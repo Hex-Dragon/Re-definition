@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : EntityBase {
     
     internal override bool isPressingCrouch() => false;
-    internal override bool isPressingJump() => false;
+    internal override bool isPressDownJump() => false;
     internal override bool isPressingLeft() => false;
     internal override bool isPressingRight() => true;
 

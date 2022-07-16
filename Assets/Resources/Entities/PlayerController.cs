@@ -8,7 +8,7 @@ public class PlayerController : EntityBase {
 
     public string keyLeft = "a", keyRight = "d", keyJump = "w", keyDown = "s";
     internal override bool isPressingCrouch() => Input.GetKey(keyDown);
-    internal override bool isPressingJump() => Input.GetKey(keyJump);
+    internal override bool isPressDownJump() => Input.GetKeyDown(keyJump);
     internal override bool isPressingLeft() => Input.GetKey(keyLeft);
     internal override bool isPressingRight() => Input.GetKey(keyRight);
 
@@ -24,6 +24,7 @@ public class PlayerController : EntityBase {
     }
     public void Hurt() {
         rb.velocity = Vector2.zero;
+        Camera.current.DOShakePosition(0.3f, 0.3f, 20);
     }
 
 }

@@ -15,8 +15,10 @@ public abstract class EntityBase : MonoBehaviour {
         coll = GetComponent<BoxCollider2D>();
     }
 
+    public bool canCrouch = false;
     public float movementSpeed = 10f, jumpForce = 20f, horizontalF = 0.9f, horizontalA = 0.3f, jumpThreshold = 0.1f, downA = 0.3f, fallA = 0.1f;
     public float jumpBufferTime = 0.2f, jumpWolfTime = 0.2f; internal float jumpBuffer = 0f, jumpWolf = 0f, jumping = 0f;
+    private bool towardsRight = true;
     void Update() {
         // 获取当前情况
         float speedX = rb.velocity.x, speedY = rb.velocity.y;
@@ -27,7 +29,7 @@ public abstract class EntityBase : MonoBehaviour {
             (isPressingLeft() ? -1 : 1)); // 获取方向
         // 判断跳跃
         jumpBuffer -= Time.deltaTime; jumpWolf -= Time.deltaTime; jumping -= Time.deltaTime;
-        if (isPressingJump()) jumpBuffer = jumpBufferTime;
+        if (isPressDownJump()) jumpBuffer = jumpBufferTime;
         if (isLand) jumpWolf = jumpWolfTime;
         if (!isCrouch && jumpBuffer > 0 && jumpWolf > 0 && jumping < 0) { // 在地面、没有蹲下
             speedY = jumpForce;
@@ -45,21 +47,28 @@ public abstract class EntityBase : MonoBehaviour {
         }
         speedX *= horizontalF;
         // 蹲下
-        if (isCrouch) {
-            sprite.sprite = spriteDown;
-            coll.size = new Vector2(coll.size.x, 0.4f);
-            coll.offset = new Vector2(0, 0.3f);
-        } else {
-            sprite.sprite = spriteNormal;
-            coll.size = new Vector2(coll.size.x, 1.2f);
-            coll.offset = new Vector2(0, 0.7f);
+        if (canCrouch) {
+            if (isCrouch) {
+                sprite.sprite = spriteDown;
+                coll.size = new Vector2(coll.size.x, 0.4f);
+                coll.offset = new Vector2(0, 0.3f);
+            } else {
+                sprite.sprite = spriteNormal;
+                coll.size = new Vector2(coll.size.x, 1.2f);
+                coll.offset = new Vector2(0, 0.7f);
+            }
         }
         // 设置
         rb.velocity = new Vector2(speedX, speedY);
+        if (towardsRight != (Mathf.Abs(speedX) > 0.01 ? speedX > 0 : towardsRight)) {
+            // 反向
+            towardsRight = !towardsRight;
+            transform.DOScaleX(towardsRight ? 1 : -1, 0.1f);
+        }
     }
     internal abstract bool isPressingLeft();
     internal abstract bool isPressingRight();
-    internal abstract bool isPressingJump();
+    internal abstract bool isPressDownJump();
     internal abstract bool isPressingCrouch();
 
     // 碰撞检测
