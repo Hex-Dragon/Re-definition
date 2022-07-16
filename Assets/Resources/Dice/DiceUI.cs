@@ -30,6 +30,9 @@ public class DiceUI : MonoBehaviour {
         spriteBg.DOColor(isKeyDown ?
             new Color(168f / 255f, 255f / 255f, 177f / 255f, isDropped ? 0.3f : 1f) :
             new Color(159f / 255f, 174f / 255f, 186f / 255f, isDropped ? 0.3f : 1f), 0.05f);
+        spriteLetter.DOColor(isKeyDown ?
+            new Color(168f / 255f, 255f / 255f, 177f / 255f, isDropped ? 0.3f : 1f) :
+            new Color(1f, 1f, 1f, isDropped ? 0.3f : 1f), 0.05f);
     }
 
     public bool allowPress = true;
