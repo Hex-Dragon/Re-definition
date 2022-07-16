@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bullet
   - Dice
+  - Marker
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemy
   - Border
   - Dice
-  - 
+  - Marker
   - 
   - 
   - 
