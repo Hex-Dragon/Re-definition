@@ -30,10 +30,9 @@ public class PlayerController : EntityBase {
     // 测试方法：按 Ctrl+R 生成骰子
     public GameObject dice;
     private void LateUpdate() {
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyUp(KeyCode.R)) {
-            DiceEntity diceNew = GameObject.Instantiate(dice).GetComponent<DiceEntity>();
-            diceNew.key = Module.RandomOne(InputM.keyTypes.ToList());
-        }
+        if (!Input.GetKey(KeyCode.LeftControl) || !Input.GetKeyUp(KeyCode.R)) return;
+        // 生成测试骰子
+        InputM.DropDice(Module.RandomOne(InputM.keyTypes.ToList()));
     }
 
 }

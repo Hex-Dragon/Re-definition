@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class InputM : MonoBehaviour {
+    public GameObject dicePrefab;
     
     public static string keyLeft = "a", keyRight = "d", keyJump = "w", keyCrouch = "s", keyFire = "l", keyReload = "r";
     public enum KeyType { Left, Right, Jump, Crouch, Fire, Reload }
@@ -86,34 +87,40 @@ public class InputM : MonoBehaviour {
     };
 
     public readonly static KeyType[] keyTypes = new[] { KeyType.Left, KeyType.Right, KeyType.Jump, KeyType.Crouch, KeyType.Fire, KeyType.Reload };
-    public static string GetPossibleResults(KeyType key, bool canRestore) {
-        List<string> result = "wasdlr".ToList().Select(c => c.ToString()).ToList();
+    public static string GetPossibleResults(KeyType key, bool doRestore) {
+        List<string> accepted = "wasdlr".ToList().Select(c => c.ToString()).ToList();
+        List<string> refused = new();
         // 删除冲突键位
         //  - 不能同时跳跃、蹲下
-        if (key == KeyType.Jump) result.Remove(GetKeyRaw(KeyType.Crouch)); 
-        if (key == KeyType.Crouch) result.Remove(GetKeyRaw(KeyType.Jump));
+        if (key == KeyType.Jump) refused.Add(GetKeyRaw(KeyType.Crouch)); 
+        if (key == KeyType.Crouch) refused.Add(GetKeyRaw(KeyType.Jump));
         //  - 不能同时向左、向右
-        if (key == KeyType.Left) result.Remove(GetKeyRaw(KeyType.Right));
-        if (key == KeyType.Right) result.Remove(GetKeyRaw(KeyType.Left));
+        if (key == KeyType.Left) refused.Add(GetKeyRaw(KeyType.Right));
+        if (key == KeyType.Right) refused.Add(GetKeyRaw(KeyType.Left));
         //  - 不能同时开火、装弹
-        if (key == KeyType.Fire) result.Remove(GetKeyRaw(KeyType.Reload));
-        if (key == KeyType.Reload) result.Remove(GetKeyRaw(KeyType.Fire));
-        Debug.Log("删除冲突后：" + string.Join("", result));
-        // 是否可以还原回原始键位
-        if (!canRestore) result.Remove(GetKeyRawDefault(key));
-        if (canRestore) result.Add(GetKeyRawDefault(key)); // 增大还原概率
-        Debug.Log("还原回原始键位：" + string.Join("", result));
+        if (key == KeyType.Fire) refused.Add(GetKeyRaw(KeyType.Reload));
+        if (key == KeyType.Reload) refused.Add(GetKeyRaw(KeyType.Fire));
         // 禁止选择已经有两个绑定项的字母、尽量选择没有绑定项的字母
         foreach (string letter in "wasdlr".ToCharArray().Select(c => c.ToString())) {
-            if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) >= 2) { result.Remove(letter); result.Remove(letter); }
-            if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) == 0) { result.Add(letter); result.Add(letter); }
+            if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) >= 2) refused.Add(letter);
+            if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) == 0) { accepted.Add(letter); accepted.Add(letter); }
         }
-        Debug.Log("绑定项 != 1：" + string.Join("", result));
         // 禁止与当前项相同
+        refused.Add(GetKeyRaw(key));
+        // 是否可以还原回原始键位
+        if (!doRestore) refused.Add(GetKeyRawDefault(key));
+        if (doRestore) for (int i = 0; i < 10; i++) accepted.Add(GetKeyRawDefault(key));
+        // 输出
         string resultStr = "";
-        result.ForEach(c => { if (c != GetKeyRaw(key)) resultStr += c; });
-        Debug.Log("禁止与当前项相同：" + resultStr);
+        accepted.ForEach(resultChar => {
+            foreach (string refusedChar in refused) if (resultChar == refusedChar) return;
+            resultStr += resultChar; 
+        });
         return resultStr;
+    }
+
+    public static void DropDice(KeyType key) {
+        GetDiceUI(key).GetComponent<DiceUI>().DropDice();
     }
 
 }

@@ -10,7 +10,6 @@ public class DiceEntity : MonoBehaviour {
     private string currentLetter;
     private SpriteRenderer spriteText;
     private void Start() {
-        currentLetter = InputM.GetKeyRaw(key);
         spriteText = GetComponentsInChildren<SpriteRenderer>().Where(sp => sp.gameObject.name == "ImgText").First();
         GetComponentsInChildren<SpriteRenderer>().Where(sp => sp.gameObject.name == "ImgType").First().sprite = InputM.GetKeyTypeSprite(key);
         currentLetter = InputM.GetKeyRaw(key);
@@ -29,7 +28,7 @@ public class DiceEntity : MonoBehaviour {
         // 开始旋转
         transform.DORotate(new Vector3(0, 0, 360f * Mathf.RoundToInt(rollTime * 1.5f)), rollTime, RotateMode.FastBeyond360);
         transform.DOScale(2, rollTime);
-        transform.DOMoveY(-2, rollTime);
+        transform.DOMoveY(transform.position.y + 3, rollTime);
         StartCoroutine(Roll());
     }
     IEnumerator Roll() {
@@ -57,11 +56,14 @@ public class DiceEntity : MonoBehaviour {
         // 结束动画
         transform.DOScale(1, endTime);
         GameObject endObj = InputM.GetDiceUI(key);
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.current, endObj.transform.position);
-        transform.DOMove((Vector2) Camera.current.ScreenToWorldPoint(screenPos), endTime);
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.allCameras[0], endObj.transform.position);
+        transform.DOMove((Vector2) Camera.allCameras[0].ScreenToWorldPoint(screenPos), endTime);
         yield return new WaitForSeconds(endTime);
         // 设置
         InputM.SetKey(key, currentLetter);
+        endObj.GetComponent<DiceUI>().isDropped = false;
+        endObj.GetComponent<DiceUI>().UpdateColor();
+        yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
     }
 
