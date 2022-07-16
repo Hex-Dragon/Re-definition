@@ -657,6 +657,7 @@ GameObject:
   - component: {fileID: 549158894}
   - component: {fileID: 549158896}
   - component: {fileID: 549158895}
+  - component: {fileID: 549158897}
   m_Layer: 5
   m_Name: DiceJump
   m_TagString: Untagged
@@ -724,6 +725,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549158893}
   m_CullTransparentMesh: 1
+--- !u!114 &549158897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549158893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31114938d2d94a64c9d2b6e0aae609e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keybind: 2
 --- !u!1 &557375725
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,10 +797,6 @@ MonoBehaviour:
   fallA: 0.4
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
-  keyLeft: a
-  keyRight: d
-  keyJump: w
-  keyDown: s
   knockbackForceH: 40
   knockbackForceV: 10
 --- !u!50 &557375728
@@ -2974,6 +2984,7 @@ GameObject:
   - component: {fileID: 767199832}
   - component: {fileID: 767199834}
   - component: {fileID: 767199833}
+  - component: {fileID: 767199835}
   m_Layer: 5
   m_Name: DiceLeft
   m_TagString: Untagged
@@ -3041,6 +3052,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767199831}
   m_CullTransparentMesh: 1
+--- !u!114 &767199835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767199831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31114938d2d94a64c9d2b6e0aae609e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keybind: 0
 --- !u!1 &803082884
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,6 +3076,7 @@ GameObject:
   - component: {fileID: 803082885}
   - component: {fileID: 803082887}
   - component: {fileID: 803082886}
+  - component: {fileID: 803082888}
   m_Layer: 5
   m_Name: DiceReload
   m_TagString: Untagged
@@ -3119,6 +3144,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803082884}
   m_CullTransparentMesh: 1
+--- !u!114 &803082888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803082884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31114938d2d94a64c9d2b6e0aae609e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keybind: 5
 --- !u!1 &807452969
 GameObject:
   m_ObjectHideFlags: 0
@@ -3366,6 +3404,7 @@ GameObject:
   - component: {fileID: 1142715112}
   - component: {fileID: 1142715114}
   - component: {fileID: 1142715113}
+  - component: {fileID: 1142715115}
   m_Layer: 5
   m_Name: DiceCrouch
   m_TagString: Untagged
@@ -3433,6 +3472,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142715111}
   m_CullTransparentMesh: 1
+--- !u!114 &1142715115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142715111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31114938d2d94a64c9d2b6e0aae609e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keybind: 3
 --- !u!1 &1153718130
 GameObject:
   m_ObjectHideFlags: 0
@@ -3444,6 +3496,7 @@ GameObject:
   - component: {fileID: 1153718131}
   - component: {fileID: 1153718133}
   - component: {fileID: 1153718132}
+  - component: {fileID: 1153718134}
   m_Layer: 5
   m_Name: DiceFire
   m_TagString: Untagged
@@ -3511,6 +3564,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153718130}
   m_CullTransparentMesh: 1
+--- !u!114 &1153718134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153718130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31114938d2d94a64c9d2b6e0aae609e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keybind: 4
 --- !u!1 &1171855005
 GameObject:
   m_ObjectHideFlags: 0
@@ -5731,6 +5797,7 @@ GameObject:
   - component: {fileID: 1688445080}
   - component: {fileID: 1688445082}
   - component: {fileID: 1688445081}
+  - component: {fileID: 1688445083}
   m_Layer: 5
   m_Name: DiceRight
   m_TagString: Untagged
@@ -5798,6 +5865,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688445079}
   m_CullTransparentMesh: 1
+--- !u!114 &1688445083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688445079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31114938d2d94a64c9d2b6e0aae609e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keybind: 1
 --- !u!1 &1741842511
 GameObject:
   m_ObjectHideFlags: 0
