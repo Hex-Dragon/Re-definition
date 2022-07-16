@@ -28,8 +28,8 @@ public class DiceUI : MonoBehaviour {
     }
     public void UpdateColor() {
         spriteBg.DOColor(isKeyDown ?
-            new Color(49f / 255f, 38f / 255f, 31f / 255f, isDropped ? 0.3f : 1f) :
-            new Color(111f / 255f, 93f / 255f, 80f / 255f, isDropped ? 0.3f : 1f), 0.05f);
+            new Color(168f / 255f, 255f / 255f, 177f / 255f, isDropped ? 0.3f : 1f) :
+            new Color(159f / 255f, 174f / 255f, 186f / 255f, isDropped ? 0.3f : 1f), 0.05f);
     }
 
     public bool allowPress = true;
