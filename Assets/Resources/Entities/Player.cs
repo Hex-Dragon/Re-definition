@@ -71,7 +71,7 @@ public class Player : EntityBase {
         }
         // 装填
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
-            // TODO: 装填音效（总时长为 reloadDelay，看 Unity 里的 Player 右边栏，这里的数字可能是过期的）
+            AudioM.Play("reload");
             currentReloadDelay = reloadDelay;
         } else if (currentReloadDelay > 0 && currentReloadDelay < Time.deltaTime) {
             currentReloadDelay = 0f; currentBullet = maxBullet;
@@ -80,7 +80,7 @@ public class Player : EntityBase {
         }
         // 开火
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
-            // TODO: 开火音效
+            AudioM.Play("fire");
             currentBullet--; currentShootDelay = shootDelay;
             Vector2 fromPos = transform.position + Vector3.up * 0.55f;
             Vector2 toPos = Camera.allCameras[0].ScreenToWorldPoint(Input.mousePosition);
@@ -97,7 +97,7 @@ public class Player : EntityBase {
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) : 
             "".PadLeft(currentBullet, "|".ToCharArray().First());
-        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(1, 1, 0.5f);
+        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(0.6588235f, 1f, 0.6941177f);
     }
 
 }
