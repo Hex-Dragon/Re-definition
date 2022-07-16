@@ -38,7 +38,6 @@ public class BasicTooltip : MonoBehaviour {
             _hovered = value;
             if (value) {
                 StartHover(UIExtensionsInputManager.MousePosition, true);
-                StartCoroutine(HoveredMouseFollowingLoop());
             } else {
                 target.HideTooltip();
             }
@@ -57,6 +56,8 @@ public class BasicTooltip : MonoBehaviour {
         if (textDescription.rawText != description) {
             textDescription.text = description;
         }
+        // 更新位置
+        StartHover(UIExtensionsInputManager.MousePosition);
     }
 
     #region "原始 Sender"
@@ -84,19 +85,11 @@ public class BasicTooltip : MonoBehaviour {
         }
     }
     
-    IEnumerator HoveredMouseFollowingLoop() {
-        while (hovered) {
-            StartHover(UIExtensionsInputManager.MousePosition);
-            yield return null;
-        }
-    }
-
     //public void OnDeselect(BaseEventData eventData) {
     //    hovered = false;
     //}
 
     void StartHover(Vector3 position, bool shouldCanvasUpdate = false) {
-        Update();
         target.SetTooltip(position, shouldCanvasUpdate);
     }
 

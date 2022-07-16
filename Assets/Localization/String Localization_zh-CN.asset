@@ -18,8 +18,12 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 5581195698176
-    m_Localized: "\u6D4B\u8BD5"
+  - m_Id: 147212595093504
+    m_Localized: "#coin \u4E2D\u6587"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 145542393880576
+    m_Localized: "\u4E2D\u6587\u6309\u94AE"
     m_Metadata:
       m_Items: []
   references:
