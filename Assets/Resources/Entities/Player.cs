@@ -34,7 +34,7 @@ public class Player : EntityBase {
     public float shootDelay = 0.15f; private float currentShootDelay = 0f;
     public float reloadDelay = 1.5f; private float currentReloadDelay = 0f;
     public float bulletSpeed = 50f, bulletKnockback = 1f;
-    public GameObject bullet;
+    public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
         // 装填
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
@@ -46,19 +46,25 @@ public class Player : EntityBase {
             currentReloadDelay -= Time.deltaTime;
         }
         // 开火
-        if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f) {
+        if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
             // TODO: 开火音效
             currentBullet--; currentShootDelay = shootDelay;
             Vector2 fromPos = transform.position + Vector3.up * 0.55f;
             Vector2 toPos = Camera.allCameras[0].ScreenToWorldPoint(Input.mousePosition);
             Vector2 shootVector = (toPos - fromPos).normalized;
-            GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.FromToRotation(fromPos, toPos));
+            GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed * shootVector;
+            newBullet.transform.eulerAngles = (shootVector.x > 0 ? -1 : 1) * Vector2.Angle(shootVector, Vector2.up) * Vector3.forward;
             // 后座力
             rb.velocity += bulletKnockback * -shootVector;
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
         }
+        // 更新 UI
+        textBullet.text = currentReloadDelay > 0f ?
+            "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) : 
+            "".PadLeft(currentBullet, "|".ToCharArray().First());
+        textBullet.color = currentReloadDelay > 0f ? new Color(0.5f, 0.5f, 0.5f) : new Color(1, 1, 0.6f);
     }
 
 }
