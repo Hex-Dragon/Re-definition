@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
@@ -8,19 +9,19 @@ public class StoryM : MonoBehaviour {
 
     
     public TMPro.TextMeshProUGUI textStory;
-    public RectTransform panStory;
+    public RectTransform shapeBack;
     void Start() {
         StartCoroutine(test());
     }
     IEnumerator SetStoryText(string textCh, string textEn = "English", float hideTime = 2f) {
         textStory.text = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)" ? textCh : textEn;
-        panStory.gameObject.SetActive(true);
-        //LayoutRebuilder.ForceRebuildLayoutImmediate(panStory);
-        //panStory.GetComponent<ContentSizeMininum>().Update();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
+        shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.06f);
         yield return new WaitForSeconds(hideTime);
     }
     public void HideStoryText() {
-        panStory.gameObject.SetActive(false);
+        textStory.text = "";
+        shapeBack.DOScaleX(0, 0.06f);
     }
 
     IEnumerator test() {
