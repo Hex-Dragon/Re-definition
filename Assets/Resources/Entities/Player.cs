@@ -66,8 +66,9 @@ public class Player : EntityBase {
                 hp++;
             }
             RefreshHearts();
-        } else {
+        } else if (currentHealTime != 0f) {
             currentHealTime = 0f;
+            RefreshHearts();
         }
         // Ч°Мо
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
