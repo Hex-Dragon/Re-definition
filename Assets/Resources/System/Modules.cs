@@ -6,11 +6,12 @@ using UnityEngine;
 
 public static class Module {
 
+    public static System.Random randomDefault = new();
     /// <summary>
     /// 将 List 随机打乱。
     /// </summary>
     public static List<T> Shuffle<T>(this List<T> list, System.Random random = null) {
-        random ??= new System.Random();
+        random ??= randomDefault;
         for (int i = 0; i < list.Count; i++) {
             int randomIndex = random.Next(list.Count);
             (list[randomIndex], list[i]) = (list[i], list[randomIndex]);
@@ -21,7 +22,7 @@ public static class Module {
     /// 随机返回数组中的一个元素。
     /// </summary>
     public static T RandomOne<T>(this List<T> list, System.Random random = null) {
-        random ??= new System.Random();
+        random ??= randomDefault;
         return list[random.Next(list.Count)];
     }
     /// <summary>

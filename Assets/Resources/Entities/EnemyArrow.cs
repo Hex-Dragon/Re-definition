@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyArrow : EnemyBase {
 
-    public bool movingLeft = false;
     internal override bool isPressingCrouch() => false;
     internal override bool isPressDownJump() => false;
     internal override bool isPressingLeft() => movingLeft;

@@ -12,21 +12,43 @@ public class Player : EntityBase {
     internal override bool isPressingLeft() => InputM.GetKeyEvent(InputM.KeyType.Left);
     internal override bool isPressingRight() => InputM.GetKeyEvent(InputM.KeyType.Right);
 
+    // 生命
+    public RectTransform[] hearts;
+    private int _hp = 3;
+    private int hp {
+        get { return _hp; }
+        set {
+            if (_hp == value) return;
+            _hp = value;
+            if (_hp == 0) _hp = 3;
+            RefreshHearts();
+        }
+    }
+    public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitBorder() {
         Hurt();
         transform.position = new Vector3(0, 8, 0);
     }
-    public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitEnemy(Collision2D collision) {
         Hurt();
         int face = collision.transform.position.x < transform.position.x ? 1 : -1;
         rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
     }
     public void Hurt() {
+        hp--;
         AudioM.Play("hurt");
         rb.velocity = Vector2.zero;
         DOTween.Kill("ScreenShake");
         Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
+    }
+
+    // 治疗
+    public float healTime = 4f; private float currentHealTime = 0f;
+    private void RefreshHearts() {
+        float totalHp = Mathf.Clamp(hp + Mathf.Pow(currentHealTime / healTime, 7f) * 0.7f + currentHealTime / healTime * 0.3f, 0, 3);
+        for (int i = 0; i < 3; i++) {
+            hearts[i].localScale = Vector3.one * Mathf.Clamp(totalHp - i, 0, 1);
+        }
     }
 
     // 射击
@@ -36,6 +58,17 @@ public class Player : EntityBase {
     public float bulletSpeed = 50f, bulletKnockback = 1f;
     public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
+        // 治疗
+        if (isPressingCrouch() && hp < 3 && isLand) {
+            currentHealTime += Time.deltaTime;
+            if (currentHealTime > healTime) {
+                currentHealTime -= healTime;
+                hp++;
+            }
+            RefreshHearts();
+        } else {
+            currentHealTime = 0f;
+        }
         // 装填
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
             // TODO: 装填音效（总时长为 reloadDelay，看 Unity 里的 Player 右边栏，这里的数字可能是过期的）
@@ -64,7 +97,7 @@ public class Player : EntityBase {
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) : 
             "".PadLeft(currentBullet, "|".ToCharArray().First());
-        textBullet.color = currentReloadDelay > 0f ? new Color(0.5f, 0.5f, 0.5f) : new Color(1, 1, 0.6f);
+        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(1, 1, 0.5f);
     }
 
 }

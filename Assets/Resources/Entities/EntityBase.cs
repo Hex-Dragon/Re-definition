@@ -10,7 +10,6 @@ public abstract class EntityBase : MonoBehaviour {
     internal BoxCollider2D coll;
     public Sprite spriteNormal, spriteDown;
     void Start() {
-        currentHp = hp;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
@@ -19,13 +18,13 @@ public abstract class EntityBase : MonoBehaviour {
     public bool canCrouch = false;
     public float movementSpeed = 10f, jumpForce = 20f, horizontalF = 0.9f, horizontalA = 0.3f, jumpThreshold = 0.1f, downA = 0.3f, fallA = 0.1f, filpSpeed = 0.3f;
     public float jumpBufferTime = 0.2f, jumpWolfTime = 0.2f; internal float jumpBuffer = 0f, jumpWolf = 0f, jumping = 0f;
-    private bool towardsRight = true;
+    internal bool towardsRight = true, isLand = false;
     void Update() {
         OnUpdate();
         // 获取当前情况
         float speedX = rb.velocity.x, speedY = rb.velocity.y;
         bool isCrouch = isPressingCrouch();
-        bool isLand = Physics2D.OverlapCircle(transform.position + Vector3.left * 0.1f, jumpThreshold, LayerMask.GetMask("Tilemap")) || 
+        isLand = Physics2D.OverlapCircle(transform.position + Vector3.left * 0.1f, jumpThreshold, LayerMask.GetMask("Tilemap")) || 
             Physics2D.OverlapCircle(transform.position + Vector3.left * -0.1f, jumpThreshold, LayerMask.GetMask("Tilemap"));
         float moveHorizontal = (isCrouch && isLand ? 0.35f : 1) * // 下蹲减速
             (isPressingLeft() == isPressingRight() ? 0 : // 没有同时按住左右
@@ -76,8 +75,6 @@ public abstract class EntityBase : MonoBehaviour {
     internal abstract bool isPressDownJump();
     internal abstract bool isPressingCrouch();
     internal virtual void OnUpdate() {}
-
-    public int hp; internal int currentHp;
 
     // 碰撞检测
     private void OnCollisionEnter2D(Collision2D collision) {
