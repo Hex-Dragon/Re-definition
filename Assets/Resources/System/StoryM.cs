@@ -16,7 +16,8 @@ public class StoryM : MonoBehaviour {
     IEnumerator SetStoryText(string textCh, string textEn = "English", float hideTime = 2f) {
         textStory.text = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)" ? textCh : textEn;
         LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
-        shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.06f);
+        DOTween.Kill("StoryBackground");
+        shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.06f).SetId("StoryBackground");
         yield return new WaitForSeconds(hideTime);
     }
     public void HideStoryText() {

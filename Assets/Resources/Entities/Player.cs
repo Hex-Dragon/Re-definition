@@ -23,19 +23,15 @@ public class Player : EntityBase {
         rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
     }
     public void Hurt() {
-        // 播放音效
         AudioM.Play("hurt");
-
         rb.velocity = Vector2.zero;
-        Camera.current.DOShakePosition(0.3f, 0.3f, 20);
+        DOTween.Kill("ScreenShake");
+        Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
     }
 
-    // 测试方法：按 Ctrl+R 生成骰子
-    public GameObject dice;
+    // 射击
     internal override void OnUpdate() {
-        if (!Input.GetKey(KeyCode.LeftControl) || !Input.GetKeyUp(KeyCode.R)) return;
-        // 生成测试骰子
-        InputM.DropDice(Module.RandomOne(InputM.keyTypes.ToList()));
+
     }
 
 }
