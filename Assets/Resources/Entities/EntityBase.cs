@@ -24,14 +24,14 @@ public abstract class EntityBase : MonoBehaviour {
         float speedX = rb.velocity.x, speedY = rb.velocity.y;
         bool isCrouch = isPressingCrouch();
         bool isLand = Physics2D.OverlapCircle(transform.position, jumpThreshold, LayerMask.GetMask("Tilemap"));
-        int moveHorizontal = isCrouch ? 0 : // 没有下蹲
+        float moveHorizontal = (isCrouch && isLand ? 0.35f : 1) * // 下蹲减速
             (isPressingLeft() == isPressingRight() ? 0 : // 没有同时按住左右
             (isPressingLeft() ? -1 : 1)); // 获取方向
         // 判断跳跃
         jumpBuffer -= Time.deltaTime; jumpWolf -= Time.deltaTime; jumping -= Time.deltaTime;
         if (isPressDownJump()) jumpBuffer = jumpBufferTime;
         if (isLand) jumpWolf = jumpWolfTime;
-        if (!isCrouch && jumpBuffer > 0 && jumpWolf > 0 && jumping < 0) { // 在地面、没有蹲下
+        if (jumpBuffer > 0 && jumpWolf > 0 && jumping < 0) {
             speedY = jumpForce;
             jumpBuffer = 0;
             jumping = 0.5f;

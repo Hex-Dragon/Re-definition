@@ -1,10 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public static class InputM {
+public class InputM : MonoBehaviour {
     
     public static string keyLeft = "a", keyRight = "d", keyJump = "w", keyCrouch = "s", keyFire = "l", keyReload = "r";
+    public enum KeyType { Left, Right, Jump, Crouch, Fire, Reload }
+
+    public static void SetKey(KeyType key, string newKey) {
+        _ = key switch {
+            KeyType.Left => keyLeft = newKey,
+            KeyType.Right => keyRight = newKey,
+            KeyType.Jump => keyJump = newKey,
+            KeyType.Crouch => keyCrouch = newKey,
+            KeyType.Fire => keyFire = newKey,
+            _ => keyReload = newKey,
+        };
+        foreach (GameObject dice in instance.dicesUI) dice.GetComponent<DiceUI>().UpdateLetter();
+    }
     public static bool GetKeyUI(KeyType key) => key switch {
         KeyType.Left => keyLeft == "l" ? Input.GetMouseButton(0) : (keyLeft == "r" ? Input.GetMouseButton(1) : Input.GetKey(keyLeft)),
         KeyType.Right => keyRight == "l" ? Input.GetMouseButton(0) : (keyRight == "r" ? Input.GetMouseButton(1) : Input.GetKey(keyRight)),
@@ -21,6 +35,85 @@ public static class InputM {
         KeyType.Fire => keyFire == "l" ? Input.GetMouseButton(0) : (keyFire == "r" ? Input.GetMouseButton(1) : Input.GetKey(keyFire)),
         _ => keyReload == "l" ? Input.GetMouseButtonDown(0) : (keyReload == "r" ? Input.GetMouseButtonDown(1) : Input.GetKeyDown(keyReload)),
     };
-    public enum KeyType { Left, Right, Jump, Crouch, Fire, Reload }
+    public static string GetKeyRaw(KeyType key) => key switch {
+        KeyType.Left => keyLeft,
+        KeyType.Right => keyRight,
+        KeyType.Jump => keyJump,
+        KeyType.Crouch => keyCrouch,
+        KeyType.Fire => keyFire,
+        _ => keyReload,
+    };
+    public static string GetKeyRawDefault(KeyType key) => key switch {
+        KeyType.Left => "a",
+        KeyType.Right => "d",
+        KeyType.Jump => "w",
+        KeyType.Crouch => "s",
+        KeyType.Fire => "l",
+        _ => "r",
+    };
+
+    public static InputM instance;
+    private void Awake() {
+        instance = this;
+        keyLeft = "a"; keyRight = "d"; keyJump = "w"; keyCrouch = "s"; keyFire = "l"; keyReload = "r";
+    }
+
+    public Sprite[] spritesText, spritesType;
+    public GameObject[] dicesUI;
+    public static Sprite GetKeyTextSprite(string key) => key switch {
+        "w" => instance.spritesText[0],
+        "a" => instance.spritesText[1],
+        "s" => instance.spritesText[2],
+        "d" => instance.spritesText[3],
+        "l" => instance.spritesText[4],
+        _ => instance.spritesText[5],
+    };
+    public static Sprite GetKeyTypeSprite(KeyType key) => key switch {
+        KeyType.Jump => instance.spritesType[0],
+        KeyType.Left => instance.spritesType[1],
+        KeyType.Crouch => instance.spritesType[2],
+        KeyType.Right => instance.spritesType[3],
+        KeyType.Fire => instance.spritesType[4],
+        _ => instance.spritesType[5],
+    };
+    public static GameObject GetDiceUI(KeyType key) => key switch {
+        KeyType.Jump => instance.dicesUI[0],
+        KeyType.Left => instance.dicesUI[1],
+        KeyType.Crouch => instance.dicesUI[2],
+        KeyType.Right => instance.dicesUI[3],
+        KeyType.Fire => instance.dicesUI[4],
+        _ => instance.dicesUI[5],
+    };
+
+    public readonly static KeyType[] keyTypes = new[] { KeyType.Left, KeyType.Right, KeyType.Jump, KeyType.Crouch, KeyType.Fire, KeyType.Reload };
+    public static string GetPossibleResults(KeyType key, bool canRestore) {
+        List<string> result = "wasdlr".ToList().Select(c => c.ToString()).ToList();
+        // 删除冲突键位
+        //  - 不能同时跳跃、蹲下
+        if (key == KeyType.Jump) result.Remove(GetKeyRaw(KeyType.Crouch)); 
+        if (key == KeyType.Crouch) result.Remove(GetKeyRaw(KeyType.Jump));
+        //  - 不能同时向左、向右
+        if (key == KeyType.Left) result.Remove(GetKeyRaw(KeyType.Right));
+        if (key == KeyType.Right) result.Remove(GetKeyRaw(KeyType.Left));
+        //  - 不能同时开火、装弹
+        if (key == KeyType.Fire) result.Remove(GetKeyRaw(KeyType.Reload));
+        if (key == KeyType.Reload) result.Remove(GetKeyRaw(KeyType.Fire));
+        Debug.Log("删除冲突后：" + string.Join("", result));
+        // 是否可以还原回原始键位
+        if (!canRestore) result.Remove(GetKeyRawDefault(key));
+        if (canRestore) result.Add(GetKeyRawDefault(key)); // 增大还原概率
+        Debug.Log("还原回原始键位：" + string.Join("", result));
+        // 禁止选择已经有两个绑定项的字母、尽量选择没有绑定项的字母
+        foreach (string letter in "wasdlr".ToCharArray().Select(c => c.ToString())) {
+            if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) >= 2) { result.Remove(letter); result.Remove(letter); }
+            if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) == 0) { result.Add(letter); result.Add(letter); }
+        }
+        Debug.Log("绑定项 != 1：" + string.Join("", result));
+        // 禁止与当前项相同
+        string resultStr = "";
+        result.ForEach(c => { if (c != GetKeyRaw(key)) resultStr += c; });
+        Debug.Log("禁止与当前项相同：" + resultStr);
+        return resultStr;
+    }
 
 }
