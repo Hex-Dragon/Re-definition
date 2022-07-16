@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMover : EntityBase {
+public class EnemyMover : EnemyBase {
 
     public bool movingLeft = false;
     internal override bool isPressingCrouch() => false;
@@ -23,9 +23,6 @@ public class EnemyMover : EntityBase {
         }
     }
 
-    internal override void OnHitBorder() {
-        Destroy(gameObject);
-    }
     public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitEnemy(Collision2D collision) {
         int face = collision.transform.position.x < transform.position.x ? 1 : -1;

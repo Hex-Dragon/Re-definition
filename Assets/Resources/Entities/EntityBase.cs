@@ -10,13 +10,14 @@ public abstract class EntityBase : MonoBehaviour {
     internal BoxCollider2D coll;
     public Sprite spriteNormal, spriteDown;
     void Start() {
+        currentHp = hp;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
     }
 
     public bool canCrouch = false;
-    public float movementSpeed = 10f, jumpForce = 20f, horizontalF = 0.9f, horizontalA = 0.3f, jumpThreshold = 0.1f, downA = 0.3f, fallA = 0.1f;
+    public float movementSpeed = 10f, jumpForce = 20f, horizontalF = 0.9f, horizontalA = 0.3f, jumpThreshold = 0.1f, downA = 0.3f, fallA = 0.1f, filpSpeed = 0.3f;
     public float jumpBufferTime = 0.2f, jumpWolfTime = 0.2f; internal float jumpBuffer = 0f, jumpWolf = 0f, jumping = 0f;
     private bool towardsRight = true;
     void Update() {
@@ -64,7 +65,7 @@ public abstract class EntityBase : MonoBehaviour {
         }
         // ÉèÖÃ
         rb.velocity = new Vector2(speedX, speedY);
-        if (towardsRight != (Mathf.Abs(speedX) > 0.01 ? speedX > 0 : towardsRight)) {
+        if (towardsRight != (Mathf.Abs(speedX) > filpSpeed ? speedX > 0 : towardsRight)) {
             // ·´Ïò
             towardsRight = !towardsRight;
             transform.DOScaleX(towardsRight ? 1 : -1, 0.1f);
@@ -76,13 +77,17 @@ public abstract class EntityBase : MonoBehaviour {
     internal abstract bool isPressingCrouch();
     internal virtual void OnUpdate() {}
 
+    public int hp; internal int currentHp;
+
     // Åö×²¼ì²â
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Border")) OnHitBorder();
+        if (collision.gameObject.CompareTag("Bullet")) OnHitBullet();
         if (collision.gameObject.CompareTag("Enemy") && gameObject.CompareTag("Player")) OnHitEnemy(collision);
         if (collision.gameObject.CompareTag("Player") && gameObject.CompareTag("Enemy")) OnHitEnemy(collision);
     }
     internal abstract void OnHitBorder();
+    internal virtual void OnHitBullet() {}
     internal abstract void OnHitEnemy(Collision2D collision);
 
 }
