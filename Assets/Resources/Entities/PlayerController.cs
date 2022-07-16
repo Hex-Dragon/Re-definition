@@ -23,6 +23,9 @@ public class PlayerController : EntityBase {
         rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
     }
     public void Hurt() {
+        // ≤•∑≈“Ù–ß
+        AudioM.Play("hurt");
+
         rb.velocity = Vector2.zero;
         Camera.current.DOShakePosition(0.3f, 0.3f, 20);
     }

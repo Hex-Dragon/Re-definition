@@ -32,6 +32,9 @@ public abstract class EntityBase : MonoBehaviour {
         if (isPressDownJump()) jumpBuffer = jumpBufferTime;
         if (isLand) jumpWolf = jumpWolfTime;
         if (jumpBuffer > 0 && jumpWolf > 0 && jumping < 0) {
+            // ²¥·ÅÒôÐ§
+            AudioM.Play("jump");
+
             speedY = jumpForce;
             jumpBuffer = 0;
             jumping = 0.5f;
