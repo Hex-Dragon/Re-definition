@@ -4,26 +4,36 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using System.Linq;
 
 public class StoryM : MonoBehaviour {
 
     // 文本
     public TMPro.TextMeshProUGUI textStory;
     public RectTransform shapeBack;
-    IEnumerator SetStoryText(string textCh, string textEn = "English", float hideTime = 2f) {
-        textStory.text = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)" ? textCh : textEn;
+    /// <summary>
+    /// 设置旁白，并返回预期时间。旁白字幕将在预期时间后消失。
+    /// </summary>
+    public float SetStoryText(string textCn, string textEn = "English") {
+        bool isCn = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)";
+        textStory.text = isCn ? textCn : textEn;
         LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
         // 动画
-        DOTween.Kill("StoryFont");
         textStory.color = Color.black;
-        textStory.DOColor(Color.white, 0.2f).SetId("StoryFont");
-        DOTween.Kill("StoryBackground");
-        shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.1f).SetId("StoryBackground");
-        yield return new WaitForSeconds(hideTime);
+        DOTween.Kill("StoryFont"); textStory.DOColor(Color.white, 0.25f).SetId("StoryFont");
+        DOTween.Kill("StoryBackground"); shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.15f).SetId("StoryBackground");
+        // 消失
+        float time = 1.5f + (isCn ? textCn.Length / 1.5f : textEn.Split(" ").Length / 2f);
+        StopCoroutine(nameof(WaitForHideStoryText)); StartCoroutine(WaitForHideStoryText(time));
+        return time;
     }
-    public void HideStoryText() {
+    IEnumerator WaitForStoryText(string textCh, string textEn = "English") {
+        yield return new WaitForSeconds(SetStoryText(textCh, textEn));
+    }
+    IEnumerator WaitForHideStoryText(float delay) {
+        yield return new WaitForSeconds(delay);
         textStory.text = "";
-        shapeBack.DOScaleX(0, 0.06f);
+        DOTween.Kill("StoryBackground"); shapeBack.DOScaleX(0, 0.2f).SetId("StoryBackground");
     }
 
     // 刷怪
@@ -47,20 +57,48 @@ public class StoryM : MonoBehaviour {
         }
     }
 
+    // 流程控制
+    IEnumerator WaitUntilClear(int remain = 0) {
+        while (FindObjectsOfType<EnemyBase>().Length - FindObjectsOfType<EnemyArrow>().Length > remain) { // 要算上自己
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    IEnumerator WaitUntilPickDice() {
+        while (FindObjectsOfType<DiceEntity>().Length > 0) {
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    // 故事
+    public int stage = 0;
     void Start() {
         StartCoroutine(test());
+        StartCoroutine(spawnArrow());
     }
+    bool canSpawnArrow = true;
     IEnumerator test() {
         while (true) {
-            Spawn(Spawner.EnemyType.Mover);
-            yield return StartCoroutine(SetStoryText("先刷一个瞎晃悠的", "Eng" , 3f));
-            Spawn(Spawner.EnemyType.Arrow, 3);
-            yield return StartCoroutine(SetStoryText("再刷……三个戳脑门的", "", 3f));
-            Spawn(Spawner.EnemyType.Heavy);
-            yield return StartCoroutine(SetStoryText("最后是一个贼硬的，完事", "", 3f));
-            HideStoryText();
+            canSpawnArrow = true;
+            Spawn(Spawner.EnemyType.Mover, 3);
+            SetStoryText("先刷几个瞎晃悠的", "");
+            yield return new WaitForSeconds(4f);
+
+            Spawn(Spawner.EnemyType.Heavy, 2);
+            SetStoryText("然后是两个贼硬的……", "");
+            yield return StartCoroutine(WaitUntilClear(2));
+
+            canSpawnArrow = false;
+            InputM.DropDice(Modules.RandomOne(InputM.keyTypes.ToList()));
+            SetStoryText("来一个骰子吧……？", "");
+            yield return StartCoroutine(WaitUntilPickDice());
+
+            yield return StartCoroutine(WaitForStoryText("准备好，下一轮要来了！", ""));
+        }
+    }
+    IEnumerator spawnArrow() {
+        while (true) {
             yield return new WaitForSeconds(5f);
-            yield return StartCoroutine(SetStoryText("准备下一轮……", "", 3f));
+            if (canSpawnArrow) Spawn(Spawner.EnemyType.Arrow, 2);
         }
     }
 

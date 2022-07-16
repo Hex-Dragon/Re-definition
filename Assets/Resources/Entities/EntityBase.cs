@@ -17,7 +17,8 @@ public abstract class EntityBase : MonoBehaviour {
 
     public bool canCrouch = false;
     public float movementSpeed = 10f, jumpForce = 20f, horizontalF = 0.9f, horizontalA = 0.3f, jumpThreshold = 0.1f, downA = 0.3f, fallA = 0.1f, filpSpeed = 0.3f;
-    public float jumpBufferTime = 0.2f, jumpWolfTime = 0.2f; internal float jumpBuffer = 0f, jumpWolf = 0f, jumping = 0f;
+    public float jumpBufferTime = 0.2f, jumpWolfTime = 0.2f, baseMass = 1f;
+    internal float jumpBuffer = 0f, jumpWolf = 0f, jumping = 0f;
     internal bool towardsRight = true, isLand = false;
     void Update() {
         OnUpdate();
@@ -64,6 +65,7 @@ public abstract class EntityBase : MonoBehaviour {
         }
         // ÉèÖÃ
         rb.velocity = new Vector2(speedX, speedY);
+        rb.mass = baseMass * (towardsRight ? 1.2f : 0.8f);
         if (towardsRight != (Mathf.Abs(speedX) > filpSpeed ? speedX > 0 : towardsRight)) {
             // ·´Ïò
             towardsRight = !towardsRight;

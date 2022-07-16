@@ -11,5 +11,8 @@ public class Spawner : MonoBehaviour {
         GameObject obj = Instantiate(prefeb, transform);
         obj.transform.parent = parent.transform;
         obj.GetComponent<EnemyBase>().movingLeft = transform.localScale.x < 0;
+        if (type == EnemyType.Arrow) {
+            obj.transform.position += Mathf.RoundToInt((float) Modules.randomDefault.NextDouble() - 0.15f) * Vector3.down * 0.8f;
+        }
     }
 }

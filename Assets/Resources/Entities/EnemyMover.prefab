@@ -149,7 +149,7 @@ MonoBehaviour:
   spriteNormal: {fileID: 21300000, guid: 10f7659f313c52a4da5e95cf35f7955b, type: 3}
   spriteDown: {fileID: 0}
   canCrouch: 0
-  movementSpeed: 8
+  movementSpeed: 10
   jumpForce: 22
   horizontalF: 0.8
   horizontalA: 0.07
@@ -159,6 +159,7 @@ MonoBehaviour:
   filpSpeed: 0.3
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
+  baseMass: 1
   movingLeft: 0
   hp: 6
   knockbackForceH: 40

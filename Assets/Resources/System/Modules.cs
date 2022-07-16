@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public static class Module {
+public static class Modules {
 
     public static System.Random randomDefault = new();
     /// <summary>

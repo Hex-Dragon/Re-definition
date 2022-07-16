@@ -1131,8 +1131,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: -30}
-  m_SizeDelta: {x: 53, y: 45}
+  m_AnchoredPosition: {x: 190, y: -40}
+  m_SizeDelta: {x: 72, y: 65}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &543358880
 MonoBehaviour:
@@ -1326,6 +1326,7 @@ MonoBehaviour:
   filpSpeed: 0.6
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
+  baseMass: 1
   hearts:
   - {fileID: 181884992}
   - {fileID: 40480623}
@@ -1333,8 +1334,8 @@ MonoBehaviour:
   knockbackForceH: 40
   knockbackForceV: 10
   healTime: 4
-  maxBullet: 25
-  currentBullet: 25
+  maxBullet: 20
+  currentBullet: 20
   shootDelay: 0.1
   reloadDelay: 2
   bulletSpeed: 50
@@ -3127,7 +3128,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -94}
+  m_AnchoredPosition: {x: 55.6, y: -126}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &583505891
@@ -3177,8 +3178,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4029,7 +4030,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -94}
+  m_AnchoredPosition: {x: 55.6, y: -126}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &971033487
@@ -4052,7 +4053,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '|||||||||||||||||||||||||'
+  m_text: '||||||||||||||||||||'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 657c8f12eebe4e44a801288bc506d2a1, type: 2}
   m_sharedMaterial: {fileID: 2859847126084961081, guid: 657c8f12eebe4e44a801288bc506d2a1, type: 2}
@@ -4079,8 +4080,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4341,8 +4342,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -30}
-  m_SizeDelta: {x: 53, y: 45}
+  m_AnchoredPosition: {x: 50, y: -40}
+  m_SizeDelta: {x: 72, y: 65}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1040107766
 MonoBehaviour:
@@ -4518,8 +4519,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -30}
-  m_SizeDelta: {x: 53, y: 45}
+  m_AnchoredPosition: {x: 120, y: -40}
+  m_SizeDelta: {x: 72, y: 65}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1140112351
 MonoBehaviour:
@@ -5442,6 +5443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textStory: {fileID: 1797852847}
   shapeBack: {fileID: 2088920593}
+  stage: 0
 --- !u!114 &1378097951
 MonoBehaviour:
   m_ObjectHideFlags: 0

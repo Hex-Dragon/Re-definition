@@ -99,7 +99,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -156,9 +156,10 @@ MonoBehaviour:
   jumpThreshold: 0.1
   downA: 0.4
   fallA: 0
-  filpSpeed: 10000
+  filpSpeed: 0.3
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
+  baseMass: 3
   movingLeft: 0
   hp: 15
   knockbackForceH: 30
