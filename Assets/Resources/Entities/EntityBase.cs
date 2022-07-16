@@ -20,10 +20,12 @@ public abstract class EntityBase : MonoBehaviour {
     public float jumpBufferTime = 0.2f, jumpWolfTime = 0.2f; internal float jumpBuffer = 0f, jumpWolf = 0f, jumping = 0f;
     private bool towardsRight = true;
     void Update() {
+        OnUpdate();
         // 获取当前情况
         float speedX = rb.velocity.x, speedY = rb.velocity.y;
         bool isCrouch = isPressingCrouch();
-        bool isLand = Physics2D.OverlapCircle(transform.position, jumpThreshold, LayerMask.GetMask("Tilemap"));
+        bool isLand = Physics2D.OverlapCircle(transform.position + Vector3.left * 0.1f, jumpThreshold, LayerMask.GetMask("Tilemap")) || 
+            Physics2D.OverlapCircle(transform.position + Vector3.left * -0.1f, jumpThreshold, LayerMask.GetMask("Tilemap"));
         float moveHorizontal = (isCrouch && isLand ? 0.35f : 1) * // 下蹲减速
             (isPressingLeft() == isPressingRight() ? 0 : // 没有同时按住左右
             (isPressingLeft() ? -1 : 1)); // 获取方向
@@ -37,7 +39,6 @@ public abstract class EntityBase : MonoBehaviour {
             jumping = 0.5f;
         } else if (isCrouch) {
             speedY -= downA;
-            if (speedY > 0) speedY = 0;
         }
         // 加速下落
         if (speedY < 0) speedY -= fallA;
@@ -70,6 +71,7 @@ public abstract class EntityBase : MonoBehaviour {
     internal abstract bool isPressingRight();
     internal abstract bool isPressDownJump();
     internal abstract bool isPressingCrouch();
+    internal virtual void OnUpdate() {}
 
     // 碰撞检测
     private void OnCollisionEnter2D(Collision2D collision) {
