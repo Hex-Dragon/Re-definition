@@ -21,7 +21,7 @@ public class DiceEntity : MonoBehaviour {
     public bool canRestore = true;
     private void OnCollisionEnter2D(Collision2D collision) {
         if (!collision.gameObject.CompareTag("Player")) return;
-        AudioM.Play("DicePickup");
+        AudioM.Play("DicePickup1");
         // 关闭其他移动
         GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
@@ -50,6 +50,7 @@ public class DiceEntity : MonoBehaviour {
         UpdateSpriteText();
         yield return new WaitForSeconds(0.5f);
         // 强调动画
+        AudioM.Play("DicePickup2");
         transform.DOScale(2.5f, 0.1f);
         yield return new WaitForSeconds(0.1f);
         transform.DOScale(2.3f, 0.1f);
