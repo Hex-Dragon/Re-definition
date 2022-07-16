@@ -859,11 +859,20 @@ MonoBehaviour:
   horizontalA: 0.07
   jumpThreshold: 0.05
   downA: 0.5
-  fallA: 0.4
+  fallA: 0.6
+  filpSpeed: 0.6
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
+  hp: 3
   knockbackForceH: 40
   knockbackForceV: 10
+  maxBullet: 30
+  currentBullet: 30
+  shootDelay: 0.1
+  reloadDelay: 1.5
+  bulletSpeed: 50
+  bulletKnockback: 2.5
+  bullet: {fileID: 3784861654496570301, guid: 5485a04fa6dca0746989d90942cc6acb, type: 3}
 --- !u!50 &557375728
 Rigidbody2D:
   serializedVersion: 4
@@ -3135,7 +3144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 70}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &941795214
@@ -3202,9 +3211,11 @@ MonoBehaviour:
   horizontalA: 0.07
   jumpThreshold: 0.1
   downA: 0.4
-  fallA: 0.4
+  fallA: 0.6
+  filpSpeed: 0.3
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
+  hp: 15
   movingLeft: 0
   knockbackForceH: 30
   knockbackForceV: 8
@@ -3538,9 +3549,11 @@ MonoBehaviour:
   horizontalA: 0.3
   jumpThreshold: 0.1
   downA: 0.3
-  fallA: 0.1
+  fallA: 0.6
+  filpSpeed: 0.3
   jumpBufferTime: 0.2
   jumpWolfTime: 0.2
+  hp: 2
   movingLeft: 0
 --- !u!1 &1142715111
 GameObject:
@@ -8617,9 +8630,11 @@ MonoBehaviour:
   horizontalA: 0.07
   jumpThreshold: 0.05
   downA: 0.4
-  fallA: 0.4
+  fallA: 0.6
+  filpSpeed: 0.3
   jumpBufferTime: 0.15
   jumpWolfTime: 0.2
+  hp: 6
   movingLeft: 0
   knockbackForceH: 40
   knockbackForceV: 10
