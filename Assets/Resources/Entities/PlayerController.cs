@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class PlayerController : EntityBase {
 
-    public string keyLeft = "a", keyRight = "d", keyJump = "w", keyDown = "s";
-    internal override bool isPressingCrouch() => Input.GetKey(keyDown);
-    internal override bool isPressDownJump() => Input.GetKeyDown(keyJump);
-    internal override bool isPressingLeft() => Input.GetKey(keyLeft);
-    internal override bool isPressingRight() => Input.GetKey(keyRight);
+    internal override bool isPressingCrouch() => InputM.GetKeyEvent(InputM.KeyType.Crouch);
+    internal override bool isPressDownJump() => InputM.GetKeyEvent(InputM.KeyType.Jump);
+    internal override bool isPressingLeft() => InputM.GetKeyEvent(InputM.KeyType.Left);
+    internal override bool isPressingRight() => InputM.GetKeyEvent(InputM.KeyType.Right);
 
     internal override void OnHitBorder() {
         Hurt();
