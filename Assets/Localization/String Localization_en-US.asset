@@ -17,15 +17,7 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: e3f186d36085a4c16a16dd9c5dead58e, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData:
-  - m_Id: 147212595093504
-    m_Localized: '#coin English'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 145542393880576
-    m_Localized: English Button
-    m_Metadata:
-      m_Items: []
+  m_TableData: []
   references:
     version: 2
     RefIds: []

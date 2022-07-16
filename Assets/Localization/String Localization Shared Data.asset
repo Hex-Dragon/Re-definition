@@ -14,15 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: String Localization
   m_TableCollectionNameGuidString: e3f186d36085a4c16a16dd9c5dead58e
-  m_Entries:
-  - m_Id: 145542393880576
-    m_Key: SceneMain/UI/UI Button/Text
-    m_Metadata:
-      m_Items: []
-  - m_Id: 147212595093504
-    m_Key: SceneMain/UI/UI Button
-    m_Metadata:
-      m_Items: []
+  m_Entries: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
