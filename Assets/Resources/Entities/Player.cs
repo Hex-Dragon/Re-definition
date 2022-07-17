@@ -103,7 +103,7 @@ public class Player : EntityBase {
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
             AudioM.Play("fire", 0.25f);
             currentBullet--; currentShootDelay = shootDelay;
-            Vector2 fromPos = transform.position + Vector3.up * 0.55f;
+            Vector2 fromPos = transform.position + Vector3.up * ((canCrouch && isPressingCrouch()) ? 0.55f : 1.3f);
             Vector2 toPos = AspectUtility.cam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 shootVector = (toPos - fromPos).normalized;
             GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
