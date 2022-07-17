@@ -27,19 +27,27 @@ public class Player : EntityBase {
     public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitBorder() {
         Hurt();
-        transform.position = new Vector3(0, 8, 0);
+        transform.position = new Vector3(-6, 10, 0);
     }
     internal override void OnHitEnemy(Collision2D collision) {
-        Hurt();
-        int face = collision.transform.position.x < transform.position.x ? 1 : -1;
-        rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
+        if (Hurt()) {
+            int face = collision.transform.position.x < transform.position.x ? 1 : -1;
+            rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
+        }
     }
-    public void Hurt() {
-        hp--;
-        AudioM.Play("hurt");
-        rb.velocity = Vector2.zero;
-        DOTween.Kill("ScreenShake");
-        Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
+    public float resistanceOnHurt = 1f; private float resistanceTime = 0f;
+    public bool Hurt() {
+        if (resistanceTime <= 0.001f) {
+            resistanceTime = resistanceOnHurt;
+            hp--;
+            AudioM.Play("hurt");
+            rb.velocity = Vector2.zero;
+            DOTween.Kill("ScreenShake");
+            Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // жнаф
@@ -58,6 +66,8 @@ public class Player : EntityBase {
     public float bulletSpeed = 50f, bulletKnockback = 1f;
     public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
+        // нч╣п
+        if (resistanceTime > 0f) resistanceTime -= Time.deltaTime;
         // жнаф
         if (isPressingCrouch() && hp < 3 && isLand) {
             currentHealTime += Time.deltaTime;

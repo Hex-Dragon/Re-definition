@@ -23,8 +23,9 @@ public class StoryM : MonoBehaviour {
         DOTween.Kill("StoryFont"); textStory.DOColor(Color.white, 0.25f).SetId("StoryFont");
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.15f).SetId("StoryBackground");
         // 消失
-        float time = 1.5f + (isCn ? textCn.Length / 1.5f : textEn.Split(" ").Length / 2f);
-        StopCoroutine(nameof(WaitForHideStoryText)); StartCoroutine(WaitForHideStoryText(time));
+        float time = 1.5f + (isCn ? textCn.Length / 3f : textEn.Split(" ").Length / 3f);
+        StopCoroutine("WaitForHideStoryText"); StartCoroutine("WaitForHideStoryText", time);
+        Debug.Log(time + " -> " + textCn);
         return time;
     }
     IEnumerator WaitForStoryText(string textCh, string textEn = "English") {
@@ -33,6 +34,7 @@ public class StoryM : MonoBehaviour {
     IEnumerator WaitForHideStoryText(float delay) {
         yield return new WaitForSeconds(delay);
         textStory.text = "";
+        Debug.Log(delay);
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX(0, 0.2f).SetId("StoryBackground");
     }
 
@@ -52,7 +54,8 @@ public class StoryM : MonoBehaviour {
         }
         // 实际刷怪
         spawners[type].Shuffle();
-        for (int i = 0; i < Mathf.Min(6, count); i++) {
+        for (int i = 0; i < count; i++) {
+            if (i >= spawners[type].Count) i = 0;
             spawners[type][i].Spawn();
         }
     }
@@ -81,10 +84,14 @@ public class StoryM : MonoBehaviour {
             canSpawnArrow = true;
             Spawn(Spawner.EnemyType.Mover, 3);
             SetStoryText("先刷几个瞎晃悠的", "");
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3f);
+
+            Spawn(Spawner.EnemyType.Shooter);
+            SetStoryText("炮塔！", "");
+            yield return new WaitForSeconds(2f);
 
             Spawn(Spawner.EnemyType.Heavy, 2);
-            SetStoryText("然后是两个贼硬的……", "");
+            SetStoryText("最后是两个贼硬的……", "");
             yield return StartCoroutine(WaitUntilClear(2));
 
             canSpawnArrow = false;

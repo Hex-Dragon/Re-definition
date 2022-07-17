@@ -17,7 +17,7 @@ public abstract class EnemyBase : EntityBase {
         // 死亡判断
         if (currentHp == -1) currentHp = hp;
         currentHp--;
-        if (currentHp < 0) {
+        if (currentHp <= 0) {
             AudioM.Play("enemy_die");
             transform.localScale = Vector3.zero;
             Destroy(gameObject, 1); // 防止动画没播放完导致报错

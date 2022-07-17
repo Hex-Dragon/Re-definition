@@ -18,7 +18,7 @@ public class EnemyMover : EnemyBase {
         turnCooldown -= Time.deltaTime;
         if (shouldTurn && turnCooldown <= 0f) {
             movingLeft = !movingLeft;
-            turnCooldown = 0.5f;
+            turnCooldown = 1f;
         }
     }
 
