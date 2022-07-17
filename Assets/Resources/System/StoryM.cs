@@ -117,6 +117,7 @@ public class StoryM : MonoBehaviour {
     }
     private int deathInStage = 0; private bool respawning = false, noDifficulty = false;
     IEnumerator Respawn() {
+        AudioM.Play("player_die");
         deathInStage++; respawning = true;
         // 停止场景
         arrowMax = 0;
