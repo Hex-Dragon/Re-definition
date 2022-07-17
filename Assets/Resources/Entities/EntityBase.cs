@@ -36,7 +36,7 @@ public abstract class EntityBase : MonoBehaviour {
         if (isLand) jumpWolf = jumpWolfTime;
         if (jumpBuffer > 0 && jumpWolf > 0 && jumping < 0) {
             // ²¥·ÅÒôÐ§
-            AudioM.Play("jump", 0.6f);
+            AudioM.Play("jump", 0.7f);
 
             speedY = jumpForce;
             jumpBuffer = 0;
