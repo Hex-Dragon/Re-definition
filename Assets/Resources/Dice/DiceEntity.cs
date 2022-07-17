@@ -1,5 +1,3 @@
-
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,19 +34,19 @@ public class DiceEntity : MonoBehaviour {
     }
     IEnumerator Roll() {
         for (int i = 0; i < rollTime * 8; i++) {
-            currentLetter = Module.RandomOne("wasdlr".ToList()).ToString();
+            currentLetter = Modules.RandomOne("wasdlr".ToList()).ToString();
             UpdateSpriteText();
             yield return new WaitForSeconds(0.1f);
         }
         for (int i = 0; i < Mathf.RoundToInt(rollTime * 0.333f); i++) {
-            currentLetter = Module.RandomOne("wasdlr".ToList()).ToString();
+            currentLetter = Modules.RandomOne("wasdlr".ToList()).ToString();
             UpdateSpriteText();
             yield return new WaitForSeconds(0.333f);
         }
         // 最终确定
         string possible = InputM.GetPossibleResults(key, canRestore);
         Debug.Log(possible);
-        currentLetter = Module.RandomOne(possible.ToCharArray().ToList()).ToString();
+        currentLetter = Modules.RandomOne(possible.ToCharArray().ToList()).ToString();
         UpdateSpriteText();
         yield return new WaitForSeconds(0.5f);
         // 强调动画
