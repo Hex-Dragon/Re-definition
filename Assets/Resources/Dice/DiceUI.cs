@@ -36,7 +36,7 @@ public class DiceUI : MonoBehaviour {
     void Update() {
         if (!Input.GetMouseButtonUp(0) || !(allowPress || Input.GetKey(KeyCode.LeftControl)) || 
             !RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.allCameras[0])) return;
-        // µã»÷
+        // ?
         DropDice();
     }
 

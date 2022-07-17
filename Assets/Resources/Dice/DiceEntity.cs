@@ -22,11 +22,11 @@ public class DiceEntity : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (!collision.gameObject.CompareTag("Player")) return;
         AudioM.Play("DicePickup1");
-        // ¹Ø±ÕÆäËûÒÆ¶¯
+        // å…³é—­å…¶ä»–ç§»åŠ¨
         GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        // ¿ªÊ¼Ğı×ª
+        // å¼€å§‹æ—‹è½¬
         transform.DORotate(new Vector3(0, 0, 360f * Mathf.RoundToInt(rollTime * 1.5f)), rollTime, RotateMode.FastBeyond360);
         transform.DOScale(2, rollTime);
         transform.DOMoveY(transform.position.y + 3, rollTime);
@@ -43,25 +43,25 @@ public class DiceEntity : MonoBehaviour {
             UpdateSpriteText();
             yield return new WaitForSeconds(0.333f);
         }
-        // ×îÖÕÈ·¶¨
+        // æœ€ç»ˆç¡®å®š
         string possible = InputM.GetPossibleResults(key, canRestore);
         Debug.Log(possible);
         currentLetter = Modules.RandomOne(possible.ToCharArray().ToList()).ToString();
         UpdateSpriteText();
         yield return new WaitForSeconds(0.5f);
-        // Ç¿µ÷¶¯»­
+        // å¼ºè°ƒåŠ¨ç”»
         AudioM.Play("DicePickup2");
         transform.DOScale(2.5f, 0.1f);
         yield return new WaitForSeconds(0.1f);
         transform.DOScale(2.3f, 0.1f);
         yield return new WaitForSeconds(0.7f);
-        // ½áÊø¶¯»­
+        // ç»“æŸåŠ¨ç”»
         transform.DOScale(1, endTime);
         GameObject endObj = InputM.GetDiceUI(key);
         Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.allCameras[0], endObj.transform.position);
         transform.DOMove((Vector2) Camera.allCameras[0].ScreenToWorldPoint(screenPos), endTime);
         yield return new WaitForSeconds(endTime);
-        // ÉèÖÃ
+        // è®¾ç½®
         InputM.SetKey(key, currentLetter);
         endObj.GetComponent<DiceUI>().isDropped = false;
         endObj.GetComponent<DiceUI>().UpdateColor();
