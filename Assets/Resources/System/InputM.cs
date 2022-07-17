@@ -5,7 +5,7 @@ using System.Linq;
 
 public class InputM : MonoBehaviour {
     public GameObject dicePrefab;
-    
+
     public static string keyLeft = "a", keyRight = "d", keyJump = "w", keyCrouch = "s", keyFire = "l", keyReload = "r";
     public enum KeyType { Left, Right, Jump, Crouch, Fire, Reload }
 
@@ -90,31 +90,31 @@ public class InputM : MonoBehaviour {
     public static string GetPossibleResults(KeyType key, bool doRestore) {
         List<string> accepted = "wasdlr".ToList().Select(c => c.ToString()).ToList();
         List<string> refused = new();
-        // É¾³ı³åÍ»¼üÎ»
-        //  - ²»ÄÜÍ¬Ê±ÌøÔ¾¡¢¶×ÏÂ
-        if (key == KeyType.Jump) refused.Add(GetKeyRaw(KeyType.Crouch)); 
+        // åˆ é™¤å†²çªé”®ä½
+        //  - ä¸èƒ½åŒæ—¶è·³è·ƒã€è¹²ä¸‹
+        if (key == KeyType.Jump) refused.Add(GetKeyRaw(KeyType.Crouch));
         if (key == KeyType.Crouch) refused.Add(GetKeyRaw(KeyType.Jump));
-        //  - ²»ÄÜÍ¬Ê±Ïò×ó¡¢ÏòÓÒ
+        //  - ä¸èƒ½åŒæ—¶å‘å·¦ã€å‘å³
         if (key == KeyType.Left) refused.Add(GetKeyRaw(KeyType.Right));
         if (key == KeyType.Right) refused.Add(GetKeyRaw(KeyType.Left));
-        //  - ²»ÄÜÍ¬Ê±¿ª»ğ¡¢×°µ¯
+        //  - ä¸èƒ½åŒæ—¶å¼€ç«ã€è£…å¼¹
         if (key == KeyType.Fire) refused.Add(GetKeyRaw(KeyType.Reload));
         if (key == KeyType.Reload) refused.Add(GetKeyRaw(KeyType.Fire));
-        // ½ûÖ¹Ñ¡ÔñÒÑ¾­ÓĞÁ½¸ö°ó¶¨ÏîµÄ×ÖÄ¸¡¢¾¡Á¿Ñ¡ÔñÃ»ÓĞ°ó¶¨ÏîµÄ×ÖÄ¸
+        // ç¦æ­¢é€‰æ‹©å·²ç»æœ‰ä¸¤ä¸ªç»‘å®šé¡¹çš„å­—æ¯ã€å°½é‡é€‰æ‹©æ²¡æœ‰ç»‘å®šé¡¹çš„å­—æ¯
         foreach (string letter in "wasdlr".ToCharArray().Select(c => c.ToString())) {
             if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) >= 2) refused.Add(letter);
             if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) == 0) { accepted.Add(letter); accepted.Add(letter); }
         }
-        // ½ûÖ¹Óëµ±Ç°ÏîÏàÍ¬
+        // ç¦æ­¢ä¸å½“å‰é¡¹ç›¸åŒ
         refused.Add(GetKeyRaw(key));
-        // ÊÇ·ñ¿ÉÒÔ»¹Ô­»ØÔ­Ê¼¼üÎ»
+        // æ˜¯å¦å¯ä»¥è¿˜åŸå›åŸå§‹é”®ä½
         if (!doRestore) refused.Add(GetKeyRawDefault(key));
         if (doRestore) for (int i = 0; i < 10; i++) accepted.Add(GetKeyRawDefault(key));
-        // Êä³ö
+        // è¾“å‡º
         string resultStr = "";
         accepted.ForEach(resultChar => {
             foreach (string refusedChar in refused) if (resultChar == refusedChar) return;
-            resultStr += resultChar; 
+            resultStr += resultChar;
         });
         return resultStr;
     }

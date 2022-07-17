@@ -8,21 +8,21 @@ using System.Linq;
 
 public class StoryM : MonoBehaviour {
 
-    // ÎÄ±¾
+    // æ–‡æœ¬
     public TMPro.TextMeshProUGUI textStory;
     public RectTransform shapeBack;
     /// <summary>
-    /// ÉèÖÃÅÔ°×£¬²¢·µ»ØÔ¤ÆÚÊ±¼ä¡£ÅÔ°××ÖÄ»½«ÔÚÔ¤ÆÚÊ±¼äºóÏûÊ§¡£
+    /// è®¾ç½®æ—ç™½ï¼Œå¹¶è¿”å›é¢„æœŸæ—¶é—´ã€‚æ—ç™½å­—å¹•å°†åœ¨é¢„æœŸæ—¶é—´åæ¶ˆå¤±ã€‚
     /// </summary>
     public float SetStoryText(string textCn, string textEn = "English") {
         bool isCn = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)";
         textStory.text = isCn ? textCn : textEn;
         LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
-        // ¶¯»­
+        // åŠ¨ç”»
         textStory.color = Color.black;
         DOTween.Kill("StoryFont"); textStory.DOColor(Color.white, 0.25f).SetId("StoryFont");
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.15f).SetId("StoryBackground");
-        // ÏûÊ§
+        // æ¶ˆå¤±
         float time = 1.5f + (isCn ? textCn.Length / 1.5f : textEn.Split(" ").Length / 2f);
         StopCoroutine(nameof(WaitForHideStoryText)); StartCoroutine(WaitForHideStoryText(time));
         return time;
@@ -36,10 +36,10 @@ public class StoryM : MonoBehaviour {
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX(0, 0.2f).SetId("StoryBackground");
     }
 
-    // Ë¢¹Ö
+    // åˆ·æ€ª
     private Dictionary<Spawner.EnemyType, List<Spawner>> spawners = null;
     public void Spawn(Spawner.EnemyType type, int count = 1) {
-        // ³õÊ¼»¯
+        // åˆå§‹åŒ–
         if (spawners == null) {
             spawners = new();
             foreach (Spawner spawner in FindObjectsOfType<Spawner>()) {
@@ -50,16 +50,16 @@ public class StoryM : MonoBehaviour {
                 }
             }
         }
-        // Êµ¼ÊË¢¹Ö
+        // å®é™…åˆ·æ€ª
         spawners[type].Shuffle();
         for (int i = 0; i < Mathf.Min(6, count); i++) {
             spawners[type][i].Spawn();
         }
     }
 
-    // Á÷³Ì¿ØÖÆ
+    // æµç¨‹æ§åˆ¶
     IEnumerator WaitUntilClear(int remain = 0) {
-        while (FindObjectsOfType<EnemyBase>().Length - FindObjectsOfType<EnemyArrow>().Length > remain) { // ÒªËãÉÏ×Ô¼º
+        while (FindObjectsOfType<EnemyBase>().Length - FindObjectsOfType<EnemyArrow>().Length > remain) { // è¦ç®—ä¸Šè‡ªå·±
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -69,7 +69,7 @@ public class StoryM : MonoBehaviour {
         }
     }
 
-    // ¹ÊÊÂ
+    // æ•…äº‹
     public int stage = 0;
     void Start() {
         StartCoroutine(test());
@@ -80,19 +80,19 @@ public class StoryM : MonoBehaviour {
         while (true) {
             canSpawnArrow = true;
             Spawn(Spawner.EnemyType.Mover, 3);
-            SetStoryText("ÏÈË¢¼¸¸öÏ¹»ÎÓÆµÄ", "");
+            SetStoryText("å…ˆåˆ·å‡ ä¸ªçæ™ƒæ‚ çš„", "");
             yield return new WaitForSeconds(4f);
 
             Spawn(Spawner.EnemyType.Heavy, 2);
-            SetStoryText("È»ºóÊÇÁ½¸öÔôÓ²µÄ¡­¡­", "");
+            SetStoryText("ç„¶åæ˜¯ä¸¤ä¸ªè´¼ç¡¬çš„â€¦â€¦", "");
             yield return StartCoroutine(WaitUntilClear(2));
 
             canSpawnArrow = false;
             InputM.DropDice(Modules.RandomOne(InputM.keyTypes.ToList()));
-            SetStoryText("À´Ò»¸ö÷»×Ó°É¡­¡­£¿", "");
+            SetStoryText("æ¥ä¸€ä¸ªéª°å­å§â€¦â€¦ï¼Ÿ", "");
             yield return StartCoroutine(WaitUntilPickDice());
 
-            yield return StartCoroutine(WaitForStoryText("×¼±¸ºÃ£¬ÏÂÒ»ÂÖÒªÀ´ÁË£¡", ""));
+            yield return StartCoroutine(WaitForStoryText("å‡†å¤‡å¥½ï¼Œä¸‹ä¸€è½®è¦æ¥äº†ï¼", ""));
         }
     }
     IEnumerator spawnArrow() {
