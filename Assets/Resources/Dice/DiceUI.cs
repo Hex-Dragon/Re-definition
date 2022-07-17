@@ -37,15 +37,16 @@ public class DiceUI : MonoBehaviour {
         if (!Input.GetMouseButtonUp(0) || !(allowPress || Input.GetKey(KeyCode.LeftControl)) || 
             !RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, AspectUtility.cam)) return;
         // µã»÷
-        DropDice();
+        DropDice(true);
     }
 
     public bool isDropped = false;
-    public void DropDice() {
+    public void DropDice(bool canRestore) {
         DiceEntity diceNew = GameObject.Instantiate(InputM.instance.dicePrefab).GetComponent<DiceEntity>();
         diceNew.transform.localScale = Vector2.one * 1.11f;
         diceNew.transform.position = rectTransform.position;
         diceNew.key = keybind;
+        diceNew.canRestore = canRestore;
         isDropped = true;
         UpdateColor();
     }

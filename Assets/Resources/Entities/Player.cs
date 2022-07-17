@@ -120,7 +120,7 @@ public class Player : EntityBase {
             currentShootDelay -= Time.deltaTime;
         }
         string fireKey = InputM.GetKeyRaw(InputM.KeyType.Fire);
-        bool isFireDown = fireKey == "l" ? Input.GetMouseButton(0) : (fireKey == "r" ? Input.GetMouseButton(1) : Input.GetKey(fireKey));
+        bool isFireDown = fireKey == "l" ? Input.GetMouseButtonDown(0) : (fireKey == "r" ? Input.GetMouseButtonDown(1) : Input.GetKeyDown(fireKey));
         if (isFireDown && currentBullet == 0 && currentReloadDelay <= 0f) {
             AudioM.Play("bullet_empty", 0.7f);
         }

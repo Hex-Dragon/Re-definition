@@ -10,6 +10,7 @@ public abstract class EntityBase : MonoBehaviour {
     internal BoxCollider2D coll;
     public Sprite spriteNormal, spriteDown;
     void Start() {
+        baseMass *= (float) Modules.randomDefault.NextDouble() * 0.4f + 0.8f;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         coll = GetComponent<BoxCollider2D>();
