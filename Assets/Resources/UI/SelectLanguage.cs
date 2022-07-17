@@ -63,7 +63,7 @@ public class SelectLanguage : MonoBehaviour, IPointerClickHandler
     }
 
     IEnumerator LoadScene() {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneMain", LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneMain");
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone) {
             yield return null;
