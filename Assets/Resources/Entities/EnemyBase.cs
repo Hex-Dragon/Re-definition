@@ -28,7 +28,7 @@ public abstract class EnemyBase : EntityBase {
         if (currentHp == -1) currentHp = hp;
         currentHp--;
         if (currentHp <= 0) {
-            AudioM.Play("enemy_die", 0.5f);
+            AudioM.Play("enemy_die", 0.7f);
             Modules.DestroyGameObject(gameObject);
         }
     }
