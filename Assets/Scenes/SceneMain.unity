@@ -1732,7 +1732,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1, y: 1.59375}
+    oldSize: {x: 1, y: 2.0078125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3302,8 +3302,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289855400
-  m_fontColor: {r: 0.65882355, g: 1, b: 0.69411767, a: 1}
+    rgba: 4288073471
+  m_fontColor: {r: 1, g: 0.8078699, b: 0.5886792, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5798,7 +5798,7 @@ MonoBehaviour:
   textStory: {fileID: 113248110}
   shapeBack: {fileID: 957311951}
   stage: 0
-  panDeath: {fileID: 0}
+  panDeath: {fileID: 1688894993}
 --- !u!114 &1378097951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10796,7 +10796,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
