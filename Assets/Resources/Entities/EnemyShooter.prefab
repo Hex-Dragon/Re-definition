@@ -163,8 +163,8 @@ MonoBehaviour:
   baseMass: 5
   movingLeft: 0
   hp: 5
-  shootDelay: 1
-  bulletSpeed: 2.5
+  shootDelay: 0.9
+  bulletSpeed: 3
   bullet: {fileID: 6338471913790559837, guid: 96699fe6403b7e24795680135973e8a7, type: 3}
 --- !u!1 &8597255516571522799
 GameObject:

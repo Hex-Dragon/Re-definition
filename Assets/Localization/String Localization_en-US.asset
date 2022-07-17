@@ -27,7 +27,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 627261102350336
-    m_Localized: Dead
+    m_Localized: DEAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704612699987968
+    m_Localized: THE END
     m_Metadata:
       m_Items: []
   references:

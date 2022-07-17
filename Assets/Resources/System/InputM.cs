@@ -87,7 +87,7 @@ public class InputM : MonoBehaviour {
     };
 
     public readonly static KeyType[] keyTypes = new[] { KeyType.Left, KeyType.Right, KeyType.Jump, KeyType.Crouch, KeyType.Fire, KeyType.Reload };
-    public static string GetPossibleResults(KeyType key, bool doRestore) {
+    public static string GetPossibleResults(KeyType key, DiceEntity.DiceType type) {
         List<string> accepted = "wasdlr".ToList().Select(c => c.ToString()).ToList();
         List<string> refused = new();
         // 删除冲突键位
@@ -108,19 +108,26 @@ public class InputM : MonoBehaviour {
         // 禁止与当前项相同
         refused.Add(GetKeyRaw(key));
         // 是否可以还原回原始键位
-        if (!doRestore) refused.Add(GetKeyRawDefault(key));
-        if (doRestore) for (int i = 0; i < 10; i++) accepted.Add(GetKeyRawDefault(key));
+        switch (type) {
+            case DiceEntity.DiceType.Restore:
+                for (int i = 0; i < 10; i++) accepted.Add(GetKeyRawDefault(key)); break;
+            case DiceEntity.DiceType.NoRestore:
+                refused.Add(GetKeyRawDefault(key)); break;
+            case DiceEntity.DiceType.Bad:
+                break; // 直接修改最后结果
+        }
         // 输出
         string resultStr = "";
         accepted.ForEach(resultChar => {
             foreach (string refusedChar in refused) if (resultChar == refusedChar) return;
             resultStr += resultChar;
         });
+        if (type == DiceEntity.DiceType.Bad) resultStr = refused[0];
         return resultStr;
     }
 
-    public static void DropDice(KeyType key, bool canRestore = false) {
-        GetDiceUI(key).GetComponent<DiceUI>().DropDice(canRestore);
+    public static void DropDice(KeyType key, DiceEntity.DiceType type = DiceEntity.DiceType.NoRestore) {
+        GetDiceUI(key).GetComponent<DiceUI>().DropDice(type);
     }
 
 }

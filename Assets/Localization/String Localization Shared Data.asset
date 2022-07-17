@@ -24,7 +24,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 627261102350336
-    m_Key: SceneMain/UITop/PanDeath/TextDeath
+    m_Key: SceneMain/UITop/PanWin/TextWin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704612699987968
+    m_Key: SceneMain/UITop/PanWin/TextWin 1
     m_Metadata:
       m_Items: []
   m_Metadata:
