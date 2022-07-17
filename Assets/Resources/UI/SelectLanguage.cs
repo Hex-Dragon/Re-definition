@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
@@ -58,6 +59,14 @@ public class SelectLanguage : MonoBehaviour, IPointerClickHandler
                 LocalizationSettings.SelectedLocale = availableLocales.GetLocale("en-US");
                 break;
         }
-        SceneManager.LoadScene("SceneMain");
+        StartCoroutine(LoadScene());
+    }
+
+    IEnumerator LoadScene() {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("SceneMain", LoadSceneMode.Additive);
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone) {
+            yield return null;
+        }
     }
 }
