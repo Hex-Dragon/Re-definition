@@ -26,6 +26,10 @@ MonoBehaviour:
     m_Localized: Reload
     m_Metadata:
       m_Items: []
+  - m_Id: 627261102350336
+    m_Localized: Dead
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

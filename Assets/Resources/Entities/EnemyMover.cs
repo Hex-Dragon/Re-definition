@@ -12,8 +12,8 @@ public class EnemyMover : EnemyBase {
     private float turnCooldown = 0f;
     internal override void OnUpdate() {
         bool shouldTurn =
-            (movingLeft && Physics2D.Linecast(transform.position, transform.position + Vector3.left * 0.5f, LayerMask.GetMask("Marker"))) ||
-            (!movingLeft && Physics2D.Linecast(transform.position, transform.position + Vector3.right * 0.5f, LayerMask.GetMask("Marker")));
+            (movingLeft && Physics2D.Linecast(transform.position, transform.position + new Vector3(-0.7f, 0.5f, 0f), LayerMask.GetMask("Marker"))) ||
+            (!movingLeft && Physics2D.Linecast(transform.position, transform.position + new Vector3(0.7f, 0.5f, 0f), LayerMask.GetMask("Marker")));
         if (Mathf.Abs(rb.velocity.x) > 0.0001f && (rb.velocity.x > 0 == movingLeft)) shouldTurn = true;
         turnCooldown -= Time.deltaTime;
         if (shouldTurn && turnCooldown <= 0f) {

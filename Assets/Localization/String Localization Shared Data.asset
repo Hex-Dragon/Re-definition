@@ -23,6 +23,10 @@ MonoBehaviour:
     m_Key: SceneMain/UI/PanControl/TextReload
     m_Metadata:
       m_Items: []
+  - m_Id: 627261102350336
+    m_Key: SceneMain/UITop/PanDeath/TextDeath
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

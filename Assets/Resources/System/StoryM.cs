@@ -122,18 +122,18 @@ public class StoryM : MonoBehaviour {
         StopCoroutine("HideStoryText");
         yield return new WaitForSeconds(1.5f);
         if (!noDifficulty) {
-            _ = Modules.randomDefault.Next(0, 3) switch {
+            _ = Modules.randomDefault.Next(0, 4) switch {
                 0 => SetStoryText("完了，寄咯！", ""),
-                1 => SetStoryText("哦吼，下次加油吧", ""),
+                1 => SetStoryText("哦吼，下辈子加油吧", ""),
                 2 => SetStoryText("诶，怎么回事？", ""),
                 3 => SetStoryText("还好没开极限模式……", ""),
                 _ => throw new System.NotImplementedException(),
             };
         } else {
-            _ = Modules.randomDefault.Next(0, 2) switch {
+            _ = Modules.randomDefault.Next(0, 3) switch {
                 0 => SetStoryText("不是吧？这也能死？", ""),
                 1 => SetStoryText("你是特么故意的吧！", ""),
-                2 => SetStoryText("哈？", ""),
+                2 => SetStoryText("嗯？", ""),
                 _ => throw new System.NotImplementedException(),
             };
         }
@@ -196,9 +196,10 @@ public class StoryM : MonoBehaviour {
         Spawn(Spawner.EnemyType.Shooter, 1);
         yield return StartCoroutine(WaitForStoryText("并且最重要的是，“丢骰子”的主题呢？", ""));
         yield return StartCoroutine(WaitForStoryText("骰子、骰子……哪儿有骰子……？", ""));
+        SetStoryText("这里一个骰子都没有！", "");
         arrowMax = 0;
         Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitUntilClear(0, 8f, "这里一个骰子都没有！切题呢？作者到底咋想的？", ""));
+        yield return StartCoroutine(WaitUntilClear(0, 6f, "切题呢？作者到底咋想的？", ""));
         noDifficulty = true;
         yield return StartCoroutine(WaitForStoryText("要不然这样，我们随便拿个东西，把它弄成骰子算了", ""));
         yield return new WaitForSeconds(2f);
@@ -208,14 +209,14 @@ public class StoryM : MonoBehaviour {
     }
     IEnumerator Stage4() {
         arrowMax = 0; noDifficulty = true;
-        yield return StartCoroutine(WaitUntilPickDice(10f, "看到右边掉下来的东西了么？把它捡起来摇一摇！", ""));
+        yield return StartCoroutine(WaitUntilPickDice(8f, "看到右边掉下来的东西了么？把它捡起来摇一摇！", ""));
         stageCompleted = true;
     }
     IEnumerator Stage5() {
         arrowMax = 0; noDifficulty = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         yield return StartCoroutine(WaitForStoryText("噔噔噔……！", ""));
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(7f);
         yield return StartCoroutine(WaitForStoryText("你看，这就是天才制作的骰子", ""));
         yield return new WaitForSeconds(1.5f);
         Spawn(Spawner.EnemyType.Mover, 1);
@@ -230,7 +231,32 @@ public class StoryM : MonoBehaviour {
     IEnumerator Stage6() {
         arrowMax = 1; noDifficulty = false;
         Spawn(Spawner.EnemyType.Mover, 3);
+        yield return StartCoroutine(WaitUntilClear(1, 8f, "骰子有六面，按键有六个，完美！", ""));
+        Spawn(Spawner.EnemyType.Shooter, 1);
+        yield return StartCoroutine(WaitForStoryText("感觉如何？", ""));
+        arrowMax = 3;
+        yield return StartCoroutine(WaitForStoryText("是不是还想马上再来一颗？", ""));
+        Spawn(Spawner.EnemyType.Mover, 2);
+        yield return StartCoroutine(WaitForStoryText("但如果给你太多骰子，那岂不是显得它很……普通", ""));
+        arrowMax = 1;
+        Spawn(Spawner.EnemyType.Mover, 1);
+        yield return StartCoroutine(WaitForStoryText("不如让我们先等等，我先给你看看之前说的新敌人", ""));
+        SetStoryText("额……就是换皮的那个", "");
+        Spawn(Spawner.EnemyType.Mover, 1);
+        yield return StartCoroutine(WaitUntilClear(1, 6f, "别抱太大期望就是了……", ""));
+        stageCompleted = true;
+    }
+    IEnumerator Stage7() {
+        arrowMax = 0; noDifficulty = false;
+        yield return StartCoroutine(WaitForStoryText("让我找找它在哪……", ""));
         yield return new WaitForSeconds(1.5f);
+        SetStoryText("卧槽！", "");
+        for (int i = 0; i < Mathf.Max(6, 15 - deathInStage); i++) {
+            Spawn(Spawner.EnemyType.Mover, 1);
+            yield return new WaitForSeconds(0.4f);
+        }
+        yield return StartCoroutine(WaitForStoryText("我把圆锯片的仓库弄漏了……", ""));
+        yield return StartCoroutine(WaitForStoryText("明明打算之后用来做点装饰的，唉", ""));
     }
     //IEnumerator test() {
     //    while (true) {
