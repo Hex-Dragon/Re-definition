@@ -24,14 +24,13 @@ public class Player : EntityBase {
         set {
             if (_hp == value) return;
             _hp = value;
-            if (_hp == 0) _hp = 3;
             instance.RefreshHearts();
         }
     }
     public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitBorder() {
         Hurt();
-        resistanceTime = resistanceOnHurt * 1.5f;
+        resistanceTime = resistanceOnHurt;
         transform.position = new Vector3(-6, 10, 0);
     }
     internal override void OnHitEnemy(Collision2D collision) {

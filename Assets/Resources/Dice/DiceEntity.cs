@@ -18,9 +18,10 @@ public class DiceEntity : MonoBehaviour {
     private void UpdateSpriteText() => spriteText.sprite = InputM.GetKeyTextSprite(currentLetter);
 
     const float rollTime = 3.5f, endTime = 1.5f;
-    public bool canRestore = true;
+    public bool canRestore = true, pickedUp = false;
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (!collision.gameObject.CompareTag("Player")) return;
+        if (!collision.gameObject.CompareTag("Player") || pickedUp) return;
+        pickedUp = true;
         AudioM.Play("DicePickup1");
         // 关闭其他移动
         GetComponent<Collider2D>().enabled = false;

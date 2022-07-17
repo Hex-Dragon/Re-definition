@@ -33,8 +33,12 @@ public class StoryM : MonoBehaviour {
     }
     IEnumerator WaitForHideStoryText(float delay) {
         yield return new WaitForSeconds(delay);
+        Debug.Log("隐藏：" + delay);
+        HideStoryText();
+    }
+    void HideStoryText() {
+        StopCoroutine("WaitForHideStoryText");
         textStory.text = "";
-        Debug.Log(delay);
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX(0, 0.2f).SetId("StoryBackground");
     }
 
@@ -62,28 +66,25 @@ public class StoryM : MonoBehaviour {
 
     // 流程控制
     IEnumerator WaitUntilClear(int remain, float waitTime = -1, string textCn = "", string textEn = "") {
-        while (GetEnemyCount() > remain) { // 要算上自己
-            if (waitTime >= 0f && waitTime < 0.3f) { // 触发额外对话
-                SetStoryText(textCn, textEn);
-            }
+        while (GetEnemyCount() > remain && !respawning) {
+            if (waitTime >= 0f && waitTime < 0.3f) SetStoryText(textCn, textEn);
             waitTime -= 0.3f;
             yield return new WaitForSeconds(0.3f);
         }
     }
     int GetEnemyCount() => FindObjectsOfType<EnemyBase>().Length - FindObjectsOfType<EnemyArrow>().Length;
     IEnumerator WaitUntilPickDice(float waitTime = -1, string textCn = "", string textEn = "") {
-        while (GetDiceCount() > 0) {
-            if (waitTime >= 0f && waitTime < 0.3f) { // 触发额外对话
-                SetStoryText(textCn, textEn);
-            }
+        while (GetDiceCount() > 0 && !respawning) {
+            if (waitTime >= 0f && waitTime < 0.3f) SetStoryText(textCn, textEn);
             waitTime -= 0.3f;
             yield return new WaitForSeconds(0.3f);
         }
     }
-    int GetDiceCount() => FindObjectsOfType<DiceEntity>().Length;
+    int GetDiceCount() => FindObjectsOfType<DiceEntity>().Count(dice => !dice.pickedUp);
 
     // 故事
     public int stage = 0; private bool stageCompleted = true;
+    public Image panDeath;
     void Start() {
         StartCoroutine("ArrowSpawner");
         StartCoroutine("Main");
@@ -94,17 +95,69 @@ public class StoryM : MonoBehaviour {
                 SetStoryText("已跳过阶段：" + stage, "Skip Stage: " + stage);
                 stageCompleted = true;
             }
+            if (Player.hp <= 0) {
+                stageCompleted = false;
+                yield return StartCoroutine("Respawn");
+            }
             if (stageCompleted) {
+                deathInStage = 0;
                 stageCompleted = false;
                 StopCoroutine("Stage" + stage);
                 stage++;
+                Debug.Log("已到达阶段：" + stage);
                 StartCoroutine("Stage" + stage);
             }
             yield return new WaitForFixedUpdate();
         }
     }
-    IEnumerator Stage1() {
+    private int deathInStage = 0; private bool respawning = false, noDifficulty = false;
+    IEnumerator Respawn() {
+        deathInStage++; respawning = true;
+        // 停止场景
         arrowMax = 0;
+        Player.instance.transform.localScale = Vector3.zero;
+        Player.instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        Player.instance.enabled = false;
+        StopCoroutine("Stage" + stage);
+        StopCoroutine("HideStoryText");
+        yield return new WaitForSeconds(1.5f);
+        if (!noDifficulty) {
+            _ = Modules.randomDefault.Next(0, 3) switch {
+                0 => SetStoryText("完了，寄咯！", ""),
+                1 => SetStoryText("哦吼，下次加油吧", ""),
+                2 => SetStoryText("诶，怎么回事？", ""),
+                3 => SetStoryText("还好没开极限模式……", ""),
+                _ => throw new System.NotImplementedException(),
+            };
+        } else {
+            _ = Modules.randomDefault.Next(0, 2) switch {
+                0 => SetStoryText("不是吧？这也能死？", ""),
+                1 => SetStoryText("你是特么故意的吧！", ""),
+                2 => SetStoryText("哈？", ""),
+                _ => throw new System.NotImplementedException(),
+            };
+        }
+        yield return new WaitForSeconds(0.5f);
+        // 转为黑屏
+        panDeath.DOFade(1, 0.3f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(1, 1f);
+        yield return new WaitForSeconds(0.3f);
+        // 复原
+        FindObjectsOfType<EnemyBase>().ToList().ForEach(e => GameObject.Destroy(e.gameObject, 1f));
+        Player.hp = 3;
+        Player.instance.currentBullet = Player.instance.maxBullet;
+        yield return new WaitForSeconds(3f);
+        // 淡出黑屏，玩家重生
+        respawning = false;
+        panDeath.DOFade(0, 0.8f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(0, 0.3f);
+        Player.instance.enabled = true;
+        Player.instance.transform.localScale = Vector3.one;
+        Player.instance.transform.position = new Vector3(-6, 10, 0);
+        // 继续游戏
+        yield return new WaitForSeconds(2f);
+        StartCoroutine("Stage" + stage);
+    }
+    IEnumerator Stage1() {
+        arrowMax = 0; noDifficulty = false;
         yield return new WaitForSeconds(3f);
         yield return StartCoroutine(WaitForStoryText("哦，哦！你好，欢迎欢迎", ""));
         yield return StartCoroutine(WaitForStoryText("先来过个教程啥的吧", ""));
@@ -115,7 +168,7 @@ public class StoryM : MonoBehaviour {
         stageCompleted = true;
     }
     IEnumerator Stage2() {
-        arrowMax = 1;
+        arrowMax = 1; noDifficulty = false;
         Spawn(Spawner.EnemyType.Mover, 2);
         yield return StartCoroutine(WaitForStoryText("哦，教程最后一条……", ""));
         Spawn(Spawner.EnemyType.Mover, 2);
@@ -131,7 +184,7 @@ public class StoryM : MonoBehaviour {
         stageCompleted = true;
     }
     IEnumerator Stage3() {
-        arrowMax = 3;
+        arrowMax = 3; noDifficulty = false;
         Spawn(Spawner.EnemyType.Mover, 1);
         yield return StartCoroutine(WaitForStoryText("说实话啊，我觉得这个游戏有点无聊", ""));
         Spawn(Spawner.EnemyType.Mover, 1);
@@ -145,25 +198,39 @@ public class StoryM : MonoBehaviour {
         yield return StartCoroutine(WaitForStoryText("骰子、骰子……哪儿有骰子……？", ""));
         arrowMax = 0;
         Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitUntilClear(0, 6f, "这里一个骰子都没有！切题呢？作者到底咋想的？", ""));
+        yield return StartCoroutine(WaitUntilClear(0, 8f, "这里一个骰子都没有！切题呢？作者到底咋想的？", ""));
+        noDifficulty = true;
+        yield return StartCoroutine(WaitForStoryText("要不然这样，我们随便拿个东西，把它弄成骰子算了", ""));
+        yield return new WaitForSeconds(2f);
+        InputM.DropDice(InputM.KeyType.Fire);
+        SetStoryText("嘿，成了！", "");
         stageCompleted = true;
     }
     IEnumerator Stage4() {
-        arrowMax = 0;
-        Player.hp = 3;
-        yield return StartCoroutine(WaitForStoryText("要不然这样，我们随便拿个东西，把它弄成骰子算了", ""));
-        yield return new WaitForSeconds(2f);
-        if (GetDiceCount() == 0) {
-            InputM.DropDice(InputM.KeyType.Fire);
-            SetStoryText("嘿，成了！", "");
-        }
-        yield return StartCoroutine(WaitUntilPickDice(5f, "看到右边掉下来的东西了么？把它捡起来摇一摇！", ""));
-        yield return new WaitForSeconds(2f);
-        yield return StartCoroutine(WaitForStoryText("你看，完美！", ""));
+        arrowMax = 0; noDifficulty = true;
+        yield return StartCoroutine(WaitUntilPickDice(10f, "看到右边掉下来的东西了么？把它捡起来摇一摇！", ""));
         stageCompleted = true;
     }
     IEnumerator Stage5() {
-        yield return new WaitForSeconds(2f);
+        arrowMax = 0; noDifficulty = true;
+        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(WaitForStoryText("噔噔噔……！", ""));
+        yield return new WaitForSeconds(6f);
+        yield return StartCoroutine(WaitForStoryText("你看，这就是天才制作的骰子", ""));
+        yield return new WaitForSeconds(1.5f);
+        Spawn(Spawner.EnemyType.Mover, 1);
+        if (Player.hp < 3) {
+            Player.hp = 3;
+            yield return StartCoroutine(WaitForStoryText("让我帮你回个血，我们继续！", ""));
+        } else {
+            yield return StartCoroutine(WaitForStoryText("来，我们继续！", ""));
+        }
+        stageCompleted = true;
+    }
+    IEnumerator Stage6() {
+        arrowMax = 1; noDifficulty = false;
+        Spawn(Spawner.EnemyType.Mover, 3);
+        yield return new WaitForSeconds(1.5f);
     }
     //IEnumerator test() {
     //    while (true) {
