@@ -171,7 +171,7 @@ public class StoryM : MonoBehaviour {
         arrowMax = 0; noDifficulty = false;
         yield return new WaitForSeconds(3f);
         yield return StartCoroutine(WaitForStoryText("哦，哦！你好，欢迎欢迎", "Oh, oh! Hello there!"));
-        yield return StartCoroutine(WaitForStoryText("先来过个教程啥的吧", "Let's go through a quick tutrial before we start."));
+        yield return StartCoroutine(WaitForStoryText("先来过个教程啥的吧", "Let's go through a quick tutorial before we start."));
         yield return StartCoroutine(WaitForStoryText("游戏的按键操作写在了右上角，应该是个人都看得懂", "All control buttons are shown on the top-right corner. I bet nobody can't understand that."));
         SetStoryText("你不如先拿它们俩试试按键吧！", "Now, let's try some buttons with these two cute guys!");
         Spawn(Spawner.EnemyType.Mover, 2);
