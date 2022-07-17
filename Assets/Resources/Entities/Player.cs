@@ -12,7 +12,7 @@ public class Player : EntityBase {
     internal override bool isPressingLeft() => InputM.GetKeyEvent(InputM.KeyType.Left);
     internal override bool isPressingRight() => InputM.GetKeyEvent(InputM.KeyType.Right);
 
-    // ����
+    // 生命
     public RectTransform[] hearts;
     private int _hp = 3;
     private int hp {
@@ -50,7 +50,7 @@ public class Player : EntityBase {
         }
     }
 
-    // ����
+    // 治疗
     public float healTime = 4f; private float currentHealTime = 0f;
     private void RefreshHearts() {
         float totalHp = Mathf.Clamp(hp + Mathf.Pow(currentHealTime / healTime, 7f) * 0.7f + currentHealTime / healTime * 0.3f, 0, 3);
@@ -59,7 +59,7 @@ public class Player : EntityBase {
         }
     }
 
-    // ���
+    // 射击
     public int maxBullet = 20, currentBullet = 20;
     public float shootDelay = 0.15f; private float currentShootDelay = 0f;
     public float reloadDelay = 1.5f; private float currentReloadDelay = 0f;
@@ -80,7 +80,7 @@ public class Player : EntityBase {
             currentHealTime = 0f;
             RefreshHearts();
         }
-        // װ��
+        // 装填
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
             AudioM.Play("reload");
             currentReloadDelay = reloadDelay;
@@ -89,7 +89,7 @@ public class Player : EntityBase {
         } else if (currentReloadDelay > 0) {
             currentReloadDelay -= Time.deltaTime;
         }
-        // ����
+        // 开火
         bool autoReload = false;
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
             AudioM.Play("fire");
@@ -100,19 +100,15 @@ public class Player : EntityBase {
             GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed * shootVector;
             newBullet.transform.eulerAngles = (shootVector.x > 0 ? -1 : 1) * Vector2.Angle(shootVector, Vector2.up) * Vector3.forward;
-            // ������
+            // 后座力
             rb.velocity += bulletKnockback * -shootVector;
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
-        }else if (autoReload && InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet == 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f)
-        {
+        } else if (autoReload && InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet == 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
             AudioM.Play("reload");
             currentReloadDelay = reloadDelay;
         }
-        {
-
-        }
-        // ���� UI
+        // 更新 UI
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) : 
             "".PadLeft(currentBullet, "|".ToCharArray().First());
