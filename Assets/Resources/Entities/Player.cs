@@ -6,6 +6,10 @@ using System.Linq;
 using UnityEngine;
 
 public class Player : EntityBase {
+    public static Player instance;
+    private void Awake() {
+        instance = this;
+    }
 
     internal override bool isPressingCrouch() => InputM.GetKeyEvent(InputM.KeyType.Crouch);
     internal override bool isPressDownJump() => InputM.GetKeyEvent(InputM.KeyType.Jump);
@@ -14,14 +18,14 @@ public class Player : EntityBase {
 
     // 生命
     public RectTransform[] hearts;
-    private int _hp = 3;
-    private int hp {
+    private static int _hp = 3;
+    public static int hp {
         get { return _hp; }
         set {
             if (_hp == value) return;
             _hp = value;
             if (_hp == 0) _hp = 3;
-            RefreshHearts();
+            instance.RefreshHearts();
         }
     }
     public float knockbackForceH = 30f, knockbackForceV = 15f;
@@ -44,7 +48,7 @@ public class Player : EntityBase {
             AudioM.Play("hurt");
             rb.velocity = Vector2.zero;
             DOTween.Kill("ScreenShake");
-            Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
+            Camera.current.DOShakePosition(0.4f, 0.5f, 25).SetId("ScreenShake");
             return true;
         } else {
             return false;
@@ -106,10 +110,6 @@ public class Player : EntityBase {
             currentShootDelay -= Time.deltaTime;
         }
         // 更新 UI
-        {
-
-        }
-        // ���� UI
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) :
             "".PadLeft(currentBullet, "|".ToCharArray().First());
