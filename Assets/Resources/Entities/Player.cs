@@ -123,7 +123,7 @@ public class Player : EntityBase {
         string fireKey = InputM.GetKeyRaw(InputM.KeyType.Fire);
         bool isFireDown = fireKey == "l" ? Input.GetMouseButtonDown(0) : (fireKey == "r" ? Input.GetMouseButtonDown(1) : Input.GetKeyDown(fireKey));
         if (isFireDown && currentBullet == 0 && currentReloadDelay <= 0f) {
-            AudioM.Play("bullet_empty", 0.7f);
+            AudioM.Play("bullet_empty", 0.5f);
         }
         // 更新 UI
         textBullet.text = currentReloadDelay > 0f ?
