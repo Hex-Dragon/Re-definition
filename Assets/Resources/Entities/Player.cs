@@ -71,6 +71,11 @@ public class Player : EntityBase {
     public float bulletSpeed = 50f, bulletKnockback = 1f;
     public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
+        // 反向
+        if ((towardsRight && isPressingLeft()) || (!towardsRight && isPressingRight())) {
+            towardsRight = !towardsRight;
+            transform.DOScaleX(towardsRight ? 1 : -1, 0.15f);
+        }
         // 无敌
         if (resistanceTime > 0f) resistanceTime -= Time.deltaTime;
         // 治疗

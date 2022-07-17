@@ -13,6 +13,7 @@ public class EnemyShooter : EnemyBase {
     public float shootDelay = 5f, bulletSpeed = 1f; private float shootCooldown = 0f;
     public GameObject bullet;
     internal override void OnUpdate() {
+        base.OnUpdate();
         if (!isLand) return;
         shootCooldown += Time.deltaTime;
         if (shootCooldown < shootDelay) return;
