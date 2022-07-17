@@ -12,7 +12,7 @@ public class Player : EntityBase {
     internal override bool isPressingLeft() => InputM.GetKeyEvent(InputM.KeyType.Left);
     internal override bool isPressingRight() => InputM.GetKeyEvent(InputM.KeyType.Right);
 
-    // ÉúÃü
+    // ï¿½ï¿½ï¿½ï¿½
     public RectTransform[] hearts;
     private int _hp = 3;
     private int hp {
@@ -42,7 +42,7 @@ public class Player : EntityBase {
         Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
     }
 
-    // ÖÎÁÆ
+    // ï¿½ï¿½ï¿½ï¿½
     public float healTime = 4f; private float currentHealTime = 0f;
     private void RefreshHearts() {
         float totalHp = Mathf.Clamp(hp + Mathf.Pow(currentHealTime / healTime, 7f) * 0.7f + currentHealTime / healTime * 0.3f, 0, 3);
@@ -51,14 +51,14 @@ public class Player : EntityBase {
         }
     }
 
-    // Éä»÷
+    // ï¿½ï¿½ï¿½
     public int maxBullet = 20, currentBullet = 20;
     public float shootDelay = 0.15f; private float currentShootDelay = 0f;
     public float reloadDelay = 1.5f; private float currentReloadDelay = 0f;
     public float bulletSpeed = 50f, bulletKnockback = 1f;
     public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
-        // ÖÎÁÆ
+        // ï¿½ï¿½ï¿½ï¿½
         if (isPressingCrouch() && hp < 3 && isLand) {
             currentHealTime += Time.deltaTime;
             if (currentHealTime > healTime) {
@@ -70,7 +70,7 @@ public class Player : EntityBase {
             currentHealTime = 0f;
             RefreshHearts();
         }
-        // ×°Ìî
+        // ×°ï¿½ï¿½
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
             AudioM.Play("reload");
             currentReloadDelay = reloadDelay;
@@ -79,7 +79,8 @@ public class Player : EntityBase {
         } else if (currentReloadDelay > 0) {
             currentReloadDelay -= Time.deltaTime;
         }
-        // ¿ª»ð
+        // ï¿½ï¿½ï¿½ï¿½
+        bool autoReload = false;
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
             AudioM.Play("fire");
             currentBullet--; currentShootDelay = shootDelay;
@@ -89,12 +90,19 @@ public class Player : EntityBase {
             GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed * shootVector;
             newBullet.transform.eulerAngles = (shootVector.x > 0 ? -1 : 1) * Vector2.Angle(shootVector, Vector2.up) * Vector3.forward;
-            // ºó×ùÁ¦
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             rb.velocity += bulletKnockback * -shootVector;
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
+        }else if (autoReload && InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet == 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f)
+        {
+            AudioM.Play("reload");
+            currentReloadDelay = reloadDelay;
         }
-        // ¸üÐÂ UI
+        {
+
+        }
+        // ï¿½ï¿½ï¿½ï¿½ UI
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) : 
             "".PadLeft(currentBullet, "|".ToCharArray().First());

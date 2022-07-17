@@ -54,12 +54,12 @@ public class Language : MonoBehaviour
     static void OnButtonClick()
     {
         SceneManager.LoadScene("SceneMain");
-        Debug.Log("OnButtonClick: Change the scene to ");
+        Debug.Log("OnButtonClick: Change the scene to SceneMain");
     }
 
     static void OnSelectedLocaleChanged(UnityEngine.Localization.Locale newLocale)
     {
-        Debug.Log("OnSelectedLocaleChanged: The locale just changed to " + newLocale);
+        Debug.Log("OnSelectedLocaleChanged: The locale just changed to " + newLocale.ToString());
 
     }
 
