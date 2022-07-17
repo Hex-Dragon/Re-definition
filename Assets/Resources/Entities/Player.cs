@@ -27,19 +27,28 @@ public class Player : EntityBase {
     public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitBorder() {
         Hurt();
-        transform.position = new Vector3(0, 8, 0);
+        resistanceTime = resistanceOnHurt * 1.5f;
+        transform.position = new Vector3(-6, 10, 0);
     }
     internal override void OnHitEnemy(Collision2D collision) {
-        Hurt();
-        int face = collision.transform.position.x < transform.position.x ? 1 : -1;
-        rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
+        if (Hurt()) {
+            int face = collision.transform.position.x < transform.position.x ? 1 : -1;
+            rb.velocity = new Vector2(face * knockbackForceH, knockbackForceV);
+        }
     }
-    public void Hurt() {
-        hp--;
-        AudioM.Play("hurt");
-        rb.velocity = Vector2.zero;
-        DOTween.Kill("ScreenShake");
-        Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
+    public float resistanceOnHurt = 1f; private float resistanceTime = 0f;
+    public bool Hurt() {
+        if (resistanceTime <= 0.001f) {
+            resistanceTime = resistanceOnHurt;
+            hp--;
+            AudioM.Play("hurt");
+            rb.velocity = Vector2.zero;
+            DOTween.Kill("ScreenShake");
+            Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // 治疗
@@ -58,6 +67,8 @@ public class Player : EntityBase {
     public float bulletSpeed = 50f, bulletKnockback = 1f;
     public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
+        // 无敌
+        if (resistanceTime > 0f) resistanceTime -= Time.deltaTime;
         // 治疗
         if (isPressingCrouch() && hp < 3 && isLand) {
             currentHealTime += Time.deltaTime;
@@ -84,7 +95,7 @@ public class Player : EntityBase {
             AudioM.Play("fire");
             currentBullet--; currentShootDelay = shootDelay;
             Vector2 fromPos = transform.position + Vector3.up * 0.55f;
-            Vector2 toPos = Camera.allCameras[0].ScreenToWorldPoint(Input.mousePosition);
+            Vector2 toPos = AspectUtility.cam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 shootVector = (toPos - fromPos).normalized;
             GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed * shootVector;
@@ -95,6 +106,10 @@ public class Player : EntityBase {
             currentShootDelay -= Time.deltaTime;
         }
         // 更新 UI
+        {
+
+        }
+        // ���� UI
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) :
             "".PadLeft(currentBullet, "|".ToCharArray().First());

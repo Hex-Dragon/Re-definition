@@ -28,8 +28,8 @@ public class DiceEntity : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         // 开始旋转
         transform.DORotate(new Vector3(0, 0, 360f * Mathf.RoundToInt(rollTime * 1.5f)), rollTime, RotateMode.FastBeyond360);
-        transform.DOScale(2, rollTime);
-        transform.DOMoveY(transform.position.y + 3, rollTime);
+        transform.DOScale(1, rollTime).SetRelative();
+        transform.DOMoveY(transform.position.y + 2, rollTime);
         StartCoroutine(Roll());
     }
     IEnumerator Roll() {
@@ -51,22 +51,23 @@ public class DiceEntity : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         // 强调动画
         AudioM.Play("DicePickup2");
-        transform.DOScale(2.5f, 0.1f);
+        transform.DOScale(0.5f, 0.1f).SetRelative();
         yield return new WaitForSeconds(0.1f);
-        transform.DOScale(2.3f, 0.1f);
+        transform.DOScale(-0.2f, 0.1f).SetRelative();
         yield return new WaitForSeconds(0.7f);
         // 结束动画
-        transform.DOScale(1, endTime);
+        transform.DOScale(-1.3f, endTime).SetRelative();
         GameObject endObj = InputM.GetDiceUI(key);
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.allCameras[0], endObj.transform.position);
-        transform.DOMove((Vector2) Camera.allCameras[0].ScreenToWorldPoint(screenPos), endTime);
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(AspectUtility.cam, endObj.transform.position);
+        transform.DOMove((Vector2) AspectUtility.cam.ScreenToWorldPoint(screenPos), endTime);
         yield return new WaitForSeconds(endTime);
         // 设置
         InputM.SetKey(key, currentLetter);
         endObj.GetComponent<DiceUI>().isDropped = false;
         endObj.GetComponent<DiceUI>().UpdateColor();
         yield return new WaitForSeconds(0.1f);
-        Destroy(gameObject);
+        // 销毁
+        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
     }
 
 

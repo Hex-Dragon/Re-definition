@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         AudioM.Play("bullet_explode");
-        Destroy(gameObject);
+        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
     }
 
 }

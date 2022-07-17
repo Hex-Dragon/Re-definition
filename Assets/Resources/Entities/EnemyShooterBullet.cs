@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyArrow : EnemyBase {
+public class EnemyShooterBullet : EnemyBase {
 
     internal override bool isPressingCrouch() => false;
     internal override bool isPressDownJump() => false;
