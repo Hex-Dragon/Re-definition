@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        AudioM.Play("bullet_explode");
+        if (!collision.gameObject.CompareTag("Border")) AudioM.Play("bullet_explode");
         transform.localScale = Vector3.zero; Destroy(gameObject, 1);
     }
 
