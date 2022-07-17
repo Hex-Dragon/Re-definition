@@ -18,7 +18,7 @@ public class EnemyShooter : EnemyBase {
         shootCooldown += Time.deltaTime;
         if (shootCooldown < shootDelay) return;
         shootCooldown = 0f;
-        // TODO: 攻击音效
+        // TODO: 攻击音效（来不及可以不要了……）
         // 生成子弹
         GameObject newBullet = Instantiate(bullet, transform);
         newBullet.transform.position += new Vector3(0.5f, -0.5f, 0);
