@@ -31,6 +31,14 @@ MonoBehaviour:
     m_Key: SceneMain/UITop/PanWin/TextWin 1
     m_Metadata:
       m_Items: []
+  - m_Id: 765497468510208
+    m_Key: SceneMain/UITop/PanWin2/Text (Legacy)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 766158247550976
+    m_Key: SceneMain/UITop/PanWin1/TextWin (1)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

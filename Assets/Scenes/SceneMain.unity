@@ -1132,6 +1132,7 @@ GameObject:
   - component: {fileID: 486207445}
   - component: {fileID: 486207447}
   - component: {fileID: 486207446}
+  - component: {fileID: 486207448}
   m_Layer: 2
   m_Name: TextWin (1)
   m_TagString: Untagged
@@ -1179,7 +1180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u611F\u8C22\u4F60\u7684\u6E38\u73A9"
+  m_text: Thanks for playing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 283cec36496b84640a3220e6d4736677, type: 2}
   m_sharedMaterial: {fileID: -4366241451420931623, guid: 283cec36496b84640a3220e6d4736677, type: 2}
@@ -1256,6 +1257,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486207444}
   m_CullTransparentMesh: 1
+--- !u!114 &486207448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486207444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 2976141983920422918
+  references:
+    version: 2
+    RefIds:
+    - rid: 2976141983920422918
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 486207446}
+        m_TrackedProperties:
+          items:
+          - rid: 2976141983920422919
+        m_UpdateType: 0
+    - rid: 2976141983920422919
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
+          m_TableEntryReference:
+            m_KeyId: 766158247550976
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: m_text
 --- !u!1 &518469180
 GameObject:
   m_ObjectHideFlags: 0
@@ -7752,7 +7791,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5B8C"
+  m_text: The End
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 283cec36496b84640a3220e6d4736677, type: 2}
   m_sharedMaterial: {fileID: -4366241451420931623, guid: 283cec36496b84640a3220e6d4736677, type: 2}
@@ -10841,6 +10880,7 @@ GameObject:
   - component: {fileID: 1862514919}
   - component: {fileID: 1862514921}
   - component: {fileID: 1862514920}
+  - component: {fileID: 1862514922}
   m_Layer: 2
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -10901,10 +10941,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<b>\u4F5C\u8005\uFF1A</b>Hex Dragon\n\u3000\u3000\u3000\u9F99\u817E\u732B\u8DC3\u300100ll00\u3001HerobrineXia\n\n\u5236\u4F5C\u4E8E 
-    GMTK  GameJam  2022                                                      \n\n<color=#404040>\u54E6\uFF0C\u5BF9\u4E86\uFF0C\u6211\u4EEC\u4F3C\u4E4E\u5FD8\u4E86\u52A0\u5173\u95ED\u6E38\u620F\u6309\u94AE\u4E86\uFF1F          
-    \n\u90A3\u2026\u2026\u4F60\u8981\u4E0D\u7136\u8BD5\u8BD5\u6309  Alt + F4\u2026\u2026\uFF1F                                                     
-    </color>\n\n\u611F\u8C22\u4F60\u7684\u6E38\u73A9\uFF01"
+  m_Text: "<b>Author\uFF1A</b>Hex Dragon\n\u3000\u3000\u3000LTCat\u300100ll00\u3001HerobrindeXia\n\nMade
+    for  GMTK  GameJam  2022                                                     
+    \n\n<color=#404040>Oh yes, it seems that we forget to add the close button?          
+    \nWell...... You might want try to press Alt + F4...\uFF1F                                                     
+    </color>\n\nThanks for playing\uFF01"
 --- !u!222 &1862514921
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10913,6 +10954,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862514918}
   m_CullTransparentMesh: 1
+--- !u!114 &1862514922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862514918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 2976141983920422916
+  references:
+    version: 2
+    RefIds:
+    - rid: 2976141983920422916
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 1862514920}
+        m_TrackedProperties:
+          items:
+          - rid: 2976141983920422917
+        m_UpdateType: 0
+    - rid: 2976141983920422917
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
+          m_TableEntryReference:
+            m_KeyId: 765497468510208
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: m_Text
 --- !u!1 &1913634232
 GameObject:
   m_ObjectHideFlags: 0

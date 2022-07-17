@@ -34,6 +34,17 @@ MonoBehaviour:
     m_Localized: "\u5B8C"
     m_Metadata:
       m_Items: []
+  - m_Id: 765497468510208
+    m_Localized: "<b>\u4F5C\u8005\uFF1A</b>Hex Dragon\n\u3000\u3000\u3000\u9F99\u817E\u732B\u8DC3\u300100ll00\u3001HerobrineXia\n\n\u5236\u4F5C\u4E8E 
+      GMTK  GameJam  2022                                                      \n\n<color=#404040>\u54E6\uFF0C\u5BF9\u4E86\uFF0C\u6211\u4EEC\u4F3C\u4E4E\u5FD8\u4E86\u52A0\u5173\u95ED\u6E38\u620F\u6309\u94AE\u4E86\uFF1F          
+      \n\u90A3\u2026\u2026\u4F60\u8981\u4E0D\u7136\u8BD5\u8BD5\u6309  Alt + F4\u2026\u2026\uFF1F                                                     
+      </color>\n\n\u611F\u8C22\u4F60\u7684\u6E38\u73A9\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 766158247550976
+    m_Localized: "\u611F\u8C22\u4F60\u7684\u6E38\u73A9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

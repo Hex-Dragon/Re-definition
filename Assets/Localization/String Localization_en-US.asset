@@ -27,11 +27,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 627261102350336
-    m_Localized: DEAD
+    m_Localized: You Dead
     m_Metadata:
       m_Items: []
   - m_Id: 704612699987968
-    m_Localized: THE END
+    m_Localized: The End
+    m_Metadata:
+      m_Items: []
+  - m_Id: 765497468510208
+    m_Localized: "<b>Author\uFF1A</b>Hex Dragon\n\u3000\u3000\u3000LTCat\u300100ll00\u3001HerobrindeXia\n\nMade
+      for  GMTK  GameJam  2022                                                     
+      \n\n<color=#404040>Oh yes, it seems that we forget to add the close button?          
+      \nWell...... You might want try to press Alt + F4...\uFF1F                                                     
+      </color>\n\nThanks for playing\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 766158247550976
+    m_Localized: Thanks for playing
     m_Metadata:
       m_Items: []
   references:

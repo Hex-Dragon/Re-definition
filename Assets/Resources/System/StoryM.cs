@@ -186,7 +186,7 @@ public class StoryM : MonoBehaviour {
         yield return StartCoroutine(WaitForStoryText("“弹药不够的时候记得右键换弹！”", "Don't forget to reload the weapon using right click before you run out of ammo!"));
         Spawn(Spawner.EnemyType.Shooter, 1);
         Spawn(Spawner.EnemyType.Mover, 1);
-        SetStoryText("加油，新手教程结束了！", "There you go, that's end of the tutrial!");
+        SetStoryText("加油，新手教程结束了！", "There you go, that's end of the tutorial!");
         yield return StartCoroutine(WaitUntilClear(1, 8f, "仔细一看，这个角色的手上连枪都没有……", "Hmm... He does not even have a gun in his hand after a closer look."));
         if (Player.hp < 3) {
             Player.hp = 3;
