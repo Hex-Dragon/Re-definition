@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour {
         obj.GetComponent<EnemyBase>().movingLeft = transform.localScale.x < 0;
         switch (type) {
             case EnemyType.Arrow:
-                obj.transform.position += Mathf.RoundToInt((float) Modules.randomDefault.NextDouble() - 0.15f) * Vector3.down;
+                obj.transform.position += Mathf.RoundToInt((float) Modules.randomDefault.NextDouble() - 0.15f) * Vector3.down * 1.2f;
                 break;
             case EnemyType.Shooter:
                 obj.transform.localScale = Vector3.one;

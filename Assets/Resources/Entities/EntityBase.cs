@@ -60,8 +60,8 @@ public abstract class EntityBase : MonoBehaviour {
                 coll.offset = new Vector2(0, 0.3f);
             } else {
                 sprite.sprite = spriteNormal;
-                coll.size = new Vector2(coll.size.x, 1.2f);
-                coll.offset = new Vector2(0, 0.7f);
+                coll.size = new Vector2(coll.size.x, 1.6f);
+                coll.offset = new Vector2(0, 0.9f);
             }
         }
         // …Ë÷√
