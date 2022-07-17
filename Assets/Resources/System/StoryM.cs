@@ -9,7 +9,7 @@ using System.Linq;
 public class StoryM : MonoBehaviour {
 
     // 文本
-    public TMPro.TextMeshProUGUI textStory;
+    public Text textStory;
     public RectTransform shapeBack;
     /// <summary>
     /// 设置旁白，并返回预期时间。旁白字幕将在预期时间后消失。
@@ -19,11 +19,11 @@ public class StoryM : MonoBehaviour {
         textStory.text = isCn ? textCn : textEn;
         LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
         // 动画
-        textStory.color = Color.black;
-        DOTween.Kill("StoryFont"); textStory.DOColor(Color.white, 0.25f).SetId("StoryFont");
-        DOTween.Kill("StoryBackground"); shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.15f).SetId("StoryBackground");
+        DOTween.Kill("StoryBackground"); shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.3f).SetEase(Ease.OutSine).SetId("StoryBackground");
+        textStory.text = "";
+        DOTween.Kill("StoryText"); textStory.DOText(isCn ? textCn : textEn, 0.3f).SetEase(Ease.OutSine).SetId("StoryText");
         // 消失
-        float time = 1f + (isCn ? textCn.Length / 4f : textEn.Split(" ").Length / 4f);
+        float time = 1f + (isCn ? textCn.Length / 3f : textEn.Split(" ").Length / 4f);
         StopCoroutine("WaitForHideStoryText"); StartCoroutine("WaitForHideStoryText", time);
         Debug.Log(time + " -> " + textCn);
         return time;
@@ -40,6 +40,7 @@ public class StoryM : MonoBehaviour {
         StopCoroutine("WaitForHideStoryText");
         textStory.text = "";
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX(0, 0.2f).SetId("StoryBackground");
+        DOTween.Kill("StoryText");
     }
 
     // 刷怪
@@ -195,7 +196,7 @@ public class StoryM : MonoBehaviour {
         Spawn(Spawner.EnemyType.Mover, 1);
         yield return StartCoroutine(WaitForStoryText("我看了看，这游戏往后的新内容就只剩一种换皮怪了！", "Let's see... We only have one more skin to replace our monsters!"));
         Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitForStoryText("然后就只剩无尽模式了……但无尽模式谁玩啊？", "And then, all we have is endless mode of \"Survive with infinite monsters!\"...")); //TODO: t 文案改了
+        yield return StartCoroutine(WaitForStoryText("除此之外就只剩无尽模式了……但无尽模式谁玩啊？", "And then, all we have is endless mode of \"Survive with infinite monsters!\"...")); //TODO: t 文案改了
         Spawn(Spawner.EnemyType.Shooter, 1);
         yield return StartCoroutine(WaitForStoryText("没有升级，没有装备，没有峰回路转的牛逼剧情", "No upgrade, no equipments, no twist to the plot or any boss to fight."));
         Spawn(Spawner.EnemyType.Mover, 1);
@@ -311,7 +312,7 @@ public class StoryM : MonoBehaviour {
         yield return StartCoroutine(WaitForStoryText("螺母怎么在这个时候出来了？", ""));
         Spawn(Spawner.EnemyType.Shooter, deathInStage <= 1 ? 2 : 1);
         yield return StartCoroutine(WaitForStoryText("额……它就是我之前说的那个换皮怪", ""));
-        Spawn(Spawner.EnemyType.Heavy, 1);
+        Spawn(Spawner.EnemyType.Heavy, 2);
         yield return StartCoroutine(WaitForStoryText("但它就是最后一种敌人了！", ""));
         SetStoryText("这下就没有任何新东西了！", "");
         yield return StartCoroutine(WaitUntilClear(1, 10f, "今天真是诸事不宜……", ""));
@@ -334,31 +335,70 @@ public class StoryM : MonoBehaviour {
     }
     IEnumerator Stage14() {
         arrowMax = 0; noDifficulty = true;
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         stageCompleted = true;
     }
     IEnumerator Stage15() {
         arrowMax = 2; noDifficulty = false;
-        yield return StartCoroutine(WaitForStoryText("好嘞", ""));
-        
-        // 大结局
-        InputM.DropDice(new List<InputM.KeyType>() { InputM.KeyType.Left, InputM.KeyType.Right }.RandomOne(), DiceEntity.DiceType.Bad);
+        Spawn(Spawner.EnemyType.Shooter, deathInStage <= 1 ? 2 : 1);
+        yield return StartCoroutine(WaitForStoryText("哇……三个骰子的威力……", ""));
+        Spawn(Spawner.EnemyType.Mover, deathInStage <= 0 ? 3 : 2);
+        yield return new WaitForSeconds(5f);
+        Spawn(Spawner.EnemyType.Mover, 1);
+        if (Player.hp < 3) {
+            Player.hp = 3; arrowMax = 1;
+            yield return StartCoroutine(WaitForStoryText("咳咳，总之，先来回个血吧", ""));
+        } else {
+            yield return StartCoroutine(WaitForStoryText("比我想像中的要猛啊……", ""));
+        }
+        yield return new WaitForSeconds(2f);
+        SetStoryText("好吧，我承认我可能做得有点过火了……", "");
+        yield return StartCoroutine(WaitUntilClear(2, 10f, "骰子™让我太兴奋了", ""));
+        Spawn(Spawner.EnemyType.Heavy, 2);
+        yield return StartCoroutine(WaitForStoryText("我保证！我之后不会再放那么多骰子™了！", ""));
+        yield return new WaitForSeconds(2f);
         stageCompleted = true;
     }
     IEnumerator Stage16() {
-        arrowMax = 0; noDifficulty = true;
-        yield return StartCoroutine(WaitUntilPickDice(10f, "都到这个时候了，还在等啥呢？", ""));
+        arrowMax = Mathf.Max(4, 9 - deathInStage); arrowTime = 2f; noDifficulty = false;
+        yield return StartCoroutine(WaitForStoryText("诶？", ""));
+        yield return StartCoroutine(WaitForStoryText("我们似乎到 BOSS 关卡了", ""));
+        Spawn(Spawner.EnemyType.Shooter, 1);
+        yield return StartCoroutine(WaitForStoryText("似乎……就是一堆垫圈满天飞？倒也符合这游戏的尿性", ""));
+        yield return new WaitForSeconds(3f);
+        Spawn(Spawner.EnemyType.Mover, 2);
+        yield return StartCoroutine(WaitForStoryText("打完 BOSS 关后，就进入无尽模式了", ""));
+        Spawn(Spawner.EnemyType.Shooter, 1);
+        yield return StartCoroutine(WaitForStoryText("嗯……就是敌人会出现得越来越快啊，有个计时器啊，巴拉巴拉", ""));
+        yield return StartCoroutine(WaitUntilClear(0, 10f, "说起来这游戏又没排行榜，那计时器有啥意义？", ""));
         stageCompleted = true;
     }
     IEnumerator Stage17() {
+        arrowMax = 0; noDifficulty = true;
+        yield return StartCoroutine(WaitForStoryText("反正，无尽模式差不多就是这么回事", ""));
+        yield return new WaitForSeconds(4f);
+        yield return StartCoroutine(WaitForStoryText("嗯？垫圈停了？结束了？", ""));
+        yield return new WaitForSeconds(1f);
+        SetStoryText("那么，在开始无尽模式之前……！", "");
+        yield return new WaitForSeconds(1f);
+        InputM.DropDice(new List<InputM.KeyType>() { InputM.KeyType.Left, InputM.KeyType.Right }.RandomOne(), DiceEntity.DiceType.Bad);
+        stageCompleted = true;
+    }
+    IEnumerator Stage18() {
+        arrowMax = 0; noDifficulty = true;
+        yield return StartCoroutine(WaitUntilPickDice(3f, "无尽模式里我肯定不会再丢骰子™了，真的！", ""));
+        stageCompleted = true;
+    }
+    IEnumerator Stage19() {
         arrowMax = 0; noDifficulty = true;
         yield return new WaitForSeconds(11f);
         yield return StartCoroutine(WaitForStoryText("呃……", ""));
         yield return new WaitForSeconds(3f);
         yield return StartCoroutine(WaitForStoryText("这可……不太妙……", ""));
-        yield return StartCoroutine(WaitForStoryText("后面还有无尽模式呢！这可咋整啊？", ""));
+        yield return StartCoroutine(WaitForStoryText("后面还有无尽模式啊！无尽模式！", ""));
+        yield return StartCoroutine(WaitForStoryText("这可咋整啊？", ""));
         yield return new WaitForSeconds(2f);
-        SetStoryText("不行！我再想想办法，例如再重新丢一次骰子™，指不定就好了呢？丢一次不行就两次，对吧？", "");
+        SetStoryText("不行！我再想想办法，如果再重新丢一次骰子™，指不定就好了呢？丢一次不行就两次，对吧？", "");
         yield return new WaitForSeconds(1.5f);
         // 结束动画
         respawning = true;
@@ -373,7 +413,7 @@ public class StoryM : MonoBehaviour {
         Text credit = panWin2.GetComponentInChildren<Text>();
         string creditText = credit.text;
         credit.text = "";
-        credit.DOText(creditText, 20f).SetEase(Ease.Linear);
+        credit.DOText(creditText, 25f).SetEase(Ease.Linear);
     }
 
 
