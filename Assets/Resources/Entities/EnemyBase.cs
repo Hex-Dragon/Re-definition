@@ -19,8 +19,7 @@ public abstract class EnemyBase : EntityBase {
         currentHp--;
         if (currentHp <= 0) {
             AudioM.Play("enemy_die", 0.5f);
-            transform.localScale = Vector3.zero;
-            Destroy(gameObject, 1); // 防止动画没播放完导致报错
+            transform.localScale = Vector3.zero; Destroy(gameObject, 1); // 防止动画没播放完导致报错
         }
     }
 

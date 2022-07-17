@@ -9,6 +9,7 @@ public class Player : EntityBase {
     public static Player instance;
     private void Awake() {
         instance = this;
+        _hp = 3;
     }
 
     internal override bool isPressingCrouch() => InputM.GetKeyEvent(InputM.KeyType.Crouch);
@@ -18,7 +19,7 @@ public class Player : EntityBase {
 
     // 生命
     public RectTransform[] hearts;
-    private static int _hp = 3;
+    private static int _hp;
     public static int hp {
         get { return _hp; }
         set {
@@ -107,6 +108,9 @@ public class Player : EntityBase {
             rb.velocity += bulletKnockback * -shootVector;
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
+        }
+        if (Input.GetKeyDown(InputM.GetKeyRaw(InputM.KeyType.Fire)) && currentBullet == 0 && currentReloadDelay <= 0f) {
+            //TODO: 弹药不足时的提示音效
         }
         // 更新 UI
         textBullet.text = currentReloadDelay > 0f ?

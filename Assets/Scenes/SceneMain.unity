@@ -5798,7 +5798,7 @@ MonoBehaviour:
   textStory: {fileID: 113248110}
   shapeBack: {fileID: 957311951}
   stage: 0
-  panDeath: {fileID: 0}
+  panDeath: {fileID: 1688894993}
 --- !u!114 &1378097951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10794,7 +10794,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fad5f40108e03ec4dbe42eb884f842c1, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
