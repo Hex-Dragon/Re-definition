@@ -123,17 +123,17 @@ public class StoryM : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
         if (!noDifficulty) {
             _ = Modules.randomDefault.Next(0, 4) switch {
-                0 => SetStoryText("完了，寄咯！", ""),
-                1 => SetStoryText("哦吼，下辈子加油吧", ""),
-                2 => SetStoryText("诶，怎么回事？", ""),
-                3 => SetStoryText("还好没开极限模式……", ""),
+                0 => SetStoryText("完了，寄咯！", "Woops, you died!"),
+                1 => SetStoryText("哦吼，下辈子加油吧", "Ouch, work harder next life!"),
+                2 => SetStoryText("诶，怎么回事？", "Yo, what's happening?"),
+                3 => SetStoryText("还好没开极限模式……", "Luckily I didn't have hardcore mode on..."),
                 _ => throw new System.NotImplementedException(),
             };
         } else {
             _ = Modules.randomDefault.Next(0, 3) switch {
-                0 => SetStoryText("不是吧？这也能死？", ""),
-                1 => SetStoryText("你是特么故意的吧！", ""),
-                2 => SetStoryText("嗯？", ""),
+                0 => SetStoryText("不是吧？这也能死？", "What? How you die from that?"),
+                1 => SetStoryText("你是特么故意的吧！", "Excuse me? Are you doing this on purpose?"),
+                2 => SetStoryText("嗯？", "Hey!"),
                 _ => throw new System.NotImplementedException(),
             };
         }
