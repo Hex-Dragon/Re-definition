@@ -13,12 +13,15 @@ public class Spawner : MonoBehaviour {
         obj.GetComponent<EnemyBase>().movingLeft = transform.localScale.x < 0;
         switch (type) {
             case EnemyType.Arrow:
-                obj.transform.position += Mathf.RoundToInt((float) Modules.randomDefault.NextDouble() - 0.15f) * Vector3.down * 0.8f;
+                obj.transform.position += Mathf.RoundToInt((float) Modules.randomDefault.NextDouble() - 0.15f) * Vector3.down;
                 break;
             case EnemyType.Shooter:
                 obj.transform.localScale = Vector3.one;
                 obj.transform.position += Modules.randomDefault.Next(-2, 2) * Vector3.left;
                 break;
         }
+    }
+    private void Awake() {
+        GameObject.Destroy(GetComponent<SpriteRenderer>());
     }
 }

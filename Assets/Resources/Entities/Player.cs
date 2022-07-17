@@ -27,6 +27,7 @@ public class Player : EntityBase {
     public float knockbackForceH = 30f, knockbackForceV = 15f;
     internal override void OnHitBorder() {
         Hurt();
+        resistanceTime = resistanceOnHurt * 1.5f;
         transform.position = new Vector3(-6, 10, 0);
     }
     internal override void OnHitEnemy(Collision2D collision) {
@@ -95,7 +96,7 @@ public class Player : EntityBase {
             AudioM.Play("fire");
             currentBullet--; currentShootDelay = shootDelay;
             Vector2 fromPos = transform.position + Vector3.up * 0.55f;
-            Vector2 toPos = Camera.allCameras[0].ScreenToWorldPoint(Input.mousePosition);
+            Vector2 toPos = AspectUtility.cam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 shootVector = (toPos - fromPos).normalized;
             GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed * shootVector;

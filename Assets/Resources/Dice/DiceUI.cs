@@ -38,17 +38,20 @@ public class DiceUI : MonoBehaviour {
     public bool allowPress = true;
     void Update() {
         if (!Input.GetMouseButtonUp(0) || !(allowPress || Input.GetKey(KeyCode.LeftControl)) || 
-            !RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.allCameras[0])) return;
+            !RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, AspectUtility.cam)) return;
         // µã»÷
         DropDice();
     }
 
     public bool isDropped = false;
     public void DropDice() {
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.allCameras[0], transform.position);
-        Vector2 currentPos = Camera.allCameras[0].ScreenToWorldPoint(screenPos);
+        Vector2 currentPos = AspectUtility.cam.ScreenToWorldPoint((Vector2) rectTransform.localPosition);
+        Vector2 currentPos2 = AspectUtility.cam.ScreenToWorldPoint((Vector2) rectTransform.localPosition + rectTransform.sizeDelta);
+        Vector2 currentScale = Vector2.one * 1.11f; //(currentPos2.x - currentPos.x);
+        Debug.Log("Dice scale: " + currentScale);
         DiceEntity diceNew = GameObject.Instantiate(InputM.instance.dicePrefab).GetComponent<DiceEntity>();
-        diceNew.transform.position = currentPos;
+        diceNew.transform.localScale = currentScale;
+        diceNew.transform.position = rectTransform.position;
         diceNew.key = keybind;
         isDropped = true;
         UpdateColor();

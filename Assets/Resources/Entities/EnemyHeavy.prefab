@@ -161,6 +161,6 @@ MonoBehaviour:
   jumpWolfTime: 0.2
   baseMass: 5
   movingLeft: 0
-  hp: 15
+  hp: 12
   knockbackForceH: 30
   knockbackForceV: 8

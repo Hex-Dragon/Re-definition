@@ -10,7 +10,7 @@ public class EnemyShooterBullet : EnemyBase {
     internal override bool isPressingRight() => !movingLeft;
 
     internal override void OnHitEnemy(Collision2D collision) {
-        Destroy(gameObject);
+        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
     }
 
 }

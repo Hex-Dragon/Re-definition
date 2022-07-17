@@ -7,7 +7,7 @@ public abstract class EnemyBase : EntityBase {
 
     public bool movingLeft = false;
     internal override void OnHitBorder() {
-        Destroy(gameObject);
+        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
     }
 
     public int hp; internal int currentHp = -1;
