@@ -10,7 +10,7 @@ public class EnemyArrow : EnemyBase {
     internal override bool isPressingRight() => !movingLeft;
 
     internal override void OnHitEnemy(Collision2D collision) {
-        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
+        Modules.DestroyGameObject(gameObject);
     }
 
 }

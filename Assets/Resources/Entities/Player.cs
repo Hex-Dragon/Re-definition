@@ -72,7 +72,7 @@ public class Player : EntityBase {
     public GameObject bullet; public TMPro.TextMeshProUGUI textBullet;
     internal override void OnUpdate() {
         // 反向
-        if ((towardsRight && isPressingLeft()) || (!towardsRight && isPressingRight())) {
+        if ((towardsRight && isPressingLeft() && !isPressingRight()) || (!towardsRight && isPressingRight() && !isPressingLeft())) {
             towardsRight = !towardsRight;
             transform.DOScaleX(towardsRight ? 1 : -1, 0.15f);
         }
@@ -106,6 +106,11 @@ public class Player : EntityBase {
             Vector2 fromPos = transform.position + Vector3.up * ((canCrouch && isPressingCrouch()) ? 0.55f : 1.3f);
             Vector2 toPos = AspectUtility.cam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 shootVector = (toPos - fromPos).normalized;
+            // 随机散布
+            shootVector.x *= 1f + (float) (Modules.randomDefault.NextDouble() * 0.4f - 0.2f);
+            shootVector.y *= 1f + (float) (Modules.randomDefault.NextDouble() * 0.4f - 0.2f);
+            shootVector.Normalize();
+            // 生成
             GameObject newBullet = Instantiate(bullet, fromPos, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = bulletSpeed * shootVector;
             newBullet.transform.eulerAngles = (shootVector.x > 0 ? -1 : 1) * Vector2.Angle(shootVector, Vector2.up) * Vector3.forward;
@@ -114,8 +119,10 @@ public class Player : EntityBase {
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
         }
-        if (Input.GetKeyDown(InputM.GetKeyRaw(InputM.KeyType.Fire)) && currentBullet == 0 && currentReloadDelay <= 0f) {
-            AudioM.Play("butte_empty");
+        string fireKey = InputM.GetKeyRaw(InputM.KeyType.Fire);
+        bool isFireDown = fireKey == "l" ? Input.GetMouseButton(0) : (fireKey == "r" ? Input.GetMouseButton(1) : Input.GetKey(fireKey));
+        if (isFireDown && currentBullet == 0 && currentReloadDelay <= 0f) {
+            AudioM.Play("bullet_empty", 0.7f);
         }
         // 更新 UI
         textBullet.text = currentReloadDelay > 0f ?

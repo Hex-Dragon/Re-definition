@@ -1621,10 +1621,10 @@ MonoBehaviour:
   horizontalA: 0.07
   jumpThreshold: 0.05
   downA: 0.5
-  fallA: 0.6
+  fallA: 0.4
   filpSpeed: 0.6
   jumpBufferTime: 0.15
-  jumpWolfTime: 0.2
+  jumpWolfTime: 0.15
   baseMass: 1
   hearts:
   - {fileID: 181884992}
