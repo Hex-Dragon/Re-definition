@@ -91,7 +91,6 @@ public class Player : EntityBase {
             currentReloadDelay -= Time.deltaTime;
         }
         // 开火
-        bool autoReload = false;
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
             AudioM.Play("fire");
             currentBullet--; currentShootDelay = shootDelay;
@@ -105,15 +104,16 @@ public class Player : EntityBase {
             rb.velocity += bulletKnockback * -shootVector;
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
-        } else if (autoReload && InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet == 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
-            AudioM.Play("reload");
-            currentReloadDelay = reloadDelay;
         }
         // 更新 UI
+        {
+
+        }
+        // ���� UI
         textBullet.text = currentReloadDelay > 0f ?
-            "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) : 
+            "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) :
             "".PadLeft(currentBullet, "|".ToCharArray().First());
-        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(0.6588235f, 1f, 0.6941177f);
+        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(0.9686275f, 0.5568628f, 0.1098039f);
     }
 
 }
