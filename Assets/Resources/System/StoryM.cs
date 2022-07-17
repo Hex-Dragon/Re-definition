@@ -58,15 +58,18 @@ public class StoryM : MonoBehaviour {
         }
         // 实际刷怪
         spawners[type].Shuffle();
+        int id = 0;
         for (int i = 0; i < count; i++) {
-            if (i >= spawners[type].Count) i = 0;
-            spawners[type][i].Spawn();
+            if (id >= spawners[type].Count) id = 0;
+            spawners[type][id].Spawn();
+            id++;
         }
     }
 
     // 流程控制
     IEnumerator WaitUntilClear(int remain, float waitTime = -1, string textCn = "", string textEn = "") {
-        while (GetEnemyCount() > remain && !respawning) {
+        int targetStage = stage;
+        while (GetEnemyCount() > remain && !respawning && targetStage == stage) {
             if (waitTime >= 0f && waitTime < 0.3f) SetStoryText(textCn, textEn);
             waitTime -= 0.3f;
             yield return new WaitForSeconds(0.3f);
@@ -74,7 +77,8 @@ public class StoryM : MonoBehaviour {
     }
     int GetEnemyCount() => FindObjectsOfType<EnemyBase>().Length - FindObjectsOfType<EnemyArrow>().Length;
     IEnumerator WaitUntilPickDice(float waitTime = -1, string textCn = "", string textEn = "") {
-        while (GetDiceCount() > 0 && !respawning) {
+        int targetStage = stage;
+        while (GetDiceCount() > 0 && !respawning && targetStage == stage) {
             if (waitTime >= 0f && waitTime < 0.3f) SetStoryText(textCn, textEn);
             waitTime -= 0.3f;
             yield return new WaitForSeconds(0.3f);
@@ -126,13 +130,13 @@ public class StoryM : MonoBehaviour {
                 0 => SetStoryText("完了，寄咯！", "Woops, you died!"),
                 1 => SetStoryText("哦吼，下辈子加油吧", "Ouch, work harder next life!"),
                 2 => SetStoryText("诶，怎么回事？", "Yo, what's happening?"),
-                3 => SetStoryText("还好没开极限模式……", "Luckily I didn't have hardcore mode on..."),
+                3 => SetStoryText("还好我没开极限模式……", "Luckily I didn't have hardcore mode on..."),
                 _ => throw new System.NotImplementedException(),
             };
         } else {
             _ = Modules.randomDefault.Next(0, 3) switch {
-                0 => SetStoryText("不是吧？这也能死？", "What? How you die from that?"),
-                1 => SetStoryText("你是特么故意的吧！", "Excuse me? Are you doing this on purpose?"),
+                0 => SetStoryText("不是吧？不至于吧？", "What? How you die from that?"), //TODO: t 改了
+                1 => SetStoryText("你是特么故意的吧！", "Excuse me? Are you doing this on purpose?"), //TODO: t 肯定语气
                 2 => SetStoryText("嗯？", "Hey!"),
                 _ => throw new System.NotImplementedException(),
             };
@@ -142,7 +146,7 @@ public class StoryM : MonoBehaviour {
         panDeath.DOFade(1, 0.3f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(1, 1f);
         yield return new WaitForSeconds(0.3f);
         // 复原
-        FindObjectsOfType<EnemyBase>().ToList().ForEach(e => GameObject.Destroy(e.gameObject, 1f));
+        FindObjectsOfType<EnemyBase>().ToList().ForEach(e => Modules.DestroyGameObject(e.gameObject));
         Player.hp = 3;
         Player.instance.currentBullet = Player.instance.maxBullet;
         yield return new WaitForSeconds(3f);
@@ -170,12 +174,12 @@ public class StoryM : MonoBehaviour {
     IEnumerator Stage2() {
         arrowMax = 1; noDifficulty = false;
         Spawn(Spawner.EnemyType.Mover, 2);
-        yield return StartCoroutine(WaitForStoryText("哦，教程最后一条……", "Oh, a final reminder before I leave...")); //TODO t 不会leave...
-        Spawn(Spawner.EnemyType.Mover, 2);
-        yield return StartCoroutine(WaitForStoryText("弹药不够的时候记得右键换弹！", "Don't forget to reload the weapon before you run out of ammo!")); //TODO t
+        yield return StartCoroutine(WaitForStoryText("哦，还剩下最后一条教程……", "Oh, a final reminder before I leave...")); //TODO t
+        Spawn(Spawner.EnemyType.Mover, deathInStage <= 0 ? 2 : 1);
+        yield return StartCoroutine(WaitForStoryText("“弹药不够的时候记得右键换弹！”", "Don't forget to reload the weapon before you run out of ammo!")); //TODO t
         Spawn(Spawner.EnemyType.Shooter, 1);
         Spawn(Spawner.EnemyType.Mover, 1);
-        SetStoryText("加油，教程结束了！", "There you go, that's end of the tutrial!");
+        SetStoryText("加油，新手教程结束了！", "There you go, that's end of the tutrial!");
         yield return StartCoroutine(WaitUntilClear(1, 8f, "仔细一看，这个角色的手上连枪都没有……", "Hmm... He does not even have a gun in his hand after a closer look."));
         if (Player.hp < 3) {
             Player.hp = 3;
@@ -187,20 +191,20 @@ public class StoryM : MonoBehaviour {
     IEnumerator Stage3() {
         arrowMax = 3; noDifficulty = false;
         Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitForStoryText("说实话啊，我觉得这个游戏有点无聊", "To be honest, I think this game is kind of boring..."));
+        yield return StartCoroutine(WaitForStoryText("说实话啊，我感觉这个游戏有点……敷衍", "To be honest, I think this game is kind of boring...")); //TODO: t 文案改了
         Spawn(Spawner.EnemyType.Mover, 1);
         yield return StartCoroutine(WaitForStoryText("我看了看，这游戏往后的新内容就只剩一种换皮怪了！", "Let's see... We only have one more skin to replace our monsters!"));
         Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitForStoryText("然后就是“在无限的怪物中生存下来吧！”的无尽模式……", "And then, all we have is endless mode of \"Survive with infinite monsters!\"..."));
-        Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitForStoryText("没有升级，没有装备，没有峰回路转的牛逼剧情", "No upgrade, no equipments, no twist to the plot or any boss to fight."));
+        yield return StartCoroutine(WaitForStoryText("然后就只剩无尽模式了……但无尽模式谁玩啊？", "And then, all we have is endless mode of \"Survive with infinite monsters!\"...")); //TODO: t 文案改了
         Spawn(Spawner.EnemyType.Shooter, 1);
-        yield return StartCoroutine(WaitForStoryText("并且最重要的是，“丢骰子”的主题呢？", "And most importantly, where's our \"Roll of the Dice\" theme?"));
-        yield return StartCoroutine(WaitForStoryText("骰子、骰子……哪儿有骰子……？", "Dice... Dice... Where is the dice...?"));
-        SetStoryText("这里一个骰子都没有！", "Not a single dice here!");
-        arrowMax = 0;
+        yield return StartCoroutine(WaitForStoryText("没有升级，没有装备，没有峰回路转的牛逼剧情", "No upgrade, no equipments, no twist to the plot or any boss to fight."));
         Spawn(Spawner.EnemyType.Mover, 1);
-        yield return StartCoroutine(WaitUntilClear(0, 5f, "切题呢？作者到底咋想的？", "What's the point? What's wrong with this author?"));
+        yield return StartCoroutine(WaitForStoryText("并且最重要的是，说好的“丢骰子”呢？", "And most importantly, where's our \"Roll of the Dice\" theme?")); //TODO t
+        yield return StartCoroutine(WaitForStoryText("骰子、骰子……让我找找哪儿有骰子……？", "Dice... Dice... Where is the dice...?")); //TODO: t
+        SetStoryText("这个游戏里一个骰子都没有！", "Not a single dice here!"); //TODO: t
+        arrowMax = 0;
+        Spawn(Spawner.EnemyType.Mover, deathInStage <= 0 ? 2 : 1);
+        yield return StartCoroutine(WaitUntilClear(0, 6f, "切题呢？作者到底咋想的？", "What's the point? What's wrong with this author?"));
         noDifficulty = true;
         yield return StartCoroutine(WaitForStoryText("要不然这样，我们随便拿个东西，把它弄成骰子算了", "How about we just grab something and make it a dice?"));
         yield return new WaitForSeconds(2f);
@@ -232,15 +236,15 @@ public class StoryM : MonoBehaviour {
     IEnumerator Stage6() {
         arrowMax = 1; noDifficulty = false;
         Spawn(Spawner.EnemyType.Mover, 3);
-        yield return StartCoroutine(WaitUntilClear(1, 6f, "骰子有六面，按键有六个，完美！", "Six sides to six buttons, perfect!"));
+        yield return StartCoroutine(WaitUntilClear(1, 6f, "骰子有六面，按键有六个，简直完美！", "Six sides to six buttons, perfect!"));
         Spawn(Spawner.EnemyType.Shooter, 1);
         yield return StartCoroutine(WaitForStoryText("感觉如何？", "How do you feel?"));
-        arrowMax = 3;
+        arrowMax = deathInStage <= 1 ? 3 : 1;
         yield return StartCoroutine(WaitForStoryText("是不是还想马上再来一颗？", "Want to have another dice now?"));
         Spawn(Spawner.EnemyType.Mover, 2);
         yield return StartCoroutine(WaitForStoryText("但如果给你太多骰子，那岂不是显得它很……普通", "But if I give you too many dices, it will look... ordinary."));
         arrowMax = 1;
-        Spawn(Spawner.EnemyType.Mover, 1);
+        Spawn(Spawner.EnemyType.Shooter, 1);
         yield return StartCoroutine(WaitForStoryText("不如让我们先等等，我先给你看看之前说的新敌人", "Why don't we wait while I show you the new enemy we were talking about...?"));
         SetStoryText("额……就是换皮的那个", "Ugh... That monster with new skin!");
         Spawn(Spawner.EnemyType.Mover, 1);
@@ -265,7 +269,7 @@ public class StoryM : MonoBehaviour {
         } else {
             yield return StartCoroutine(WaitForStoryText("唉，惹麻烦了……", ""));
         }
-        yield return StartCoroutine(WaitUntilClear(2, 6f, "我的锯片……", ""));
+        yield return StartCoroutine(WaitUntilClear(2, 7f, "我的锯片……", ""));
         yield return StartCoroutine(WaitForStoryText("要不然……我再给你一颗特制按键骰子™作为补偿？", ""));
         yield return new WaitForSeconds(1f);
         InputM.DropDice(new List<InputM.KeyType>() { InputM.KeyType.Left, InputM.KeyType.Right, InputM.KeyType.Crouch }.RandomOne());
@@ -274,15 +278,41 @@ public class StoryM : MonoBehaviour {
     }
     IEnumerator Stage8() {
         arrowMax = 0; noDifficulty = true;
-        yield return StartCoroutine(WaitUntilPickDice(5f, "难道说你不喜欢特制按键骰子™吗？别吧", ""));
+        yield return StartCoroutine(WaitUntilPickDice(6f, "难道说你不喜欢特制按键骰子™吗？别吧", ""));
         stageCompleted = true;
     }
     IEnumerator Stage9() {
-        arrowMax = 1; noDifficulty = false;
+        arrowMax = 0; noDifficulty = true;
         yield return new WaitForSeconds(7f);
-        yield return StartCoroutine(WaitForStoryText("唔，看起来特制按键骰子™的威力还挺大", ""));
+        stageCompleted = true;
     }
-    
+    IEnumerator Stage10() {
+        arrowMax = deathInStage <= 2 ? 0 : 2; noDifficulty = false;
+        yield return StartCoroutine(WaitForStoryText("唔，看起来特制按键骰子™的威力还挺大……", ""));
+        Spawn(Spawner.EnemyType.Mover, deathInStage <= 0 ? 4 : 3);
+        yield return new WaitForSeconds(1.5f);
+        SetStoryText("呼，圆锯片看起来也还剩了不少", "");
+        yield return StartCoroutine(WaitUntilClear(1, 10f, "哇哦……", ""));
+        Spawn(Spawner.EnemyType.Shooter, deathInStage <= 1 ? 3 : 2);
+        yield return StartCoroutine(WaitForStoryText("看起来我低估了特制按键骰子™的……", ""));
+        SetStoryText("刺激程度", "");
+        yield return StartCoroutine(WaitUntilClear(2, 10f, "这不比原来好玩多了嘛！", ""));
+        stageCompleted = true;
+    }
+    IEnumerator Stage11() {
+        arrowMax = 2; noDifficulty = false;
+        yield return StartCoroutine(WaitForStoryText("既然骰子™能为游戏的玩法带来颠覆性的体验", ""));
+        SetStoryText("那我们为啥不再立即多来几颗呢？", "");
+        yield return new WaitForSeconds(2f);
+        Spawn(Spawner.EnemyType.Heavy, 1);
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(WaitForStoryText("什么？", ""));
+        Spawn(Spawner.EnemyType.Heavy, 1);
+        yield return StartCoroutine(WaitForStoryText("那是我之前说的最后一种换皮怪！", ""));
+        yield return StartCoroutine(WaitForStoryText("它怎么在这个时候漏下来了？", ""));
+        Spawn(Spawner.EnemyType.Heavy, 2);
+    }
+
 
     int arrowMax = 0; float arrowTime = 4f;
     IEnumerator ArrowSpawner() {

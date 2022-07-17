@@ -17,9 +17,7 @@ public abstract class EnemyBase : EntityBase {
     public bool movingLeft = false;
     internal override void OnHitBorder() {
         // À¿Õˆ
-        transform.position = new Vector3(1000, 1000);
-        gameObject.SetActive(false);
-        Destroy(gameObject, 1);
+        Modules.DestroyGameObject(gameObject);
     }
 
     public int hp; internal int currentHp = -1;
@@ -31,7 +29,7 @@ public abstract class EnemyBase : EntityBase {
         currentHp--;
         if (currentHp <= 0) {
             AudioM.Play("enemy_die", 0.5f);
-            OnHitBorder();
+            Modules.DestroyGameObject(gameObject);
         }
     }
 

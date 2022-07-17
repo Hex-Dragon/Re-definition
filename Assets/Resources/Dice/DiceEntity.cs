@@ -68,7 +68,7 @@ public class DiceEntity : MonoBehaviour {
         endObj.GetComponent<DiceUI>().UpdateColor();
         yield return new WaitForSeconds(0.1f);
         // 销毁
-        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
+        Modules.DestroyGameObject(gameObject);
     }
 
 

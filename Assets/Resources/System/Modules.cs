@@ -33,4 +33,10 @@ public static class Modules {
         return list;
     }
 
+    public static void DestroyGameObject(GameObject obj) {
+        obj.transform.position = new Vector3(1000, 1000);
+        obj.SetActive(false);
+        GameObject.Destroy(obj, 1);
+    }
+
 }
