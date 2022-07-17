@@ -115,7 +115,7 @@ public class Player : EntityBase {
             currentShootDelay -= Time.deltaTime;
         }
         if (Input.GetKeyDown(InputM.GetKeyRaw(InputM.KeyType.Fire)) && currentBullet == 0 && currentReloadDelay <= 0f) {
-            //TODO: 弹药不足时的提示音效
+            AudioM.Play("bullet_empty", 0.7f);
         }
         // 更新 UI
         textBullet.text = currentReloadDelay > 0f ?
