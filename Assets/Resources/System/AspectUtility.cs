@@ -16,6 +16,15 @@ public class AspectUtility : MonoBehaviour {
         SetCamera();
     }
 
+    float resetTimer = 0f;
+    private void Update() {
+        resetTimer += Time.deltaTime;
+        if (resetTimer > 5f) {
+            resetTimer = 0f;
+            SetCamera();
+        }
+    }
+
     public static void SetCamera() {
         float currentAspectRatio = 0.0f;
         if (Screen.orientation == ScreenOrientation.LandscapeRight ||
