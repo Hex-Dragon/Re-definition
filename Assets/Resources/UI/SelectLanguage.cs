@@ -12,11 +12,11 @@ public class SelectLanguage : MonoBehaviour, IPointerClickHandler
         // Use included settings if one is available.
         if (localizationSettings != null)
         {
-            Debug.Log("Using included localization data");
+            Debug.Log("Using included localization data...");
             return;
         }
 
-        Debug.Log("Creating default localization data");
+        Debug.Log("Creating default localization data...");
 
         // Create our localization settings. If a LocalizationSettings asset has been created and configured in the editor then we can leave this step out.
         localizationSettings = ScriptableObject.CreateInstance<LocalizationSettings>();
