@@ -90,27 +90,27 @@ public class InputM : MonoBehaviour {
     public static string GetPossibleResults(KeyType key, bool doRestore) {
         List<string> accepted = "wasdlr".ToList().Select(c => c.ToString()).ToList();
         List<string> refused = new();
-        // É¾³ý³åÍ»¼üÎ»
-        //  - ²»ÄÜÍ¬Ê±ÌøÔ¾¡¢¶×ÏÂ
+        // É¾ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Î»
+        //  - ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½Ô¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (key == KeyType.Jump) refused.Add(GetKeyRaw(KeyType.Crouch)); 
         if (key == KeyType.Crouch) refused.Add(GetKeyRaw(KeyType.Jump));
-        //  - ²»ÄÜÍ¬Ê±Ïò×ó¡¢ÏòÓÒ
+        //  - ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (key == KeyType.Left) refused.Add(GetKeyRaw(KeyType.Right));
         if (key == KeyType.Right) refused.Add(GetKeyRaw(KeyType.Left));
-        //  - ²»ÄÜÍ¬Ê±¿ª»ð¡¢×°µ¯
+        //  - ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½
         if (key == KeyType.Fire) refused.Add(GetKeyRaw(KeyType.Reload));
         if (key == KeyType.Reload) refused.Add(GetKeyRaw(KeyType.Fire));
-        // ½ûÖ¹Ñ¡ÔñÒÑ¾­ÓÐÁ½¸ö°ó¶¨ÏîµÄ×ÖÄ¸¡¢¾¡Á¿Ñ¡ÔñÃ»ÓÐ°ó¶¨ÏîµÄ×ÖÄ¸
+        // ï¿½ï¿½Ö¹Ñ¡ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ã»ï¿½Ð°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸
         foreach (string letter in "wasdlr".ToCharArray().Select(c => c.ToString())) {
             if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) >= 2) refused.Add(letter);
             if (keyTypes.Count(keyType => GetKeyRaw(keyType) == letter) == 0) { accepted.Add(letter); accepted.Add(letter); }
         }
-        // ½ûÖ¹Óëµ±Ç°ÏîÏàÍ¬
+        // ï¿½ï¿½Ö¹ï¿½ëµ±Ç°ï¿½ï¿½ï¿½ï¿½Í¬
         refused.Add(GetKeyRaw(key));
-        // ÊÇ·ñ¿ÉÒÔ»¹Ô­»ØÔ­Ê¼¼üÎ»
+        // ï¿½Ç·ï¿½ï¿½ï¿½Ô»ï¿½Ô­ï¿½ï¿½Ô­Ê¼ï¿½ï¿½Î»
         if (!doRestore) refused.Add(GetKeyRawDefault(key));
         if (doRestore) for (int i = 0; i < 10; i++) accepted.Add(GetKeyRawDefault(key));
-        // Êä³ö
+        // ï¿½ï¿½ï¿½
         string resultStr = "";
         accepted.ForEach(resultChar => {
             foreach (string refusedChar in refused) if (resultChar == refusedChar) return;
