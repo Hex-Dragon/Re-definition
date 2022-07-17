@@ -11,14 +11,16 @@ public class EnemyMover : EnemyBase {
 
     private float turnCooldown = 0f;
     internal override void OnUpdate() {
+        base.OnUpdate();
+        if (!isLand) return;
         bool shouldTurn =
             (movingLeft && Physics2D.Linecast(transform.position, transform.position + new Vector3(-0.7f, 0.5f, 0f), LayerMask.GetMask("Marker"))) ||
             (!movingLeft && Physics2D.Linecast(transform.position, transform.position + new Vector3(0.7f, 0.5f, 0f), LayerMask.GetMask("Marker")));
-        if (Mathf.Abs(rb.velocity.x) > 0.0001f && (rb.velocity.x > 0 == movingLeft)) shouldTurn = true;
+        if (Mathf.Abs(rb.velocity.x) > filpSpeed && (rb.velocity.x > 0 == movingLeft)) shouldTurn = true;
         turnCooldown -= Time.deltaTime;
         if (shouldTurn && turnCooldown <= 0f) {
             movingLeft = !movingLeft;
-            turnCooldown = 1f;
+            turnCooldown = 0.6f;
         }
     }
 

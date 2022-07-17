@@ -10,14 +10,16 @@ public class EnemyHeavy : EnemyBase {
     internal override bool isPressingRight() => !movingLeft;
     private float turnCooldown = 0f;
     internal override void OnUpdate() {
+        base.OnUpdate();
+        if (!isLand) return;
         bool shouldTurn =
             (movingLeft && Physics2D.Linecast(transform.position, transform.position + Vector3.left * 0.5f, LayerMask.GetMask("Marker"))) ||
             (!movingLeft && Physics2D.Linecast(transform.position, transform.position + Vector3.right * 0.5f, LayerMask.GetMask("Marker")));
-        if (Mathf.Abs(rb.velocity.x) > 0.0001f && (rb.velocity.x > 0 == movingLeft)) shouldTurn = true;
+        if (Mathf.Abs(rb.velocity.x) > filpSpeed && (rb.velocity.x > 0 == movingLeft)) shouldTurn = true;
         turnCooldown -= Time.deltaTime;
         if (shouldTurn && turnCooldown <= 0f) {
             movingLeft = !movingLeft;
-            turnCooldown = 1f;
+            turnCooldown = 0.6f;
         }
     }
 

@@ -5,9 +5,21 @@ using DG.Tweening;
 
 public abstract class EnemyBase : EntityBase {
 
+    internal override void OnUpdate() {
+        rb.mass = baseMass * (towardsRight ? 1.2f : 0.8f);
+        // 反向
+        if (towardsRight != (Mathf.Abs(rb.velocity.x) > filpSpeed ? rb.velocity.x > 0 : towardsRight)) {
+            towardsRight = !towardsRight;
+            transform.DOScaleX(towardsRight ? 1 : -1, 0.15f);
+        }
+    }
+
     public bool movingLeft = false;
     internal override void OnHitBorder() {
-        transform.localScale = Vector3.zero; Destroy(gameObject, 1);
+        // 死亡
+        transform.position = new Vector3(1000, 1000);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 1);
     }
 
     public int hp; internal int currentHp = -1;
@@ -19,8 +31,7 @@ public abstract class EnemyBase : EntityBase {
         currentHp--;
         if (currentHp <= 0) {
             AudioM.Play("enemy_die", 0.5f);
-            transform.localScale = Vector3.zero;
-            Destroy(gameObject, 1); // 防止动画没播放完导致报错
+            OnHitBorder();
         }
     }
 

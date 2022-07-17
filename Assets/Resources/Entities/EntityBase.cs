@@ -65,12 +65,6 @@ public abstract class EntityBase : MonoBehaviour {
         }
         // ÉèÖÃ
         rb.velocity = new Vector2(speedX, speedY);
-        rb.mass = baseMass * (towardsRight ? 1.2f : 0.8f);
-        if (towardsRight != (Mathf.Abs(speedX) > filpSpeed ? speedX > 0 : towardsRight)) {
-            // ·´Ïò
-            towardsRight = !towardsRight;
-            transform.DOScaleX(towardsRight ? 1 : -1, 0.1f);
-        }
     }
     internal abstract bool isPressingLeft();
     internal abstract bool isPressingRight();
