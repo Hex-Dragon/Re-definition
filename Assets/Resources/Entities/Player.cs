@@ -98,7 +98,7 @@ public class Player : EntityBase {
         textBullet.text = currentReloadDelay > 0f ?
             "".PadLeft(maxBullet - Mathf.RoundToInt(currentReloadDelay / reloadDelay * maxBullet), "|".ToCharArray().First()) :
             "".PadLeft(currentBullet, "|".ToCharArray().First());
-        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(0.6588235f, 1f, 0.6941177f);
+        textBullet.color = currentReloadDelay > 0f ? new Color(0.6f, 0.6f, 0.6f) : new Color(0.9686275f, 0.5568628f, 0.1098039f);
     }
 
 }
