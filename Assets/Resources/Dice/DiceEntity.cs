@@ -22,7 +22,7 @@ public class DiceEntity : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         if (!collision.gameObject.CompareTag("Player") || pickedUp) return;
         pickedUp = true;
-        AudioM.Play("DicePickup1");
+        AudioM.Play("DicePickup1", 0.8f);
         // 关闭其他移动
         GetComponent<Collider2D>().enabled = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
