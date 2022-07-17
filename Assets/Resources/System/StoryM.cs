@@ -88,7 +88,7 @@ public class StoryM : MonoBehaviour {
 
     // 故事
     public int stage = 0; private bool stageCompleted = true;
-    public Image panDeath;
+    public GameObject panDeath, panWin1, panWin2;
     void Start() {
         StartCoroutine("ArrowSpawner");
         StartCoroutine("Main");
@@ -143,7 +143,7 @@ public class StoryM : MonoBehaviour {
         }
         yield return new WaitForSeconds(0.5f);
         // 转为黑屏
-        panDeath.DOFade(1, 0.3f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(1, 1f);
+        panDeath.GetComponent<Image>().DOFade(1, 0.3f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(1, 1f);
         yield return new WaitForSeconds(0.3f);
         // 复原
         FindObjectsOfType<EnemyBase>().ToList().ForEach(e => Modules.DestroyGameObject(e.gameObject));
@@ -152,7 +152,7 @@ public class StoryM : MonoBehaviour {
         yield return new WaitForSeconds(3f);
         // 淡出黑屏，玩家重生
         respawning = false;
-        panDeath.DOFade(0, 0.8f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(0, 0.3f);
+        panDeath.GetComponent<Image>().DOFade(0, 0.8f); panDeath.GetComponentInChildren<TMPro.TextMeshProUGUI>().DOFade(0, 0.3f);
         Player.instance.enabled = true;
         Player.instance.transform.localScale = Vector3.one;
         Player.instance.transform.position = new Vector3(-6, 10, 0);
@@ -340,6 +340,40 @@ public class StoryM : MonoBehaviour {
     IEnumerator Stage15() {
         arrowMax = 2; noDifficulty = false;
         yield return StartCoroutine(WaitForStoryText("好嘞", ""));
+        
+        // 大结局
+        InputM.DropDice(new List<InputM.KeyType>() { InputM.KeyType.Left, InputM.KeyType.Right }.RandomOne(), DiceEntity.DiceType.Bad);
+        stageCompleted = true;
+    }
+    IEnumerator Stage16() {
+        arrowMax = 0; noDifficulty = true;
+        yield return StartCoroutine(WaitUntilPickDice(10f, "都到这个时候了，还在等啥呢？", ""));
+        stageCompleted = true;
+    }
+    IEnumerator Stage17() {
+        arrowMax = 0; noDifficulty = true;
+        yield return new WaitForSeconds(11f);
+        yield return StartCoroutine(WaitForStoryText("呃……", ""));
+        yield return new WaitForSeconds(3f);
+        yield return StartCoroutine(WaitForStoryText("这可……不太妙……", ""));
+        yield return StartCoroutine(WaitForStoryText("后面还有无尽模式呢！这可咋整啊？", ""));
+        yield return new WaitForSeconds(2f);
+        SetStoryText("不行！我再想想办法，例如再重新丢一次骰子™，指不定就好了呢？丢一次不行就两次，对吧？", "");
+        yield return new WaitForSeconds(1.5f);
+        // 结束动画
+        respawning = true;
+        Player.instance.transform.localScale = Vector3.zero;
+        Player.instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        Player.instance.enabled = false;
+        panWin1.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        SetStoryText("诶？喂？", "");
+        yield return new WaitForSeconds(8f);
+        panWin1.SetActive(false); panWin2.SetActive(true);
+        Text credit = panWin2.GetComponentInChildren<Text>();
+        string creditText = credit.text;
+        credit.text = "";
+        credit.DOText(creditText, 20f).SetEase(Ease.Linear);
     }
 
 

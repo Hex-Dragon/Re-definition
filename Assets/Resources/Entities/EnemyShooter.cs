@@ -17,9 +17,9 @@ public class EnemyShooter : EnemyBase {
         if (!isLand) return;
         shootCooldown += Time.deltaTime;
         if (shootCooldown < shootDelay) return;
-        shootCooldown = 0f;
-        AudioM.Play("enemy_shoot", 0.5f);
         // Éú³É×Óµ¯
+        AudioM.Play("enemy_shoot", 0.5f); 
+        shootCooldown = shootDelay * ((float) Modules.randomDefault.NextDouble() * 0.4f - 0.2f);
         GameObject newBullet = Instantiate(bullet, transform);
         newBullet.transform.position += new Vector3(0.5f, -0.5f, 0);
         newBullet.transform.SetParent(null);

@@ -47,8 +47,7 @@ public class Player : EntityBase {
             hp--;
             AudioM.Play("hurt", 0.6f);
             rb.velocity = Vector2.zero;
-            DOTween.Kill("ScreenShake");
-            Camera.current.DOShakePosition(0.4f, 0.5f, 25).SetId("ScreenShake");
+            Camera.current.DOShakePosition(0.6f, 2f, 100).SetId("ScreenShake");
             return true;
         } else {
             return false;
@@ -116,6 +115,8 @@ public class Player : EntityBase {
             newBullet.transform.eulerAngles = (shootVector.x > 0 ? -1 : 1) * Vector2.Angle(shootVector, Vector2.up) * Vector3.forward;
             // 后座力
             rb.velocity += bulletKnockback * -shootVector;
+            // 屏幕抖动
+            Camera.current.DOShakePosition(0.1f, 0.08f, 100).SetId("ScreenShake");
         } else if (currentShootDelay > 0) {
             currentShootDelay -= Time.deltaTime;
         }

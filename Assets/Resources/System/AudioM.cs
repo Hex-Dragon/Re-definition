@@ -11,7 +11,7 @@ public class AudioM : MonoBehaviour {
             audios = new();
             Resources.LoadAll<AudioClip>("").ToList().ForEach(a => audios.Add(a.name, a));
         }
-        AudioSource.PlayClipAtPoint(audios[name], AspectUtility.cam.transform.position, volume);
+        AudioSource.PlayClipAtPoint(audios[name], Vector3.zero, volume);
     }
 
     private void Awake() {

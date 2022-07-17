@@ -18,7 +18,8 @@ public class DiceEntity : MonoBehaviour {
     private void UpdateSpriteText() => spriteText.sprite = InputM.GetKeyTextSprite(currentLetter);
 
     const float rollTime = 3.5f, endTime = 1.5f;
-    public bool canRestore = true, pickedUp = false;
+    public DiceType diceType = DiceType.NoRestore; public bool pickedUp = false;
+    public enum DiceType { Restore, NoRestore, Bad }
     private void OnCollisionEnter2D(Collision2D collision) {
         if (!collision.gameObject.CompareTag("Player") || pickedUp) return;
         pickedUp = true;
@@ -45,7 +46,7 @@ public class DiceEntity : MonoBehaviour {
             yield return new WaitForSeconds(0.333f);
         }
         // 最终确定
-        string possible = InputM.GetPossibleResults(key, canRestore);
+        string possible = InputM.GetPossibleResults(key, diceType);
         Debug.Log(possible);
         currentLetter = Modules.RandomOne(possible.ToCharArray().ToList()).ToString();
         UpdateSpriteText();

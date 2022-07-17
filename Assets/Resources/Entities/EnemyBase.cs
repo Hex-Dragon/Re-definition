@@ -20,16 +20,17 @@ public abstract class EnemyBase : EntityBase {
         Modules.DestroyGameObject(gameObject);
     }
 
-    public int hp; internal int currentHp = -1;
+    public int hp; internal int currentHp = -10;
     internal override void OnHitBullet() {
         //  ‹…À∂Øª≠
         sprite.DOColor(new Color(1f, 0.5f, 0.5f), 0.04f).SetLoops(2, LoopType.Yoyo);
         // À¿Õˆ≈–∂œ
-        if (currentHp == -1) currentHp = hp;
+        if (currentHp == -10) currentHp = hp;
         currentHp--;
         if (currentHp <= 0) {
             AudioM.Play("enemy_die", 0.7f);
             Modules.DestroyGameObject(gameObject);
+            if (hp > 3) { Camera.current.DOShakePosition(0.15f, 0.4f, 100).SetId("ScreenShake"); }
         }
     }
 
