@@ -119,8 +119,8 @@ public class InputM : MonoBehaviour {
         return resultStr;
     }
 
-    public static void DropDice(KeyType key) {
-        GetDiceUI(key).GetComponent<DiceUI>().DropDice();
+    public static void DropDice(KeyType key, bool canRestore = false) {
+        GetDiceUI(key).GetComponent<DiceUI>().DropDice(canRestore);
     }
 
 }
