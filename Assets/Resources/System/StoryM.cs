@@ -15,6 +15,7 @@ public class StoryM : MonoBehaviour {
     /// 设置旁白，并返回预期时间。旁白字幕将在预期时间后消失。
     /// </summary>
     public float SetStoryText(string textCn, string textEn = "English") {
+        AudioM.Play("sub");
         bool isCn = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)";
         textStory.text = isCn ? textCn : textEn;
         LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
