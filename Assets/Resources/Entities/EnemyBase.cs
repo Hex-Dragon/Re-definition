@@ -12,15 +12,15 @@ public abstract class EnemyBase : EntityBase {
 
     public int hp; internal int currentHp = -1;
     internal override void OnHitBullet() {
-        // å—ä¼¤åŠ¨ç”»
+        // ÊÜÉË¶¯»­
         sprite.DOColor(new Color(1f, 0.5f, 0.5f), 0.04f).SetLoops(2, LoopType.Yoyo);
-        // æ­»äº¡åˆ¤æ–­
+        // ËÀÍöÅĞ¶Ï
         if (currentHp == -1) currentHp = hp;
         currentHp--;
         if (currentHp < 0) {
             AudioM.Play("enemy_die");
             transform.localScale = Vector3.zero;
-            Destroy(gameObject, 1); // é˜²æ­¢åŠ¨ç”»æ²¡æ’­æ”¾å®Œå¯¼è‡´æŠ¥é”™
+            Destroy(gameObject, 1); // ·ÀÖ¹¶¯»­Ã»²¥·ÅÍêµ¼ÖÂ±¨´í
         }
     }
 

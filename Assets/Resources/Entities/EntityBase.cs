@@ -22,20 +22,20 @@ public abstract class EntityBase : MonoBehaviour {
     internal bool towardsRight = true, isLand = false;
     void Update() {
         OnUpdate();
-        // è·å–å½“å‰æƒ…å†µ
+        // »ñÈ¡µ±Ç°Çé¿ö
         float speedX = rb.velocity.x, speedY = rb.velocity.y;
         bool isCrouch = isPressingCrouch();
         isLand = Physics2D.OverlapCircle(transform.position + Vector3.left * 0.1f, jumpThreshold, LayerMask.GetMask("Tilemap")) || 
             Physics2D.OverlapCircle(transform.position + Vector3.left * -0.1f, jumpThreshold, LayerMask.GetMask("Tilemap"));
-        float moveHorizontal = (isCrouch && isLand ? 0.35f : 1) * // ä¸‹è¹²å‡é€Ÿ
-            (isPressingLeft() == isPressingRight() ? 0 : // æ²¡æœ‰åŒæ—¶æŒ‰ä½å·¦å³
-            (isPressingLeft() ? -1 : 1)); // è·å–æ–¹å‘
-        // åˆ¤æ–­è·³è·ƒ
+        float moveHorizontal = (isCrouch && isLand ? 0.35f : 1) * // ÏÂ¶×¼õËÙ
+            (isPressingLeft() == isPressingRight() ? 0 : // Ã»ÓĞÍ¬Ê±°´×¡×óÓÒ
+            (isPressingLeft() ? -1 : 1)); // »ñÈ¡·½Ïò
+        // ÅĞ¶ÏÌøÔ¾
         jumpBuffer -= Time.deltaTime; jumpWolf -= Time.deltaTime; jumping -= Time.deltaTime;
         if (isPressDownJump()) jumpBuffer = jumpBufferTime;
         if (isLand) jumpWolf = jumpWolfTime;
         if (jumpBuffer > 0 && jumpWolf > 0 && jumping < 0) {
-            // æ’­æ”¾éŸ³æ•ˆ
+            // ²¥·ÅÒôĞ§
             AudioM.Play("jump");
 
             speedY = jumpForce;
@@ -44,14 +44,14 @@ public abstract class EntityBase : MonoBehaviour {
         } else if (isCrouch) {
             speedY -= downA;
         }
-        // åŠ é€Ÿä¸‹è½
+        // ¼ÓËÙÏÂÂä
         if (speedY < 0) speedY -= fallA;
-        // æ¨ªå‘ç§»åŠ¨
+        // ºáÏòÒÆ¶¯
         if (moveHorizontal != 0) {
             speedX = speedX * (1 - horizontalA) + movementSpeed * horizontalA * moveHorizontal;
         }
         speedX *= horizontalF;
-        // è¹²ä¸‹
+        // ¶×ÏÂ
         if (canCrouch) {
             if (isCrouch) {
                 sprite.sprite = spriteDown;
@@ -63,11 +63,11 @@ public abstract class EntityBase : MonoBehaviour {
                 coll.offset = new Vector2(0, 0.7f);
             }
         }
-        // è®¾ç½®
+        // ÉèÖÃ
         rb.velocity = new Vector2(speedX, speedY);
         rb.mass = baseMass * (towardsRight ? 1.2f : 0.8f);
         if (towardsRight != (Mathf.Abs(speedX) > filpSpeed ? speedX > 0 : towardsRight)) {
-            // åå‘
+            // ·´Ïò
             towardsRight = !towardsRight;
             transform.DOScaleX(towardsRight ? 1 : -1, 0.1f);
         }
@@ -78,7 +78,7 @@ public abstract class EntityBase : MonoBehaviour {
     internal abstract bool isPressingCrouch();
     internal virtual void OnUpdate() {}
 
-    // ç¢°æ’æ£€æµ‹
+    // Åö×²¼ì²â
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Border")) OnHitBorder();
         if (collision.gameObject.CompareTag("Bullet")) OnHitBullet();
