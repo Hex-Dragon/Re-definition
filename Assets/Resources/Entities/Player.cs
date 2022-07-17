@@ -41,7 +41,7 @@ public class Player : EntityBase {
         if (resistanceTime <= 0.001f) {
             resistanceTime = resistanceOnHurt;
             hp--;
-            AudioM.Play("hurt");
+            AudioM.Play("hurt", 0.6f);
             rb.velocity = Vector2.zero;
             DOTween.Kill("ScreenShake");
             Camera.current.DOShakePosition(0.3f, 0.3f, 20).SetId("ScreenShake");
@@ -83,7 +83,7 @@ public class Player : EntityBase {
         }
         // 装填
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
-            AudioM.Play("reload");
+            AudioM.Play("reload", 0.8f);
             currentReloadDelay = reloadDelay;
         } else if (currentReloadDelay > 0 && currentReloadDelay < Time.deltaTime) {
             currentReloadDelay = 0f; currentBullet = maxBullet;
@@ -92,7 +92,7 @@ public class Player : EntityBase {
         }
         // 开火
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
-            AudioM.Play("fire");
+            AudioM.Play("fire", 0.25f);
             currentBullet--; currentShootDelay = shootDelay;
             Vector2 fromPos = transform.position + Vector3.up * 0.55f;
             Vector2 toPos = AspectUtility.cam.ScreenToWorldPoint(Input.mousePosition);
