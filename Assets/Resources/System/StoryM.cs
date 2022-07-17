@@ -129,7 +129,7 @@ public class StoryM : MonoBehaviour {
         StopCoroutine("HideStoryText");
         yield return new WaitForSeconds(1.5f);
         if (stage == 16 && deathInStage % 3 == 1) {
-            SetStoryText("嘿，你可以蹲下来躲避飞在天上的螺圈！", "Hey, you can dodge these flying coil by crouching down!");
+            SetStoryText("嘿，你可以蹲下来躲避飞在天上的螺圈！", "Hey, you can dodge these flying coils by crouching down!");
         } else if (!noDifficulty) {
             _ = Modules.randomDefault.Next(0, 6) switch {
                 0 => SetStoryText("完了，寄咯！", "Woops, you died!"),
@@ -205,7 +205,7 @@ public class StoryM : MonoBehaviour {
         Spawn(Spawner.EnemyType.Mover, 1);
         yield return StartCoroutine(WaitForStoryText("除此之外就只剩无尽模式了……但无尽模式谁玩啊？", "And then, all we have is endless mode... But who plays endless mode?"));
         Spawn(Spawner.EnemyType.Shooter, 1);
-        yield return StartCoroutine(WaitForStoryText("没有升级，没有装备，没有峰回路转的牛逼剧情", "No upgrade, no equipments, no twist to the plot or any boss to fight."));
+        yield return StartCoroutine(WaitForStoryText("没有升级，没有装备，没有峰回路转的牛逼剧情", "No upgrade, no equipments, no twist to the plot..."));
         Spawn(Spawner.EnemyType.Mover, 1);
         yield return StartCoroutine(WaitForStoryText("并且最重要的是，说好的“丢骰子”呢？", "And most importantly, where's \"Roll of the Dice\"?"));
         yield return StartCoroutine(WaitForStoryText("骰子、骰子……让我找找哪儿有骰子……？", "Dice... Dice... Where is the dice...?"));
@@ -368,46 +368,46 @@ public class StoryM : MonoBehaviour {
     }
     IEnumerator Stage16() {
         arrowMax = Mathf.Max(3, 5 - deathInStage); arrowTime = 1.5f + deathInStage * 0.1f; noDifficulty = false;
-        yield return StartCoroutine(WaitForStoryText("诶？", ""));
-        yield return StartCoroutine(WaitForStoryText("我们似乎到 BOSS 关卡了", ""));
+        yield return StartCoroutine(WaitForStoryText("诶？", "Eh?"));
+        yield return StartCoroutine(WaitForStoryText("我们似乎到 BOSS 关卡了", "I think we're at the boss level"));
         Spawn(Spawner.EnemyType.Shooter, 1);
         yield return new WaitForSeconds(3f);
-        yield return StartCoroutine(WaitForStoryText("似乎……就是一堆螺圈满天飞？倒也符合这游戏的尿性", ""));
+        yield return StartCoroutine(WaitForStoryText("似乎……就是一堆螺圈满天飞？倒也符合这游戏的尿性", "Well... just a bunch of coils flying over the sky? At least it fits the nature of this game."));
         Spawn(Spawner.EnemyType.Mover, 2);
         yield return new WaitForSeconds(3f);
-        yield return StartCoroutine(WaitForStoryText("打完 BOSS 关后，就进入无尽模式了", ""));
+        yield return StartCoroutine(WaitForStoryText("打完 BOSS 关后，就进入无尽模式了", "After finishing the boss level, you will enter the endless mode..."));
         Spawn(Spawner.EnemyType.Shooter, 1);
-        yield return StartCoroutine(WaitForStoryText("嗯……就是敌人会出现得越来越快啊，有个计时器啊，巴拉巴拉", ""));
-        yield return StartCoroutine(WaitUntilClear(0, 10f, "说起来这游戏又没排行榜，那计时器有啥意义？", ""));
+        yield return StartCoroutine(WaitForStoryText("嗯……就是敌人会出现得越来越快啊，有个计时器啊，巴拉巴拉", "Hmm... it's just enemies will appear faster and faster, and there will be a timer, blablabla..."));
+        yield return StartCoroutine(WaitUntilClear(0, 10f, "说起来这游戏又没排行榜，那计时器有啥意义？", "Speaking of the timer, what's the point if there's not a leaderboard?"));
         stageCompleted = true;
     }
     IEnumerator Stage17() {
         arrowMax = 0; noDifficulty = true;
-        yield return StartCoroutine(WaitForStoryText("反正，无尽模式差不多就是这么回事", ""));
+        yield return StartCoroutine(WaitForStoryText("反正，无尽模式差不多就是这么回事", "Anyway, that's pretty much what the endless mode is..."));
         yield return new WaitForSeconds(3f);
-        yield return StartCoroutine(WaitForStoryText("嗯？螺圈停了？结束了？", ""));
+        yield return StartCoroutine(WaitForStoryText("嗯？螺圈停了？结束了？", "Huh? Did the coil stop? Is this the end?"));
         yield return new WaitForSeconds(1f);
-        SetStoryText("那么，在开始无尽模式之前……！", "");
+        SetStoryText("那么，在开始无尽模式之前……！", "So, before we start the endless mode...!");
         yield return new WaitForSeconds(1f);
         InputM.DropDice(new List<InputM.KeyType>() { InputM.KeyType.Left, InputM.KeyType.Right }.RandomOne(), DiceEntity.DiceType.Bad);
         stageCompleted = true;
     }
     IEnumerator Stage18() {
         arrowMax = 0; noDifficulty = true;
-        yield return StartCoroutine(WaitUntilPickDice(3f, "无尽模式里我肯定不会再丢骰子™了，真的！", ""));
+        yield return StartCoroutine(WaitUntilPickDice(3f, "无尽模式里我肯定不会再丢骰子™了，真的！", "I'm definitely not going to roll the Dice™ again in the endless mode, really!"));
         stageCompleted = true;
     }
     IEnumerator Stage19() {
         arrowMax = 0; noDifficulty = true;
         yield return new WaitForSeconds(11f);
-        yield return StartCoroutine(WaitForStoryText("呃……", ""));
+        yield return StartCoroutine(WaitForStoryText("呃……", "Ueh..."));
         yield return new WaitForSeconds(5f);
-        yield return StartCoroutine(WaitForStoryText("这可……不太妙……", ""));
+        yield return StartCoroutine(WaitForStoryText("这可……不太妙……", "That's... not good..."));
         yield return new WaitForSeconds(3f);
-        yield return StartCoroutine(WaitForStoryText("后面还有无尽模式啊！无尽模式！这样可怎么玩？", ""));
-        yield return StartCoroutine(WaitForStoryText("这可咋整啊？", ""));
+        yield return StartCoroutine(WaitForStoryText("后面还有无尽模式啊！无尽模式！这样可怎么玩？", "There is an endless mode after this! Endless mode! How can this be played?"));
+        yield return StartCoroutine(WaitForStoryText("这可咋整啊？", "What should I do?"));
         yield return new WaitForSeconds(2f);
-        SetStoryText("不行！我再想想办法，如果再重新丢一次骰子™，指不定就好了呢？丢一次不行就两次，对吧？", "");
+        SetStoryText("不行！我再想想办法，如果再重新丢一次骰子™，指不定就好了呢？丢一次不行就两次，对吧？", "No way! Let me think about it... What if I can fix it by rolling the Dice™ again? Just once or twice will fix it, right?");
         yield return new WaitForSeconds(1.5f);
         // 结束动画
         respawning = true;
@@ -416,8 +416,8 @@ public class StoryM : MonoBehaviour {
         Player.instance.enabled = false;
         panWin1.SetActive(true);
         yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(WaitForStoryText("诶？喂？", ""));
-        SetStoryText("无尽模式呢？", "");
+        yield return StartCoroutine(WaitForStoryText("诶？喂？", "Aye? Hello?"));
+        SetStoryText("无尽模式呢？", "Where is the endless mode?");
         yield return new WaitForSeconds(6f);
         panWin1.SetActive(false); panWin2.SetActive(true);
         Text credit = panWin2.GetComponentInChildren<Text>();
