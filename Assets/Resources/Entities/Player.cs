@@ -92,7 +92,7 @@ public class Player : EntityBase {
         }
         // 装填
         if (InputM.GetKeyEvent(InputM.KeyType.Reload) && currentBullet < maxBullet && currentReloadDelay <= 0f) {
-            AudioM.Play("reload", 0.8f);
+            AudioM.Play("reload", 1f);
             currentReloadDelay = reloadDelay;
         } else if (currentReloadDelay > 0 && currentReloadDelay < Time.deltaTime) {
             currentReloadDelay = 0f; currentBullet = maxBullet;
@@ -101,7 +101,7 @@ public class Player : EntityBase {
         }
         // 开火
         if (InputM.GetKeyEvent(InputM.KeyType.Fire) && currentBullet > 0 && currentShootDelay <= 0f && currentReloadDelay <= 0f) {
-            AudioM.Play("fire", 0.6f);
+            AudioM.Play("fire", 0.65f);
             currentBullet--; currentShootDelay = shootDelay;
             Vector2 fromPos = transform.position + Vector3.up * ((canCrouch && isPressingCrouch()) ? 0.55f : 1.3f);
             Vector2 toPos = AspectUtility.cam.ScreenToWorldPoint(Input.mousePosition);
