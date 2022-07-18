@@ -730,7 +730,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5C04\u51FB"
+  m_text: Shoot
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 657c8f12eebe4e44a801288bc506d2a1, type: 2}
   m_sharedMaterial: {fileID: 2859847126084961081, guid: 657c8f12eebe4e44a801288bc506d2a1, type: 2}
@@ -757,8 +757,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -820,55 +820,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjects:
-  - rid: 2680856002935652384
+  - rid: 2680856053959360520
   references:
     version: 2
     RefIds:
-    - rid: 2680856002935652384
+    - rid: 2680856053959360520
       type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
       data:
         m_Target: {fileID: 333962407}
         m_TrackedProperties:
           items:
-          - rid: 2680856002935652385
-          - rid: 2680856002935652394
-          - rid: 2680856002935652387
+          - rid: 2680856053959360521
         m_UpdateType: 0
-    - rid: 2680856002935652385
+    - rid: 2680856053959360521
       type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
           m_TableReference:
             m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
           m_TableEntryReference:
-            m_KeyId: 286449353089024
+            m_KeyId: 963866270883840
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0
           m_LocalVariables: []
         m_PropertyPath: m_text
-    - rid: 2680856002935652387
-      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
-      data:
-        m_PropertyPath: m_fontSizeBase
-        m_VariantData:
-        - localeIdentifier:
-            m_Code: zh-CN
-          value: 26
-        - localeIdentifier:
-            m_Code: en-US
-          value: 23
-    - rid: 2680856002935652394
-      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
-      data:
-        m_PropertyPath: m_fontSize
-        m_VariantData:
-        - localeIdentifier:
-            m_Code: zh-CN
-          value: 26
-        - localeIdentifier:
-            m_Code: en-US
-          value: 23
 --- !u!1 &371514761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1108,7 @@ GameObject:
   - component: {fileID: 486207445}
   - component: {fileID: 486207447}
   - component: {fileID: 486207446}
+  - component: {fileID: 486207448}
   m_Layer: 2
   m_Name: TextWin (1)
   m_TagString: Untagged
@@ -1179,7 +1156,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u611F\u8C22\u4F60\u7684\u6E38\u73A9"
+  m_text: Thanks for playing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 283cec36496b84640a3220e6d4736677, type: 2}
   m_sharedMaterial: {fileID: -4366241451420931623, guid: 283cec36496b84640a3220e6d4736677, type: 2}
@@ -1256,6 +1233,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486207444}
   m_CullTransparentMesh: 1
+--- !u!114 &486207448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486207444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 2680856053959360512
+  references:
+    version: 2
+    RefIds:
+    - rid: 2680856053959360512
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 486207446}
+        m_TrackedProperties:
+          items:
+          - rid: 2680856053959360513
+        m_UpdateType: 0
+    - rid: 2680856053959360513
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
+          m_TableEntryReference:
+            m_KeyId: 962001814675456
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: m_text
 --- !u!1 &518469180
 GameObject:
   m_ObjectHideFlags: 0
@@ -5041,7 +5056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u88C5\u586B"
+  m_text: Reload
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 657c8f12eebe4e44a801288bc506d2a1, type: 2}
   m_sharedMaterial: {fileID: 2859847126084961081, guid: 657c8f12eebe4e44a801288bc506d2a1, type: 2}
@@ -5068,8 +5083,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5131,55 +5146,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjects:
-  - rid: 2680856002935652388
+  - rid: 2680856053959360522
   references:
     version: 2
     RefIds:
-    - rid: 2680856002935652388
+    - rid: 2680856053959360522
       type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
       data:
         m_Target: {fileID: 1225800341}
         m_TrackedProperties:
           items:
-          - rid: 2680856002935652389
-          - rid: 2680856002935652395
-          - rid: 2680856002935652396
+          - rid: 2680856053959360523
         m_UpdateType: 0
-    - rid: 2680856002935652389
+    - rid: 2680856053959360523
       type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
           m_TableReference:
             m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
           m_TableEntryReference:
-            m_KeyId: 286584636170240
+            m_KeyId: 964002799673344
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0
           m_LocalVariables: []
         m_PropertyPath: m_text
-    - rid: 2680856002935652395
-      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
-      data:
-        m_PropertyPath: m_fontSize
-        m_VariantData:
-        - localeIdentifier:
-            m_Code: zh-CN
-          value: 26
-        - localeIdentifier:
-            m_Code: en-US
-          value: 23
-    - rid: 2680856002935652396
-      type: {class: FloatTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
-      data:
-        m_PropertyPath: m_fontSizeBase
-        m_VariantData:
-        - localeIdentifier:
-            m_Code: zh-CN
-          value: 26
-        - localeIdentifier:
-            m_Code: en-US
-          value: 23
 --- !u!1 &1314396154
 GameObject:
   m_ObjectHideFlags: 0
@@ -7519,32 +7510,40 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1504625349}
     m_ColliderPaths:
-    - - X: 220000000
-        Y: 160000000
-      - X: -210000000
-        Y: 160000000
-      - X: -210000000
-        Y: -120000000
-      - X: 220000000
-        Y: -120000000
-    - - X: -200000000
-        Y: -110000000
-      - X: -200000000
-        Y: 150000000
-      - X: 210000000
-        Y: 150000000
-      - X: 210000000
-        Y: -110000000
+    - - X: 220000100
+        Y: -120000041
+      - X: 220000100
+        Y: 160000041
+      - X: 220000041
+        Y: 160000100
+      - X: -210000041
+        Y: 160000100
+      - X: -210000100
+        Y: 160000041
+      - X: -210000100
+        Y: -120000041
+      - X: -210000041
+        Y: -120000100
+      - X: 220000041
+        Y: -120000100
+    - - X: -199999900
+        Y: -109999900
+      - X: -199999900
+        Y: 149999900
+      - X: 209999900
+        Y: 149999900
+      - X: 209999900
+        Y: -109999900
   m_CompositePaths:
     m_Paths:
-    - - {x: 21.999971, y: -12}
-      - {x: 21.999971, y: 16}
-      - {x: -21, y: 15.999971}
-      - {x: -20.999971, y: -12}
-    - - {x: 21, y: -10.99997}
-      - {x: -20, y: -10.99997}
-      - {x: -19.999971, y: 15}
-      - {x: 21, y: 14.999971}
+    - - {x: 21.999975, y: -12.00001}
+      - {x: 21.999975, y: 16.00001}
+      - {x: -21.00001, y: 15.999974}
+      - {x: -20.999975, y: -12.00001}
+    - - {x: 20.99999, y: -10.999961}
+      - {x: -19.99999, y: -10.999961}
+      - {x: -19.99996, y: 14.99999}
+      - {x: 20.99999, y: 14.99996}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!1 &1506709098
@@ -7658,7 +7657,7 @@ GameObject:
   - component: {fileID: 1549525303}
   - component: {fileID: 1549525306}
   - component: {fileID: 1549525305}
-  - component: {fileID: 1549525304}
+  - component: {fileID: 1549525307}
   m_Layer: 2
   m_Name: TextWin
   m_TagString: Untagged
@@ -7686,44 +7685,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 0, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1549525304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549525302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjects:
-  - rid: 2680856036347478018
-  references:
-    version: 2
-    RefIds:
-    - rid: 2680856036347478018
-      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
-      data:
-        m_Target: {fileID: 1549525305}
-        m_TrackedProperties:
-          items:
-          - rid: 2680856036347478019
-        m_UpdateType: 0
-    - rid: 2680856036347478019
-      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
-      data:
-        m_Localized:
-          m_TableReference:
-            m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
-          m_TableEntryReference:
-            m_KeyId: 704612699987968
-            m_Key: 
-          m_FallbackState: 0
-          m_WaitForCompletion: 0
-          m_LocalVariables: []
-        m_PropertyPath: m_text
 --- !u!114 &1549525305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7744,7 +7705,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5B8C"
+  m_text: The End
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 283cec36496b84640a3220e6d4736677, type: 2}
   m_sharedMaterial: {fileID: -4366241451420931623, guid: 283cec36496b84640a3220e6d4736677, type: 2}
@@ -7821,6 +7782,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549525302}
   m_CullTransparentMesh: 1
+--- !u!114 &1549525307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549525302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 2680856053959360514
+  references:
+    version: 2
+    RefIds:
+    - rid: 2680856053959360514
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 1549525305}
+        m_TrackedProperties:
+          items:
+          - rid: 2680856053959360515
+        m_UpdateType: 0
+    - rid: 2680856053959360515
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
+          m_TableEntryReference:
+            m_KeyId: 962103551713280
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: m_text
 --- !u!1 &1564009352
 GameObject:
   m_ObjectHideFlags: 0
@@ -8142,7 +8141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5BC4"
+  m_text: You Dead
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 283cec36496b84640a3220e6d4736677, type: 2}
   m_sharedMaterial: {fileID: -4366241451420931623, guid: 283cec36496b84640a3220e6d4736677, type: 2}
@@ -8232,26 +8231,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjects:
-  - rid: 2680856030500880386
+  - rid: 2680856053959360516
   references:
     version: 2
     RefIds:
-    - rid: 2680856030500880386
+    - rid: 2680856053959360516
       type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
       data:
         m_Target: {fileID: 1649923699}
         m_TrackedProperties:
           items:
-          - rid: 2680856030500880387
+          - rid: 2680856053959360517
         m_UpdateType: 0
-    - rid: 2680856030500880387
+    - rid: 2680856053959360517
       type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
       data:
         m_Localized:
           m_TableReference:
             m_TableCollectionName: GUID:e3f186d36085a4c16a16dd9c5dead58e
           m_TableEntryReference:
-            m_KeyId: 627261102350336
+            m_KeyId: 962378995851264
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0
@@ -8637,188 +8636,300 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1799490076}
     m_ColliderPaths:
-    - - X: 220000000
-        Y: 160000000
-      - X: -210000000
-        Y: 160000000
-      - X: -210000000
-        Y: -120000000
-      - X: 220000000
-        Y: -120000000
-    - - X: -200000000
-        Y: -110000000
-      - X: -200000000
-        Y: 150000000
-      - X: 210000000
-        Y: 150000000
-      - X: 210000000
-        Y: -110000000
-    - - X: 150000000
-        Y: 30000000
-      - X: 140000000
-        Y: 30000000
-      - X: 140000000
-        Y: 20000000
-      - X: 150000000
-        Y: 20000000
-    - - X: 70000000
-        Y: 30000000
-      - X: 60000000
-        Y: 30000000
-      - X: 60000000
-        Y: 20000000
-      - X: 70000000
-        Y: 20000000
-    - - X: 40000000
-        Y: 30000000
-      - X: 30000000
-        Y: 30000000
-      - X: 30000000
-        Y: 20000000
-      - X: 40000000
-        Y: 20000000
-    - - X: -40000000
-        Y: 30000000
-      - X: -50000000
-        Y: 30000000
-      - X: -50000000
-        Y: 20000000
-      - X: -40000000
-        Y: 20000000
-    - - X: -70000000
-        Y: 30000000
-      - X: -80000000
-        Y: 30000000
-      - X: -80000000
-        Y: 20000000
-      - X: -70000000
-        Y: 20000000
-    - - X: -130000000
-        Y: 30000000
-      - X: -140000000
-        Y: 30000000
-      - X: -140000000
-        Y: 20000000
-      - X: -130000000
-        Y: 20000000
-    - - X: 100000000
-        Y: -10000000
-      - X: 90000000
-        Y: -10000000
-      - X: 90000000
-        Y: -20000000
-      - X: 100000000
-        Y: -20000000
-    - - X: 20000000
-        Y: -10000000
-      - X: 10000000
-        Y: -10000000
-      - X: 10000000
-        Y: -20000000
-      - X: 20000000
-        Y: -20000000
-    - - X: -20000000
-        Y: -10000000
-      - X: -30000000
-        Y: -10000000
-      - X: -30000000
-        Y: -20000000
-      - X: -20000000
-        Y: -20000000
-    - - X: -120000000
-        Y: -10000000
-      - X: -130000000
-        Y: -10000000
-      - X: -130000000
-        Y: -20000000
-      - X: -120000000
-        Y: -20000000
-    - - X: 90000000
-        Y: -50000000
-      - X: 70000000
-        Y: -50000000
-      - X: 70000000
-        Y: -60000000
-      - X: 90000000
-        Y: -60000000
-    - - X: 180000000
-        Y: -50000000
-      - X: 170000000
-        Y: -50000000
-      - X: 170000000
-        Y: -60000000
-      - X: 180000000
-        Y: -60000000
-    - - X: -160000000
-        Y: -50000000
-      - X: -170000000
-        Y: -50000000
-      - X: -170000000
-        Y: -60000000
-      - X: -160000000
-        Y: -60000000
+    - - X: 220000100
+        Y: -120000041
+      - X: 220000100
+        Y: 160000041
+      - X: 220000041
+        Y: 160000100
+      - X: -210000041
+        Y: 160000100
+      - X: -210000100
+        Y: 160000041
+      - X: -210000100
+        Y: -120000041
+      - X: -210000041
+        Y: -120000100
+      - X: 220000041
+        Y: -120000100
+    - - X: -199999900
+        Y: -109999900
+      - X: -199999900
+        Y: 149999900
+      - X: 209999900
+        Y: 149999900
+      - X: 209999900
+        Y: -109999900
+    - - X: -129999900
+        Y: 19999959
+      - X: -129999900
+        Y: 30000041
+      - X: -129999959
+        Y: 30000100
+      - X: -140000041
+        Y: 30000100
+      - X: -140000100
+        Y: 30000041
+      - X: -140000100
+        Y: 19999959
+      - X: -140000041
+        Y: 19999900
+      - X: -129999959
+        Y: 19999900
+    - - X: -69999900
+        Y: 19999959
+      - X: -69999900
+        Y: 30000041
+      - X: -69999959
+        Y: 30000100
+      - X: -80000041
+        Y: 30000100
+      - X: -80000100
+        Y: 30000041
+      - X: -80000100
+        Y: 19999959
+      - X: -80000041
+        Y: 19999900
+      - X: -69999959
+        Y: 19999900
+    - - X: -39999900
+        Y: 19999959
+      - X: -39999900
+        Y: 30000041
+      - X: -39999959
+        Y: 30000100
+      - X: -50000041
+        Y: 30000100
+      - X: -50000100
+        Y: 30000041
+      - X: -50000100
+        Y: 19999959
+      - X: -50000041
+        Y: 19999900
+      - X: -39999959
+        Y: 19999900
+    - - X: 40000100
+        Y: 19999959
+      - X: 40000100
+        Y: 30000041
+      - X: 40000041
+        Y: 30000100
+      - X: 29999959
+        Y: 30000100
+      - X: 29999900
+        Y: 30000041
+      - X: 29999900
+        Y: 19999959
+      - X: 29999959
+        Y: 19999900
+      - X: 40000041
+        Y: 19999900
+    - - X: 70000100
+        Y: 19999959
+      - X: 70000100
+        Y: 30000041
+      - X: 70000041
+        Y: 30000100
+      - X: 59999959
+        Y: 30000100
+      - X: 59999900
+        Y: 30000041
+      - X: 59999900
+        Y: 19999959
+      - X: 59999959
+        Y: 19999900
+      - X: 70000041
+        Y: 19999900
+    - - X: 150000100
+        Y: 19999959
+      - X: 150000100
+        Y: 30000041
+      - X: 150000041
+        Y: 30000100
+      - X: 139999959
+        Y: 30000100
+      - X: 139999900
+        Y: 30000041
+      - X: 139999900
+        Y: 19999959
+      - X: 139999959
+        Y: 19999900
+      - X: 150000041
+        Y: 19999900
+    - - X: -119999900
+        Y: -20000041
+      - X: -119999900
+        Y: -9999959
+      - X: -119999959
+        Y: -9999900
+      - X: -130000041
+        Y: -9999900
+      - X: -130000100
+        Y: -9999959
+      - X: -130000100
+        Y: -20000041
+      - X: -130000041
+        Y: -20000100
+      - X: -119999959
+        Y: -20000100
+    - - X: -19999900
+        Y: -20000041
+      - X: -19999900
+        Y: -9999959
+      - X: -19999959
+        Y: -9999900
+      - X: -30000041
+        Y: -9999900
+      - X: -30000100
+        Y: -9999959
+      - X: -30000100
+        Y: -20000041
+      - X: -30000041
+        Y: -20000100
+      - X: -19999959
+        Y: -20000100
+    - - X: 20000100
+        Y: -20000041
+      - X: 20000100
+        Y: -9999959
+      - X: 20000041
+        Y: -9999900
+      - X: 9999959
+        Y: -9999900
+      - X: 9999900
+        Y: -9999959
+      - X: 9999900
+        Y: -20000041
+      - X: 9999959
+        Y: -20000100
+      - X: 20000041
+        Y: -20000100
+    - - X: 100000100
+        Y: -20000041
+      - X: 100000100
+        Y: -9999959
+      - X: 100000041
+        Y: -9999900
+      - X: 89999959
+        Y: -9999900
+      - X: 89999900
+        Y: -9999959
+      - X: 89999900
+        Y: -20000041
+      - X: 89999959
+        Y: -20000100
+      - X: 100000041
+        Y: -20000100
+    - - X: -159999900
+        Y: -60000041
+      - X: -159999900
+        Y: -49999959
+      - X: -159999959
+        Y: -49999900
+      - X: -170000041
+        Y: -49999900
+      - X: -170000100
+        Y: -49999959
+      - X: -170000100
+        Y: -60000041
+      - X: -170000041
+        Y: -60000100
+      - X: -159999959
+        Y: -60000100
+    - - X: 90000100
+        Y: -60000041
+      - X: 90000100
+        Y: -49999959
+      - X: 90000041
+        Y: -49999900
+      - X: 69999959
+        Y: -49999900
+      - X: 69999900
+        Y: -49999959
+      - X: 69999900
+        Y: -60000041
+      - X: 69999959
+        Y: -60000100
+      - X: 90000041
+        Y: -60000100
+    - - X: 180000100
+        Y: -60000041
+      - X: 180000100
+        Y: -49999959
+      - X: 180000041
+        Y: -49999900
+      - X: 169999959
+        Y: -49999900
+      - X: 169999900
+        Y: -49999959
+      - X: 169999900
+        Y: -60000041
+      - X: 169999959
+        Y: -60000100
+      - X: 180000041
+        Y: -60000100
   m_CompositePaths:
     m_Paths:
-    - - {x: 21.999971, y: -12}
-      - {x: 21.999971, y: 16}
-      - {x: -21, y: 15.999971}
-      - {x: -20.999971, y: -12}
-    - - {x: 21, y: -10.99997}
-      - {x: -20, y: -10.99997}
-      - {x: -19.999971, y: 15}
-      - {x: 21, y: 14.999971}
-    - - {x: 14.999971, y: 2}
-      - {x: 14.999971, y: 3}
-      - {x: 14, y: 2.999971}
-      - {x: 14.000029, y: 2}
-    - - {x: 6.9999704, y: 2}
-      - {x: 6.9999704, y: 3}
-      - {x: 6, y: 2.999971}
-      - {x: 6.000029, y: 2}
-    - - {x: 3.999971, y: 2}
-      - {x: 3.999971, y: 3}
-      - {x: 3, y: 2.999971}
-      - {x: 3.0000293, y: 2}
-    - - {x: -4.000029, y: 2}
-      - {x: -4.000029, y: 3}
-      - {x: -5, y: 2.999971}
-      - {x: -4.999971, y: 2}
-    - - {x: -7.0000296, y: 2}
-      - {x: -7.0000296, y: 3}
-      - {x: -8, y: 2.999971}
-      - {x: -7.9999704, y: 2}
-    - - {x: -13.00003, y: 2}
-      - {x: -13.00003, y: 3}
-      - {x: -14, y: 2.999971}
-      - {x: -13.999971, y: 2}
-    - - {x: 9.99997, y: -2}
-      - {x: 9.99997, y: -1}
-      - {x: 9, y: -1.0000293}
-      - {x: 9.00003, y: -2}
-    - - {x: 1.9999708, y: -2}
-      - {x: 1.9999708, y: -1}
-      - {x: 1, y: -1.0000293}
-      - {x: 1.0000293, y: -2}
-    - - {x: -2.0000293, y: -2}
-      - {x: -2.0000293, y: -1}
-      - {x: -3, y: -1.0000293}
-      - {x: -2.999971, y: -2}
-    - - {x: -12.00003, y: -2}
-      - {x: -12.00003, y: -1}
-      - {x: -13, y: -1.0000293}
-      - {x: -12.99997, y: -2}
-    - - {x: 17.999971, y: -6}
-      - {x: 17.999971, y: -5}
-      - {x: 17, y: -5.000029}
-      - {x: 17.000029, y: -6}
-    - - {x: 8.99997, y: -6}
-      - {x: 8.99997, y: -5}
-      - {x: 7, y: -5.000029}
-      - {x: 7.0000296, y: -6}
-    - - {x: -16.000029, y: -6}
-      - {x: -16.000029, y: -5}
-      - {x: -17, y: -5.000029}
-      - {x: -16.999971, y: -6}
+    - - {x: 21.999975, y: -12.00001}
+      - {x: 21.999975, y: 16.00001}
+      - {x: -21.00001, y: 15.999974}
+      - {x: -20.999975, y: -12.00001}
+    - - {x: 20.99999, y: -10.999961}
+      - {x: -19.99999, y: -10.999961}
+      - {x: -19.99996, y: 14.99999}
+      - {x: 20.99999, y: 14.99996}
+    - - {x: -13.000026, y: 1.99999}
+      - {x: -13.000026, y: 3.00001}
+      - {x: -14.00001, y: 2.9999747}
+      - {x: -13.999974, y: 1.99999}
+    - - {x: -7.0000257, y: 1.99999}
+      - {x: -7.0000257, y: 3.00001}
+      - {x: -8.00001, y: 2.9999747}
+      - {x: -7.9999747, y: 1.99999}
+    - - {x: -4.0000253, y: 1.99999}
+      - {x: -4.0000253, y: 3.00001}
+      - {x: -5.00001, y: 2.9999747}
+      - {x: -4.9999747, y: 1.99999}
+    - - {x: 3.9999747, y: 1.99999}
+      - {x: 3.9999747, y: 3.00001}
+      - {x: 2.99999, y: 2.9999747}
+      - {x: 3.0000253, y: 1.99999}
+    - - {x: 6.9999743, y: 1.99999}
+      - {x: 6.9999743, y: 3.00001}
+      - {x: 5.99999, y: 2.9999747}
+      - {x: 6.0000253, y: 1.99999}
+    - - {x: 14.999974, y: 1.99999}
+      - {x: 14.999974, y: 3.00001}
+      - {x: 13.99999, y: 2.9999747}
+      - {x: 14.000026, y: 1.99999}
+    - - {x: -12.000026, y: -2.00001}
+      - {x: -12.000026, y: -0.99999}
+      - {x: -13.00001, y: -1.0000252}
+      - {x: -12.999974, y: -2.00001}
+    - - {x: -2.0000253, y: -2.00001}
+      - {x: -2.0000253, y: -0.99999}
+      - {x: -3.00001, y: -1.0000252}
+      - {x: -2.9999747, y: -2.00001}
+    - - {x: 1.9999748, y: -2.00001}
+      - {x: 1.9999748, y: -0.99999}
+      - {x: 0.99999, y: -1.0000252}
+      - {x: 1.0000252, y: -2.00001}
+    - - {x: 9.999974, y: -2.00001}
+      - {x: 9.999974, y: -0.99999}
+      - {x: 8.99999, y: -1.0000252}
+      - {x: 9.000026, y: -2.00001}
+    - - {x: -16.000027, y: -6.00001}
+      - {x: -16.000027, y: -4.99999}
+      - {x: -17.00001, y: -5.0000253}
+      - {x: -16.999975, y: -6.00001}
+    - - {x: 8.999974, y: -6.00001}
+      - {x: 8.999974, y: -4.99999}
+      - {x: 6.9999905, y: -5.0000253}
+      - {x: 7.0000257, y: -6.00001}
+    - - {x: 17.999975, y: -6.00001}
+      - {x: 17.999975, y: -4.99999}
+      - {x: 16.99999, y: -5.0000253}
+      - {x: 17.000027, y: -6.00001}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!19719996 &1799490076
@@ -10781,10 +10892,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<b>\u4F5C\u8005\uFF1A</b>Hex Dragon\n\u3000\u3000\u3000\u9F99\u817E\u732B\u8DC3\u300100ll00\u3001HerobrineXia\n\n\u5236\u4F5C\u4E8E 
-    GMTK  GameJam  2022                                                      \n\n<color=#404040>\u54E6\uFF0C\u5BF9\u4E86\uFF0C\u6211\u4EEC\u4F3C\u4E4E\u5FD8\u4E86\u52A0\u5173\u95ED\u6E38\u620F\u6309\u94AE\u4E86\uFF1F          
-    \n\u90A3\u2026\u2026\u4F60\u8981\u4E0D\u7136\u8BD5\u8BD5\u6309  Alt + F4\u2026\u2026\uFF1F                                                     
-    </color>\n\n\u611F\u8C22\u4F60\u7684\u6E38\u73A9\uFF01"
+  m_Text: 
 --- !u!222 &1862514921
 CanvasRenderer:
   m_ObjectHideFlags: 0

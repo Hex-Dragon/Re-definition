@@ -24,7 +24,7 @@ public class StoryM : MonoBehaviour {
         textStory.text = "";
         DOTween.Kill("StoryText"); textStory.DOText(isCn ? textCn : textEn, 0.3f).SetEase(Ease.OutSine).SetId("StoryText");
         // 消失
-        float time = 1f + (isCn ? textCn.Length / 3f : textEn.Split(" ").Length / 4f);
+        float time = 1f + (isCn ? textCn.Length / 3f : textEn.Split(" ").Length / 3f);
         StopCoroutine("WaitForHideStoryText"); StartCoroutine("WaitForHideStoryText", time);
         Debug.Log(time + " -> " + textCn);
         return time;
@@ -421,9 +421,11 @@ public class StoryM : MonoBehaviour {
         yield return new WaitForSeconds(6f);
         panWin1.SetActive(false); panWin2.SetActive(true);
         Text credit = panWin2.GetComponentInChildren<Text>();
-        string creditText = credit.text;
         credit.text = "";
-        credit.DOText(creditText, 25f).SetEase(Ease.Linear);
+        bool isCn = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)";
+        const string cn = "<b>作者：</b>Hex Dragon\n　　　龙腾猫跃、00ll00、HerobrineXia\n\n制作于  GMTK  GameJam  2022                                                      \n\n<color=#404040>哦，对了，我们似乎忘了加关闭游戏按钮了？           \n那……你要不然试试按  Alt + F4……？                                                      </color>\n\n感谢你的游玩！";
+        const string en = "<b>Author：</b>Hex Dragon\n　　      　LTCat、00ll00、HerobrineXia\n\nMade  for  GMTK  GameJam  2022                                                      \n\n<color=#404040>Oh yes, it seems that we forget to add the close button?           \nWell... You might want try to press Alt + F4...？                                                      </color>\n\nThanks for playing！";
+        credit.DOText(isCn ? cn : en, 25f).SetEase(Ease.Linear);
     }
 
 

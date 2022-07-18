@@ -15,20 +15,24 @@ MonoBehaviour:
   m_TableCollectionName: String Localization
   m_TableCollectionNameGuidString: e3f186d36085a4c16a16dd9c5dead58e
   m_Entries:
-  - m_Id: 286449353089024
-    m_Key: SceneMain/UI/PanControl/TextFire
+  - m_Id: 962001814675456
+    m_Key: fsfrfs
     m_Metadata:
       m_Items: []
-  - m_Id: 286584636170240
-    m_Key: SceneMain/UI/PanControl/TextReload
+  - m_Id: 962103551713280
+    m_Key: gsgvs
     m_Metadata:
       m_Items: []
-  - m_Id: 627261102350336
-    m_Key: SceneMain/UITop/PanWin/TextWin
+  - m_Id: 962378995851264
+    m_Key: ggfrsg
     m_Metadata:
       m_Items: []
-  - m_Id: 704612699987968
-    m_Key: SceneMain/UITop/PanWin/TextWin 1
+  - m_Id: 963866270883840
+    m_Key: ffresgserg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 964002799673344
+    m_Key: New Entry
     m_Metadata:
       m_Items: []
   m_Metadata:
