@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using System.Linq;
 
@@ -16,15 +15,14 @@ public class StoryM : MonoBehaviour {
     /// </summary>
     public float SetStoryText(string textCn, string textEn = "English") {
         AudioM.Play("sub");
-        bool isCn = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)";
-        textStory.text = isCn ? textCn : textEn;
+        textStory.text = LanguageM.isChinese ? textCn : textEn;
         LayoutRebuilder.ForceRebuildLayoutImmediate(textStory.rectTransform);
         // 动画
         DOTween.Kill("StoryBackground"); shapeBack.DOScaleX((textStory.rectTransform.rect.width + 40f) / 100f, 0.3f).SetEase(Ease.OutSine).SetId("StoryBackground");
         textStory.text = "";
-        DOTween.Kill("StoryText"); textStory.DOText(isCn ? textCn : textEn, 0.3f).SetEase(Ease.OutSine).SetId("StoryText");
+        DOTween.Kill("StoryText"); textStory.DOText(LanguageM.isChinese ? textCn : textEn, 0.3f).SetEase(Ease.OutSine).SetId("StoryText");
         // 消失
-        float time = 1f + (isCn ? textCn.Length / 3f : textEn.Split(" ").Length / 3f);
+        float time = 1f + (LanguageM.isChinese ? textCn.Length / 3f : textEn.Split(" ").Length / 3f);
         StopCoroutine("WaitForHideStoryText"); StartCoroutine("WaitForHideStoryText", time);
         Debug.Log(time + " -> " + textCn);
         return time;
@@ -417,15 +415,21 @@ public class StoryM : MonoBehaviour {
         panWin1.SetActive(true);
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(WaitForStoryText("诶？喂？", "Aye? Hello?"));
-        SetStoryText("无尽模式呢？", "Where is the endless mode?");
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(2f);
+        SetStoryText("还有无尽模式呢？", "Where is the endless mode?");
+        yield return new WaitForSeconds(4f);
         panWin1.SetActive(false); panWin2.SetActive(true);
         Text credit = panWin2.GetComponentInChildren<Text>();
         credit.text = "";
-        bool isCn = LocalizationSettings.SelectedLocale.LocaleName == "Chinese (Simplified) (zh-CN)";
-        const string cn = "<b>作者：</b>Hex Dragon\n　　　龙腾猫跃、00ll00、HerobrineXia\n\n制作于  GMTK  GameJam  2022                                                      \n\n<color=#404040>哦，对了，我们似乎忘了加关闭游戏按钮了？           \n那……你要不然试试按  Alt + F4……？                                                      </color>\n\n感谢你的游玩！";
-        const string en = "<b>Author：</b>Hex Dragon\n　　      　LTCat、00ll00、HerobrineXia\n\nMade  for  GMTK  GameJam  2022                                                      \n\n<color=#404040>Oh yes, it seems that we forget to add the close button?           \nWell... You might want try to press Alt + F4...？                                                      </color>\n\nThanks for playing！";
-        credit.DOText(isCn ? cn : en, 25f).SetEase(Ease.Linear);
+        string cn, en;
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            cn = "<b>作者：</b>Hex Dragon\n　　　龙腾猫跃、00ll00、HerobrineXia\n\n制作于  GMTK  GameJam  2022                                                      \n\n<color=#404040>哦，对了，我们似乎忘了加关闭游戏按钮了？           \n哦，对，这游戏是在网页上跑的，我管这干嘛……                                                      </color>\n\n感谢你的游玩！";
+            en = "<b>Author：</b>Hex Dragon\n　　      　LTCat、00ll00、HerobrineXia\n\nMade  for  GMTK  GameJam  2022                                                      \n\n<color=#404040>Oh yes, it seems that we forget to add the close button?           \nOh, this game is running on a web page! Why am I still worried about this?                                                      </color>\n\nThanks for playing！";
+        } else {
+            cn = "<b>作者：</b>Hex Dragon\n　　　龙腾猫跃、00ll00、HerobrineXia\n\n制作于  GMTK  GameJam  2022                                                      \n\n<color=#404040>哦，对了，我们似乎忘了加关闭游戏按钮了？           \n那……你要不然试试按  Alt + F4……？                                                      </color>\n\n感谢你的游玩！";
+            en = "<b>Author：</b>Hex Dragon\n　　      　LTCat、00ll00、HerobrineXia\n\nMade  for  GMTK  GameJam  2022                                                      \n\n<color=#404040>Oh yes, it seems that we forget to add the close button?           \nWell... You might want try to press Alt + F4...？                                                      </color>\n\nThanks for playing！";
+        }
+        credit.DOText(LanguageM.isChinese ? cn : en, 25f).SetEase(Ease.Linear);
     }
 
 
